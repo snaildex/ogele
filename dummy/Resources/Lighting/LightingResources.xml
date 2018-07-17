@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Resources>
+
+  <Shader name="LightingCompute">
+    <Tags> Lighting </Tags>
+    <Stages>
+      <Vertex path="LightingCompute.vert"/>
+      <Fragment path="LightingCompute.frag"/>
+    </Stages>
+  </Shader>
+
+  <Shader name="LightingCompose">
+    <Tags> Lighting </Tags>
+    <Stages>
+      <Vertex path="LightingCompose.vert"/>
+      <Fragment path="LightingCompose.frag"/>
+    </Stages>
+  </Shader>
+
+  <Texture2D name="BRDFLUT">
+    <Tags> Lighting </Tags>
+    <File path="BRDFLUT.bmp"/>
+    <Wrap>ClampToEdge</Wrap>
+    <MinFilter>Linear</MinFilter>
+    <MagFilter>Linear</MagFilter>
+  </Texture2D>
+
+</Resources>
