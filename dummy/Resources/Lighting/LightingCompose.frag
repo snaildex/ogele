@@ -25,6 +25,7 @@ void main()
 
 	vec3 normal=normalMetal.xyz;
 	vec3 pos=posDepth.xyz;
+	float depth=posDepth.w;
 	vec3 albedo=albedoRough.rgb;
 	float rough=albedoRough.a;
 	float metal=normalMetal.w;
@@ -33,4 +34,6 @@ void main()
 	vec3 specular=texture(Specular,UV).rgb;
 
 	Color=(diffuse+specular)*albedo;
+	if(depth==1)
+    		Color=vec3(0.4,0.6,0.8);
 }

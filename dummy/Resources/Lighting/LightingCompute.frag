@@ -16,6 +16,10 @@ layout(location = 1) out vec3 Specular;
 
 const float PI = 3.14159265359;
 
+float mdot(vec3 a, vec3 b){
+	return max(dot(a,b),0);
+}
+
 float DistributionGGX(vec3 N, vec3 H, float a){
     float a2     = a*a;
     float NdotH  = max(dot(N, H), 0.0);
@@ -29,17 +33,13 @@ float DistributionGGX(vec3 N, vec3 H, float a){
 }
 
 float GeometrySchlickGGX(float NdotV, float k){
-    float nom   = NdotV;
-    float denom = NdotV * (1.0 - k) + k;
-    return nom / denom;
+    return NdotV / (NdotV * (1.0 - k) + k);
 }
   
 float GeometrySmith(vec3 N, vec3 V, vec3 L, float k){
-    float NdotV = max(dot(N, V), 0.0);
-    float NdotL = max(dot(N, L), 0.0);
-    float ggx1 = GeometrySchlickGGX(NdotV, k);
-    float ggx2 = GeometrySchlickGGX(NdotL, k);
-	
+    float ggx1 = GeometrySchlickGGX(mdot(N,V), k);
+    float ggx2 = GeometrySchlickGGX(mdot(N,L), k);
+	//return mdot(N,V)*mdot(N,L);
     return ggx1 * ggx2;
 }
 
@@ -50,10 +50,6 @@ vec3 fresnelSchlick(float cosTheta, vec3 F0)
 
 vec3 fresnelSchlickRoughness(float cosTheta, vec3 F0, float roughness){
     return F0 + (max(vec3(1.0 - roughness), F0) - F0) * pow(1.0 - cosTheta, 5.0);
-}  
-
-float mdot(vec3 a, vec3 b){
-	return max(dot(a,b),0);
 }
 
 void DirectionalLighting(vec3 albedo, float metallic, float roughness, vec3 norm, vec3 view, vec3 ldir, vec3 color)
@@ -63,7 +59,7 @@ void DirectionalLighting(vec3 albedo, float metallic, float roughness, vec3 norm
 	F0      = mix(F0, albedo, metallic);	
     
 	float NDF = DistributionGGX(norm, halfdir, roughness);        
-    float G   = GeometrySmith(norm, view, ldir, roughness); 
+    float G   = GeometrySmith(norm, view, ldir, roughness);
 	vec3 F    = fresnelSchlick(mdot(halfdir, view), F0);
 	
     vec3 kD = (vec3(1.0) - F)*(1.0 - metallic);   
@@ -72,9 +68,9 @@ void DirectionalLighting(vec3 albedo, float metallic, float roughness, vec3 norm
     float denominator = 4 * mdot(norm, view)*mdot(norm,ldir); 
 	float NdotL = mdot(norm, ldir);                
     
-	//Specular += color * nominator / max(denominator, 0.001) * NdotL;
-	//Diffuse += color * kD * albedo * NdotL;
-	Diffuse +=color*G;
+	Specular += color * nominator / max(denominator, 0.001) * NdotL;
+	Diffuse += color * kD * albedo * NdotL;
+	//Diffuse +=color*G;
 	//Specular += view;
 	//Specular += color * fresnelSchlick(mdot(halfdir, view), F0);
 }
@@ -123,12 +119,6 @@ void main()
 	vec3 ldir=normalize(vec3(1,1,1));
 	vec3 lcol=vec3(1);
 
-	//AmbientLighting(albedo,1,normal,view,reflection,rough,metal);
+	AmbientLighting(albedo,1,normal,view,reflection,rough,metal);
 	DirectionalLighting(albedo,metal,rough,normal,view,ldir,lcol);
-
-	if(depth==1)
-	{
-		Diffuse=vec3(1,0,0);
-		Specular=vec3(0.4,0.6,0.8);
-	}
 }

@@ -14,11 +14,11 @@ uniform mat4 IVP;
 void main()
 {
 	gl_Position = vec4(nearPos.xy,0,1);	
-	vec4 farPos=IVP * vec4(farPos,1);
-	farPos.xyz/=farPos.w;
-	vec4 nearPos=IVP * vec4(nearPos,1);
-	nearPos.xyz/=nearPos.w;
-	LookDir=normalize(farPos.xyz-nearPos.xyz);
+	vec4 fPos=IVP * vec4(farPos,1);
+	fPos.xyz/=fPos.w;
+	vec4 nPos=IVP * vec4(nearPos,1);
+	nPos.xyz/=nPos.w;
+	LookDir=normalize(fPos.xyz-nPos.xyz);
 	NearPos=nearPos.xyz;
 	FarPos=farPos.xyz;
 	UV=uv;

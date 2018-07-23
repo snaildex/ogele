@@ -45,6 +45,9 @@ class RunnerApp : public Application {
         Enable(Feature::CullFace);
         Enable(Feature::DepthTest);
 
+        ClearColor({0.4f, 0.6f, 0.8f, 1.0f});
+        Clear(BufferBit::Color | BufferBit::Depth);
+
         m_pipeline->Bind();
         Viewport({0, 0}, GetResolution());
         ClearColor({0.4f, 0.6f, 0.8f, 1.0f});
@@ -53,18 +56,23 @@ class RunnerApp : public Application {
         m_pipeline->Unbind();
 
 
-        //ImGui::Begin("Debug");
-        //ImGui::End();
+//        GetResources()->GUI();
+//        ImGui::Begin("Debug");
+//        ImGui::Image(reinterpret_cast<ImTextureID >((*m_pipeline->GetFinalBuffer())[0]->GetHandle()), {100, 100});
+//        ImGui::End();
 
+        DrawBasis(cam->GetViewProjMatrix());
         Disable(Feature::CullFace);
         Disable(Feature::DepthTest);
         Disable(Feature::Blend);
         DrawTex((*m_pipeline->GetFinalBuffer())[0]);
+
+        DrawBasis(cam->GetViewProjMatrix());
     }
 };
 
-int main() {
-    cout<<std::experimental::filesystem::current_path();
+int main(int argc, char *argv[]) {
+    cout << std::experimental::filesystem::current_path();
     auto app = make_unique<RunnerApp>();
     app->Run();
     return 0;
