@@ -8,19 +8,15 @@ namespace ogele {
 
     class DeferredPBRPipeline {
         unique_ptr<RenderTarget> m_GBufFBO;
-        unique_ptr<RenderTarget> m_LightsFBO;
         unique_ptr<RenderTarget> m_FinalFBO;
         Camera *m_cam;
         ShaderProgram *m_lightCompute;
-        ShaderProgram *m_lightCompose;
         ScreenQuadMesh *m_screenQuad;
         Texture2D *m_brdflut;
     public:
         DeferredPBRPipeline(const ivec2 &frameSize);
 
         inline RenderTarget *GetGBuffer() const noexcept { return m_GBufFBO.get(); }
-
-        inline RenderTarget *GetLightsBuffer() const noexcept { return m_LightsFBO.get(); }
 
         inline RenderTarget *GetFinalBuffer() const noexcept { return m_FinalFBO.get(); }
 

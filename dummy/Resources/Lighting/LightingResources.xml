@@ -9,14 +9,6 @@
     </Stages>
   </Shader>
 
-  <Shader name="LightingCompose">
-    <Tags> Lighting </Tags>
-    <Stages>
-      <Vertex path="LightingCompose.vert"/>
-      <Fragment path="LightingCompose.frag"/>
-    </Stages>
-  </Shader>
-
   <Texture2D name="BRDFLUT">
     <Tags> Lighting </Tags>
     <File path="BRDFLUT.bmp"/>

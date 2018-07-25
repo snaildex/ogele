@@ -12,8 +12,8 @@ float GetHeight(ivec2 delta)
 void main()
 {
 	vec3 val;
-	val.x = GetHeight(ivec2(1, 0)) - GetHeight(ivec2(-1, 0));
+	val.x = GetHeight(ivec2(-1, 0)) - GetHeight(ivec2(1, 0));
 	val.y = 2;
-	val.z = GetHeight(ivec2(0, 1)) - GetHeight(ivec2(0, -1));
+	val.z = GetHeight(ivec2(0, -1)) - GetHeight(ivec2(0, 1));
 	imageStore(Normals, ivec2(gl_GlobalInvocationID.xz), vec4(normalize(val), 0));
 }

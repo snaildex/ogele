@@ -6,13 +6,13 @@
 #define OGELE_MODELMESH_H
 namespace ogele {
     class ModelMesh : public MeshBase {
-        unique_ptr <FloatBuffer<vec3>> m_position;
-        unique_ptr <FloatBuffer<vec3>> m_normals;
-        unique_ptr <FloatBuffer<vec3>> m_tangents;
-        unique_ptr <FloatBuffer<vec4>> m_color;
-        array <unique_ptr<FloatBuffer < vec2>>, 2>
+        unique_ptr<FloatBuffer < vec3>> m_position;
+        unique_ptr<FloatBuffer < vec3>> m_normals;
+        unique_ptr<FloatBuffer < vec3>> m_tangents;
+        unique_ptr<FloatBuffer < vec4>> m_color;
+        array<unique_ptr<FloatBuffer < vec2>>, 2>
         m_uvs;
-        unique_ptr <UnsignedIntBuffer<unsigned int>> m_indexes;
+        unique_ptr<UnsignedIntBuffer < unsigned int>> m_indexes;
     public:
         ModelMesh() : MeshBase(Topology::Triangles) {}
 
