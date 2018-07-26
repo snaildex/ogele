@@ -9,8 +9,10 @@ namespace ogele {
     class DeferredPBRPipeline {
         unique_ptr<RenderTarget> m_GBufFBO;
         unique_ptr<RenderTarget> m_FinalFBO;
+        unique_ptr<RenderTarget> m_RawFBO;
         Camera *m_cam;
         ShaderProgram *m_lightCompute;
+        ShaderProgram *m_tonemap;
         ScreenQuadMesh *m_screenQuad;
         Texture2D *m_brdflut;
     public:

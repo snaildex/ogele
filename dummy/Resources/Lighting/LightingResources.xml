@@ -9,6 +9,14 @@
     </Stages>
   </Shader>
 
+  <Shader name="Tonemapping">
+    <Tags> Lighting </Tags>
+    <Stages>
+      <Vertex path="Tonemapping.vert"/>
+      <Fragment path="Tonemapping.frag"/>
+    </Stages>
+  </Shader>
+
   <Texture2D name="BRDFLUT">
     <Tags> Lighting </Tags>
     <File path="BRDFLUT.bmp"/>
