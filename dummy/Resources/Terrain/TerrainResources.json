@@ -1,0 +1,33 @@
+[
+  {
+    "type": "Shader",
+    "name": "TerrainDraw",
+    "tags": [
+      "Terrain"
+    ],
+    "stages": {
+      "vertex": "TerrainDraw.vert",
+      "fragment": "TerrainDraw.frag"
+    }
+  },
+  {
+    "type": "Shader",
+    "name": "TerrainGen",
+    "tags": [
+      "Terrain"
+    ],
+    "stages": {
+      "compute": "TerrainGen.compute"
+    }
+  },
+  {
+    "type": "Shader",
+    "name": "TerrainNormals",
+    "tags": [
+      "Terrain"
+    ],
+    "stages": {
+      "compute": "TerrainNormals.compute"
+    }
+  }
+]

@@ -19,10 +19,10 @@ namespace ogele {
         Entity(ResourceLoader)
     protected:
         ResourceLoader() = default;
-        void LoadNameTags(const tinyxml2::XMLElement* reader, Resource* res) const;
+        void LoadNameTags(const Jzon::Node* reader, Resource* res) const;
     public:
         virtual ~ResourceLoader() {}
-        virtual Resource* Load(const tinyxml2::XMLElement* reader) const = 0;
+        virtual Resource* Load(const Jzon::Node* reader) const=0;
     };
 
     class ResourceContainer

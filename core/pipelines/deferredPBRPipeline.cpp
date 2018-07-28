@@ -20,6 +20,7 @@ namespace ogele {
                 "Tonemapping");
         m_screenQuad = Application::GetInstance()->GetResources()->GetResourceByName<ScreenQuadMesh>("ScreenQuad");
         m_brdflut = Application::GetInstance()->GetResources()->GetResourceByName<Texture2D>("BRDFLUT");
+        m_skybox = Application::GetInstance()->GetResources()->GetResourceByName<TextureCube>("Skybox");
     }
 
     void DeferredPBRPipeline::Resize(const ivec2 &size) {
@@ -44,6 +45,7 @@ namespace ogele {
         m_lightCompute->SetTexture("NormalMetal", (*m_GBufFBO.get())[2]);
         m_lightCompute->SetTexture("Emission", (*m_GBufFBO.get())[3]);
         m_lightCompute->SetTexture("BRDFLUT", m_brdflut);
+        m_lightCompute->SetTexture("Skybox", m_skybox);
         m_screenQuad->Draw();
         m_lightCompute->Unbind();
         m_RawFBO->Unbind();

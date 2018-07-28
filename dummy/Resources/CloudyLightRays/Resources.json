@@ -1,0 +1,14 @@
+[
+  {
+    "type":"TextureCube",
+    "name":"Skybox",
+    "file":{
+      "front":"Front.png",
+      "back":"Back.png",
+      "left":"Left.png",
+      "right":"Right.png",
+      "up":"Up.png",
+      "down":"Down.png"
+    }
+  }
+]

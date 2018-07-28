@@ -10,17 +10,17 @@ using namespace glm;
 namespace fs = std::experimental::filesystem;
 
 namespace ogele {
-    Resource *Texture2DLoader::Load(const tinyxml2::XMLElement *reader) const {
-        auto filePath = reader->FirstChildElement("File")->FindAttribute("path")->Value();
+    Resource *Texture2DLoader::Load(const Jzon::Node *reader) const {
+        auto filePath = reader->get("file").toString();
         int x, y, n;
-        ucvec4 *data = reinterpret_cast<ucvec4 *>(stbi_load(filePath, &x, &y, &n, 4));
+        ucvec4 *data = reinterpret_cast<ucvec4 *>(stbi_load(filePath.c_str(), &x, &y, &n, 4));
         ivec2 size = {x, y};
         Texture2D *tex = new Texture2D(size, true, TextureFormat::RGBA8);
         LoadNameTags(reader, tex);
         tex->Bind();
-        tex->bSetWrap(StrToTexWrapMode[ReadXMLProperty(reader, "Wrap", "Repeat")]);
-        tex->bSetMinFilter(StrToTexFilterMode[ReadXMLProperty(reader, "MinFilter", "LinearMipMapNearest")]);
-        tex->bSetMagFilter(StrToTexFilterMode[ReadXMLProperty(reader, "MagFilter", "Linear")]);
+        tex->bSetWrap(StrToTexWrapMode[ReadProperty(reader, "wrap", "repeat")]);
+        tex->bSetMinFilter(StrToTexFilterMode[ReadProperty(reader, "minFilter", "linearMipMapNearest")]);
+        tex->bSetMagFilter(StrToTexFilterMode[ReadProperty(reader, "magFilter", "linear")]);
         tex->bSetData(0, {0, 0}, size, data);
         tex->Unbind();
         stbi_image_free(data);

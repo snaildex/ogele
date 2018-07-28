@@ -26,6 +26,10 @@ namespace ogele {
 
         inline int GetChunkSize() const noexcept { return m_chunkSize; }
 
+        inline int GetDrawRange() const noexcept { return m_drawRange; }
+
+        inline void SetDrawRange(int range) noexcept { m_drawRange=range; }
+
         inline const trvec3 &GetOffset() const noexcept { return m_offset; }
 
         void Generate();

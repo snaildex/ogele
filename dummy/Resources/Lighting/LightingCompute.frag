@@ -10,10 +10,12 @@ uniform sampler2D PosDepth;
 uniform sampler2D NormalMetal;
 uniform sampler2D Emission;
 uniform sampler2D BRDFLUT;
+uniform samplerCube Skybox;
 
 layout(location = 0) out vec3 Result;
 
 const float PI = 3.14159265359;
+const float MAX_REFLECTION_LOD = 10.0;
 
 float mdot(vec3 a, vec3 b)
 {
@@ -90,12 +92,11 @@ vec3 AmbientLighting(sceneData scene)
     vec3 F = fresnelSchlickRoughness(NdotV, F0, scene.roughness);
     vec3 kD = 1.0 - F;
     kD *= 1.0 - scene.metallic;
-    //vec3 irradiance = texture(irradianceMap, N).rgb;
-    vec3 irradiance = vec3(0.4,0.6,0.8);
+    vec3 irradiance = textureLod(Skybox, scene.normal,MAX_REFLECTION_LOD).rgb;
     vec3 diffuse = irradiance * scene.albedo;
-    const float MAX_REFLECTION_LOD = 4.0;
-    //vec3 prefilteredColor = textureLod(prefilterMap, R,  roughness * MAX_REFLECTION_LOD).rgb;
-    vec3 prefilteredColor = vec3(0.4,0.6,0.8);
+    vec3 reflection=reflect(scene.view,scene.normal);
+    reflection.y*=-1;
+    vec3 prefilteredColor = textureLod(Skybox, reflection,  scene.roughness * MAX_REFLECTION_LOD).rgb;
     vec2 brdf  = texture(BRDFLUT, vec2(NdotV, scene.roughness)).rg;
     vec3 specular = prefilteredColor * (F * brdf.x + brdf.y);
     return (kD * diffuse + specular) * scene.ambientOcclusion;
@@ -131,5 +132,7 @@ void main()
     vec3 color=DirectLighting(scene,light);
     color+=AmbientLighting(scene);
 
-    Result=(scene.depth==1) ? vec3(0.4,0.6,0.8) : color;
+    vec3 skyCoord=scene.view;
+    skyCoord.y*=-1;
+    Result=(scene.depth==1) ? texture(Skybox, skyCoord).rgb : color;
 }

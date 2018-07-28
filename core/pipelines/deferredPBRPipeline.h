@@ -15,6 +15,7 @@ namespace ogele {
         ShaderProgram *m_tonemap;
         ScreenQuadMesh *m_screenQuad;
         Texture2D *m_brdflut;
+        TextureCube *m_skybox;
     public:
         DeferredPBRPipeline(const ivec2 &frameSize);
 

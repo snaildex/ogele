@@ -10,12 +10,12 @@ namespace fs = std::experimental::filesystem;
 
 namespace ogele {
     map<string, ShaderType> ShaderLoader::m_shaderTypeMap = {
-            {"Compute",        ShaderType::Compute},
-            {"Fragment",       ShaderType::Fragment},
-            {"Geometry",       ShaderType::Geometry},
-            {"TessControl",    ShaderType::TessControl},
-            {"TessEvaluation", ShaderType::TessEvaluation},
-            {"Vertex",         ShaderType::Vertex}
+            {"compute",        ShaderType::Compute},
+            {"fragment",       ShaderType::Fragment},
+            {"geometry",       ShaderType::Geometry},
+            {"tessControl",    ShaderType::TessControl},
+            {"tessEvaluation", ShaderType::TessEvaluation},
+            {"vertex",         ShaderType::Vertex}
     };
 
     ShaderProgram *CreateShaderProgram(const string &vertex, const string &fragment) {
@@ -39,17 +39,16 @@ namespace ogele {
         return res;
     }
 
-    ogele::Resource *ShaderLoader::Load(const tinyxml2::XMLElement *reader) const {
+    ogele::Resource *ShaderLoader::Load(const Jzon::Node *reader) const {
         list<unique_ptr<ShaderStage>> stages;
         ShaderProgram *res = new ShaderProgram();
         LoadNameTags(reader, res);
-        auto stage = reader->FirstChildElement("Stages")->FirstChildElement();
-        while (stage != nullptr) {
-            ifstream srcFile(stage->FindAttribute("path")->Value());
+        for(const auto stage : reader->get("stages"))
+        {
+            ifstream srcFile(stage.second.toString());
             stringstream buffer;
             buffer << srcFile.rdbuf();
-            stages.emplace_back(make_unique<ShaderStage>(m_shaderTypeMap[stage->Name()], buffer.str()));
-            stage = stage->NextSiblingElement();
+            stages.emplace_back(make_unique<ShaderStage>(m_shaderTypeMap[stage.first], buffer.str()));
         }
         for (const auto &s : stages)
             res->AttachStage(s.get());

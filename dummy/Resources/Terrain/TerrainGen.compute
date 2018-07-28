@@ -45,6 +45,6 @@ void main()
 {
 	float val;
 	vec2 pos = vec2(gl_GlobalInvocationID.xz) / 100;
-	val = snoise(pos) * 40 + 8;
+	val = snoise(pos) * 10 + 8;
 	imageStore(Heights, ivec2(gl_GlobalInvocationID.xz), vec4(val, 0, 0, 0));
 }

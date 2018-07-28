@@ -10,28 +10,26 @@ namespace fs = std::experimental::filesystem;
 
 namespace ogele {
 
-    string ReadXMLProperty(const tinyxml2::XMLElement *reader, const string &propName, const string &defaultValue) {
-        auto elem = reader->FirstChildElement(propName.data());
-        if (elem == nullptr)
-            return defaultValue;
-        else
-            return elem->GetText();
+    string ReadProperty(const Jzon::Node *reader, const string &propName, const string &defaultValue) {
+        if(reader->has(propName))
+            return reader->get(propName).toString();
+        else return defaultValue;
     }
 
     map<const string, TextureWrapMode> StrToTexWrapMode = {
-            {"ClampToEdge",       TextureWrapMode::ClampToEdge},
-            {"ClampToBorder",     TextureWrapMode::ClampToBorder},
-            {"MirroredRepeat",    TextureWrapMode::MirroredRepeat},
-            {"Repeat",            TextureWrapMode::Repeat},
-            {"MirrorClampToEdge", TextureWrapMode::MirrorClampToEdge}
+            {"clampToEdge",       TextureWrapMode::ClampToEdge},
+            {"clampToBorder",     TextureWrapMode::ClampToBorder},
+            {"mirroredRepeat",    TextureWrapMode::MirroredRepeat},
+            {"repeat",            TextureWrapMode::Repeat},
+            {"mirrorClampToEdge", TextureWrapMode::MirrorClampToEdge}
     };
     map<const string, TextureFilterMode> StrToTexFilterMode = {
-            {"Linear",               TextureFilterMode::Linear},
-            {"LinearMipMapLinear",   TextureFilterMode::LinearMipMapLinear},
-            {"LinearMipMapNearest",  TextureFilterMode::LinearMipMapNearest},
-            {"Nearest",              TextureFilterMode::Nearest},
-            {"NearestMipMapLinear",  TextureFilterMode::NearestMipMapLinear},
-            {"NearestMipMapNearest", TextureFilterMode::NearestMipMapNearest}
+            {"linear",               TextureFilterMode::Linear},
+            {"linearMipMapLinear",   TextureFilterMode::LinearMipMapLinear},
+            {"linearMipMapNearest",  TextureFilterMode::LinearMipMapNearest},
+            {"nearest",              TextureFilterMode::Nearest},
+            {"nearestMipMapLinear",  TextureFilterMode::NearestMipMapLinear},
+            {"nearestMipMapNearest", TextureFilterMode::NearestMipMapNearest}
     };
 }
 

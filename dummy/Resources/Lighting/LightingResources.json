@@ -1,0 +1,35 @@
+[
+  {
+    "type": "Shader",
+    "name": "LightingCompute",
+    "tags": [
+      "Lighting"
+    ],
+    "stages": {
+      "vertex": "LightingCompute.vert",
+      "fragment": "LightingCompute.frag"
+    }
+  },
+  {
+    "type": "Shader",
+    "name": "Tonemapping",
+    "tags": [
+      "Lighting"
+    ],
+    "stages": {
+      "vertex": "Tonemapping.vert",
+      "fragment": "Tonemapping.frag"
+    }
+  },
+  {
+    "type": "Texture2D",
+    "name": "BRDFLUT",
+    "tags": [
+      "Lighting"
+    ],
+    "file": "BRDFLUT.bmp",
+    "wrap": "clampToEdge",
+    "minFilter": "linear",
+    "magFilter": "linear"
+  }
+]

@@ -10,7 +10,7 @@ namespace ogele {
 
     public:
 
-        Resource *Load(const tinyxml2::XMLElement *reader) const override;
+        Resource *Load(const Jzon::Node* reader) const override;
 
     };
 }

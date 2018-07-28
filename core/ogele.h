@@ -35,6 +35,7 @@
 #include "glm/gtx/projection.hpp"
 #include "glm/gtc/type_ptr.hpp"
 #include "tinyxml2/tinyxml2.h"
+#include "jzon/Jzon.h"
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw_gl3.h"
 
@@ -75,6 +76,8 @@
 #include "texture/textureLoaderHelpers.h"
 #include "texture/texture2D/texture2D.h"
 #include "texture/texture2D/texture2DLoader.h"
+#include "texture/textureCube/textureCube.h"
+#include "texture/textureCube/textureCubeLoader.h"
 #include "shader/material.h"
 #include "framebuffer/framebuffer.h"
 #include "framebuffer/renderTarget.h"

@@ -27,8 +27,10 @@ class RunnerApp : public Application {
         m_pipeline = make_unique<DeferredPBRPipeline>(GetResolution());
         m_terr = make_unique<Terrain>(ivec2(32, 32), 32);
         m_terr->Generate();
+        m_terr->SetDrawRange(5);
         cam->SetLocalPos({0, 40, 0});
         m_pipeline->SetFrameCamera(cam.get());
+        Enable(Feature::SeamlessCubemap);
     }
 
     void Update() override {

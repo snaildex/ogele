@@ -475,14 +475,6 @@ namespace ogele {
         SingleBuffer = GL_TEXTURE_BUFFER,
         Single2DMultisample = GL_TEXTURE_2D_MULTISAMPLE,
         Array2DMultisample = GL_TEXTURE_2D_MULTISAMPLE_ARRAY,
-
-        SingleCubeMapPositiveX = GL_TEXTURE_CUBE_MAP_POSITIVE_X,
-        SingleCubeMapPositiveY = GL_TEXTURE_CUBE_MAP_POSITIVE_Y,
-        SingleCubeMapPositiveZ = GL_TEXTURE_CUBE_MAP_POSITIVE_Z,
-        SingleCubeMapNegativeX = GL_TEXTURE_CUBE_MAP_NEGATIVE_X,
-        SingleCubeMapNegativeY = GL_TEXTURE_CUBE_MAP_NEGATIVE_Y,
-        SingleCubeMapNegativeZ = GL_TEXTURE_CUBE_MAP_NEGATIVE_Z,
-
         Single1DProxy = GL_PROXY_TEXTURE_1D,
         Single2DProxy = GL_PROXY_TEXTURE_2D,
         Single3DProxy = GL_PROXY_TEXTURE_3D,

@@ -7,11 +7,12 @@ using namespace std;
 using namespace glm;
 namespace fs = std::experimental::filesystem;
 
-namespace ogele{
+namespace ogele {
 
     ResourceContainer::ResourceContainer() {
         m_loaders["Shader"] = make_unique<ShaderLoader>();
         m_loaders["Texture2D"] = make_unique<Texture2DLoader>();
+        m_loaders["TextureCube"] = make_unique<TextureCubeLoader>();
     }
 
     template<typename Out>
@@ -29,35 +30,28 @@ namespace ogele{
         return elems;
     }
 
-    void ResourceLoader::LoadNameTags(const tinyxml2::XMLElement *reader, Resource *res) const {
-        res->SetName(reader->FindAttribute("name")->Value());
-        auto tags = reader->FirstChildElement("Tags");
-        if (tags != nullptr) {
-            auto t = split(tags->GetText(), ',');
-            for (auto s : t) {
-                std::string::iterator end_pos = std::remove(s.begin(), s.end(), ' ');
-                s.erase(end_pos, s.end());
-                if (!s.empty())
-                    res->AddTag(s);
-            }
+    void ResourceLoader::LoadNameTags(const Jzon::Node *reader, Resource *res) const {
+        res->SetName(reader->get("name").toString());
+        if (reader->has("tags")) {
+            Jzon::Node t = reader->get("tags");
+            for (int i = 0; i < t.getCount(); i++)
+                res->AddTag(t.get(i).toString());
         }
     }
 
     void ResourceContainer::LoadFromFilesystem() {
         fs::path cpath = fs::current_path();
-        list<fs::path> configs = ScanFiles(".xml");
+        Jzon::Parser parser;
+        list<fs::path> configs = ScanFiles(".json");
         for (const auto &p : configs) {
-            tinyxml2::XMLDocument doc;
-            if (doc.LoadFile(p.string().c_str()) == 0) {
+            Jzon::Node node = parser.parseFile(p.string());
+            if (node.isValid()) {
                 fs::current_path(p.parent_path());
-                auto node = doc.RootElement()->FirstChildElement();
-                auto txt = doc.RootElement()->Name();
-                while (node != nullptr) {
-                    AddResource(m_loaders[node->Name()]->Load(node));
-                    node = node->NextSiblingElement();
+                for (int i = 0; i < node.getCount(); i++) {
+                    Jzon::Node cnode = node.get(i);
+                    AddResource(m_loaders[cnode.get("type").toString()]->Load(&cnode));
                 }
             }
-
         }
         fs::current_path(cpath);
     }

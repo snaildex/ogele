@@ -5,7 +5,7 @@
 #ifndef OGELE_TEXTURELOADERHELPERS_H
 #define OGELE_TEXTURELOADERHELPERS_H
 namespace ogele {
-    string ReadXMLProperty(const tinyxml2::XMLElement *reader, const string &propName, const string &defaultValue);
+    string ReadProperty(const Jzon::Node *reader, const string &propName, const string &defaultValue);
 
     extern map<const string, TextureWrapMode> StrToTexWrapMode;
 
