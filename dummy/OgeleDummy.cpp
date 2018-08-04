@@ -11,6 +11,8 @@ class RunnerApp : public Application {
     unique_ptr<Terrain> m_terr;
     unique_ptr<DeferredPBRPipeline> m_pipeline;
 
+    float m_sunRot;
+
     void OnResize(const ivec2 &size) override {
         rt.reset(new RenderTarget(size, 1, TextureFormat::RGB8, false, true));
         cam->SetFrameSize(size);
@@ -21,13 +23,17 @@ class RunnerApp : public Application {
         cam->LookAround(delta, 0.4 * GetTimeDelta(), -1.5, 1.5);
     }
 
+    void OnScroll(const glm::dvec2 &offset) override {
+        m_sunRot=clamp((m_sunRot+offset.y*0.1)/M_PI)*M_PI;
+    }
+
     void Start() override {
         rt = make_unique<RenderTarget>(GetResolution(), 1, TextureFormat::RGB8, false, true);
         cam = make_unique<PerspectiveCamera>(GetResolution(), 45, 1, 1000);
         m_pipeline = make_unique<DeferredPBRPipeline>(GetResolution());
         m_terr = make_unique<Terrain>(ivec2(32, 32), 32);
         m_terr->Generate();
-        m_terr->SetDrawRange(5);
+        m_terr->SetDrawRange(3);
         cam->SetLocalPos({0, 40, 0});
         m_pipeline->SetFrameCamera(cam.get());
         Enable(Feature::SeamlessCubemap);
@@ -50,18 +56,15 @@ class RunnerApp : public Application {
         ClearColor({0.4f, 0.6f, 0.8f, 1.0f});
         Clear(BufferBit::Color | BufferBit::Depth);
 
+        vec3 sunDir = glm::angleAxis(m_sunRot, normalize(vec3(0, 0.3, 1))) * vec3(1, 0, 0);
+        m_pipeline->SetSunDir(sunDir);
+
         m_pipeline->Bind();
         Viewport({0, 0}, GetResolution());
         ClearColor({0.4f, 0.6f, 0.8f, 1.0f});
         Clear(BufferBit::Color | BufferBit::Depth);
         m_terr->Draw(cam.get());
         m_pipeline->Unbind();
-
-
-//        GetResources()->GUI();
-//        ImGui::Begin("Debug");
-//        ImGui::Image(reinterpret_cast<ImTextureID >((*m_pipeline->GetFinalBuffer())[0]->GetHandle()), {100, 100});
-//        ImGui::End();
 
         DrawBasis(cam->GetViewProjMatrix());
         Disable(Feature::CullFace);

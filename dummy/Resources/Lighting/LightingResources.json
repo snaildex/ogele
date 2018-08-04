@@ -22,6 +22,16 @@
     }
   },
   {
+    "type": "Shader",
+    "name": "Skybox",
+    "tags": [
+      "Lighting"
+    ],
+    "stages": {
+      "compute": "Skybox.glsl"
+    }
+  },
+  {
     "type": "Texture2D",
     "name": "BRDFLUT",
     "tags": [

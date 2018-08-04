@@ -10,7 +10,6 @@ out vec3 LookDir;
 out vec2 UV;
 
 uniform mat4 IVP;
-
 void main()
 {
 	gl_Position = vec4(nearPos.xy,0,1);	
@@ -18,8 +17,8 @@ void main()
 	fPos.xyz/=fPos.w;
 	vec4 nPos=IVP * vec4(nearPos,1);
 	nPos.xyz/=nPos.w;
-	LookDir=normalize(fPos.xyz-nPos.xyz);
-	NearPos=nearPos.xyz;
-	FarPos=farPos.xyz;
-	UV=uv;
+	LookDir=normalize(nPos.xyz-fPos.xyz);
+	FarPos=fPos.xyz;
+	NearPos=nPos.xyz;
+    UV=uv;
 }

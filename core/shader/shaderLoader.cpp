@@ -3,6 +3,7 @@
 //
 
 #include "../ogele.h"
+#include <regex>
 
 using namespace std;
 using namespace glm;
@@ -39,16 +40,39 @@ namespace ogele {
         return res;
     }
 
+    string ReadFile(const string &path) {
+        ifstream srcFile(path);
+        if (!srcFile.is_open())
+            cout << "\n[ShaderLoader] Failed to include "<<path;
+        stringstream buffer;
+        buffer << srcFile.rdbuf();
+        return buffer.str();
+    }
+
+    string ApplyIncludes(const string &source) {
+        stringstream result;
+        regex inclReg(R"(#include\s*\".*\")");
+        for (sregex_token_iterator i{source.begin(), source.end(), inclReg, {-1, 0}}, end;
+             i != end; ++i) {
+            string token = *i;
+            if (regex_match(token, inclReg)) {
+                unsigned long long int pos = token.find('"');
+                string path = token.substr(pos + 1, token.length() - pos - 2);
+                result << ReadFile(path);
+            } else
+                result << token;
+        }
+        return result.str();
+    }
+
     ogele::Resource *ShaderLoader::Load(const Jzon::Node *reader) const {
         list<unique_ptr<ShaderStage>> stages;
         ShaderProgram *res = new ShaderProgram();
         LoadNameTags(reader, res);
-        for(const auto stage : reader->get("stages"))
-        {
-            ifstream srcFile(stage.second.toString());
-            stringstream buffer;
-            buffer << srcFile.rdbuf();
-            stages.emplace_back(make_unique<ShaderStage>(m_shaderTypeMap[stage.first], buffer.str()));
+        for (const auto stage : reader->get("stages")) {
+            string source = ReadFile(stage.second.toString());
+            source = ApplyIncludes(source);
+            stages.emplace_back(make_unique<ShaderStage>(m_shaderTypeMap[stage.first], source));
         }
         for (const auto &s : stages)
             res->AttachStage(s.get());

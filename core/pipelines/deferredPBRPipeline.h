@@ -13,9 +13,13 @@ namespace ogele {
         Camera *m_cam;
         ShaderProgram *m_lightCompute;
         ShaderProgram *m_tonemap;
+        ShaderProgram *m_skyboxGen;
         ScreenQuadMesh *m_screenQuad;
         Texture2D *m_brdflut;
-        TextureCube *m_skybox;
+        unique_ptr<TextureCube> m_skybox;
+
+        vec3 m_sunDir;
+
     public:
         DeferredPBRPipeline(const ivec2 &frameSize);
 
@@ -26,6 +30,10 @@ namespace ogele {
         inline Camera *GetFrameCamera() const noexcept { return m_cam; }
 
         inline void SetFrameCamera(Camera *cam) noexcept { m_cam = cam; }
+
+        inline const vec3 &GetSunDir() const noexcept { return m_sunDir; }
+
+        inline void SetSunDir(const vec3 &sunDir) noexcept { m_sunDir = sunDir; }
 
         void Resize(const ivec2 &size);
 

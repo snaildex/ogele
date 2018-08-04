@@ -16,7 +16,7 @@ layout(location = 3) out vec4 Emission;
 void main()
 {
 vec3 norm=normalize(WNorm);
-vec3 col=mix(DirtColor,GrassColor,smoothstep(0.6,0.8,norm.y));
+vec3 col=mix(DirtColor,GrassColor,smoothstep(0.8,0.9,norm.y));
 col=mix(SandColor,col,smoothstep(1,2,WPosDepth.y));
 AlbedoRough=vec4(col,0.9);
 PosDepth=WPosDepth;

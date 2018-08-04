@@ -18,6 +18,7 @@
 #include <list>
 #include <map>
 #include <experimental/filesystem>
+#define _USE_MATH_DEFINES
 #include <math.h>
 #include <functional>
 #include <chrono>
@@ -33,6 +34,7 @@
 #include "glm/gtx/quaternion.hpp"
 #include "glm/gtx/string_cast.hpp"
 #include "glm/gtx/projection.hpp"
+#include "glm/gtx/wrap.hpp"
 #include "glm/gtc/type_ptr.hpp"
 #include "tinyxml2/tinyxml2.h"
 #include "jzon/Jzon.h"
