@@ -23,6 +23,7 @@ namespace ogele {
         static Application *m_instance;
         unique_ptr<ResourceContainer> m_res;
         ivec2 m_screenSize;
+        chrono::high_resolution_clock::time_point m_startTimePoint;
         chrono::high_resolution_clock::time_point m_lastFrameTimePoint;
         double m_timeDelta, m_time;
 

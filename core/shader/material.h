@@ -69,7 +69,12 @@ namespace ogele {
 
             UniformTexture(TextureBase *val) { m_value = val; }
 
-            void GUI(const string &name) override { PropertyGUI<TextureBase *>(name, &m_value); }
+            void GUI(const string &name) override {
+                ImGui::Text(name.c_str());
+                ImGui::SameLine();
+                ImGui::Image(reinterpret_cast<ImTextureID >(m_value->GetHandle()),{32,32});
+                ImGui::NewLine();
+            }
 
             void TryCopyFrom(UniformBase *other) override {
                 UniformTexture *cother = dynamic_cast<UniformTexture *>(other);
@@ -95,7 +100,9 @@ namespace ogele {
 
             UniformBuffer(BufferBase *val) { m_value = val; }
 
-            void GUI(const string &name) override { PropertyGUI<BufferBase *>(name, &m_value); }
+            void GUI(const string &name) override {
+                ImGui::LabelText(name.c_str(),typeid(m_value).name());
+            }
 
             void TryCopyFrom(UniformBase *other) override {
                 UniformBuffer *cother = dynamic_cast<UniformBuffer *>(other);
@@ -104,7 +111,7 @@ namespace ogele {
             }
         };
 
-        mutable map <string, unique_ptr<UniformBase>> m_data;
+        mutable map<string, unique_ptr<UniformBase>> m_data;
     public:
         void AddUniform(const string &name, UniformType type);
 

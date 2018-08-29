@@ -45,7 +45,6 @@ void main()
     coord[faceY.x]=faceY.y+faceY.z*2*uv.y;
     coord[depth.x]=depth.y;
     coord=normalize(coord);
-    vec3 color = atmosphere(coord,vec3(0,0,0),sunDir);
-    //color = 1.0 - exp(-1.0 * color);
+    vec3 color = atmosphere(coord,vec3(0,0,0),sunDir,vec3(0),1e8,1);
     imageStore(Skybox, ivec3(gl_GlobalInvocationID.xyz), vec4(color,1));
 }

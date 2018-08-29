@@ -43,7 +43,7 @@ namespace ogele {
     string ReadFile(const string &path) {
         ifstream srcFile(path);
         if (!srcFile.is_open())
-            cout << "\n[ShaderLoader] Failed to include "<<path;
+            cerr << "\n[ShaderLoader] Failed to open "<<path<<'\n';
         stringstream buffer;
         buffer << srcFile.rdbuf();
         return buffer.str();

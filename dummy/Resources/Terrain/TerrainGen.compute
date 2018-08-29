@@ -43,9 +43,9 @@ float snoise(vec2 v)
 
 void main()
 {
-	float val=0, scale=1, power=10;
+	float val=0, scale=0.3, power=30;
 	vec2 pos = vec2(gl_GlobalInvocationID.xz) / 100;
-	for(int i=0; i<6; i++)
+	for(int i=0; i<8; i++)
 	{
 	    val+=snoise(pos*scale) * power;
 	    scale*=2;

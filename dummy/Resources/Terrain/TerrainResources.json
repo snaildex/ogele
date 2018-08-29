@@ -7,6 +7,8 @@
     ],
     "stages": {
       "vertex": "TerrainDraw.vert",
+      "tessEvaluation": "TerrainTessEval.glsl",
+      "tessControl": "TerrainTessControl.glsl",
       "fragment": "TerrainDraw.frag"
     }
   },

@@ -40,4 +40,8 @@ namespace ogele {
         GLErr();
     }
 
+    void SetPolygonMode(PolygonFace face, PolygonMode mode) {
+        glPolygonMode(static_cast<GLenum>(face), static_cast<GLenum>(mode));
+        GLErr();
+    }
 }

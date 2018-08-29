@@ -17,7 +17,7 @@ layout(location = 0) out vec3 Result;
 #include "includes/DataTypes.glsl"
 #include "includes/PBRCore.glsl"
 #include "includes/Atmosphere.glsl"
-#include "includes/Ocean.glsl"
+#include "includes/Clouds.glsl"
 
 void main()
 {
@@ -31,8 +31,9 @@ void main()
     vec3 normal = normalize(normalMetal.xyz);
 
     sceneData scene=sceneData(
-        albedoRough.rgb,
+        (posDepth.w==1) ? vec3(0) : albedoRough.rgb,
         (posDepth.w==1) ? FarPos : posDepth.xyz,
+        NearPos,
         normal,
         view,
         albedoRough.a,
@@ -46,23 +47,9 @@ void main()
         lcol
     );
 
-    vec3 color=DirectLighting(scene,light)+AmbientLighting(scene);
-    vec3 atmo=atmosphere(-view, NearPos, sunDir);
-    if(scene.depth==1) color=atmo;
-
-    float realDepth=distance(NearPos,scene.pos);
-    vec3 waterPos;
-    if(IntersectRayPlane(NearPos,-view,waterPos)){
-        float waterDist=distance(NearPos,waterPos);
-        float waterDepth= NearPos.y > 0 ? distance(waterPos,scene.pos) : distance(NearPos,waterPos);
-        if(waterDist<realDepth || scene.depth==1){
-            color=AbsorbWater(color,waterDepth);
-            vec3 waterCol=vec3(0.03,0.06,0.18);
-            color+=waterCol*ScatterWater(waterPos,-view*min(waterDepth,5), light);
-        }
-        Result=color;
-        //Result=vec3(waterDepth);
-    }else
-    Result=(scene.depth==1) ? atmo : color;
-
+    float realDepth=scene.depth==1 ? 1e8 : distance(NearPos,scene.pos);
+    vec3 color=scene.depth==1 ? vec3(0) : DirectLighting(scene,light)+AmbientLighting(scene);
+    color=atmosphere(-view,NearPos,sunDir,color,realDepth,float(scene.depth==1));
+    color=clouds(color, NearPos,-view, sunDir,realDepth);
+    Result=color;
 }

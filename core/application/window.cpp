@@ -44,6 +44,8 @@ namespace ogele {
     }
 
     void Window::FramebufferSizeCallback(GLFWwindow *window, int width, int height) {
+        if(width==0 || height==0)
+            return;
         Window *wnd = (Window *) glfwGetWindowUserPointer(window);
         Viewport(ivec2(0, 0), ivec2(width, height));
         wnd->OnResize(ivec2(width, height));
@@ -54,6 +56,7 @@ namespace ogele {
             glfwInit();
         m_handle = glfwCreateWindow(size.x, size.y, caption.data(), NULL, NULL);
         glfwSetWindowUserPointer(m_handle, this);
+        glfwSetWindowSizeLimits(m_handle, 640, 480, GLFW_DONT_CARE, GLFW_DONT_CARE);
 
         if (firstInit) {
             MakeContextCurrent();

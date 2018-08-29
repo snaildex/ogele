@@ -32,6 +32,26 @@
     }
   },
   {
+    "type": "Shader",
+    "name": "GenClouds",
+    "tags": [
+      "Lighting"
+    ],
+    "stages": {
+      "compute": "GenerateClouds.glsl"
+    }
+  },
+  {
+    "type": "Shader",
+    "name": "GenCloudNoise",
+    "tags": [
+      "Lighting"
+    ],
+    "stages": {
+      "compute": "GenerateCloudNoise.glsl"
+    }
+  },
+  {
     "type": "Texture2D",
     "name": "BRDFLUT",
     "tags": [

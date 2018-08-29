@@ -19,6 +19,7 @@ namespace ogele {
         m_screenSize.x = mode->width;
         m_screenSize.y = mode->height;
         m_lastFrameTimePoint = chrono::high_resolution_clock::now();
+        m_startTimePoint = chrono::high_resolution_clock::now();
         CreateInternal();
 
         ImGui::CreateContext();
@@ -48,7 +49,7 @@ namespace ogele {
 
             auto ctime = chrono::high_resolution_clock::now();
             m_timeDelta = chrono::duration_cast<chrono::duration<double>>(ctime - m_lastFrameTimePoint).count();
-            m_time = chrono::duration_cast<chrono::duration<double>>(ctime.time_since_epoch()).count();
+            m_time = chrono::duration_cast<chrono::duration<double>>(ctime-m_startTimePoint).count();
             m_lastFrameTimePoint = ctime;
 
             ImGui_ImplGlfwGL3_NewFrame();

@@ -290,6 +290,16 @@ namespace ogele {
         PrimitiveRestart = GL_PRIMITIVE_RESTART,
         Blend = GL_BLEND
     };
+    enum class PolygonMode : GLenum{
+        Point=GL_POINT,
+        Line=GL_LINE,
+        Fill=GL_FILL
+    };
+    enum class PolygonFace : GLenum{
+        Front=GL_FRONT ,
+        Back=GL_BACK ,
+        FrontAndBack=GL_FRONT_AND_BACK
+    };
     enum class DepthFuncMode : GLenum {
         Less = GL_LESS,
         Equal = GL_EQUAL,

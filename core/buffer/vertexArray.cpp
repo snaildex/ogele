@@ -13,6 +13,9 @@ namespace ogele {
     VertexArray::VertexArray(Topology topology) {
         m_topology = topology;
         m_indexed = false;
+        m_patchVerticies=1;
+        m_defOuterTess=vec4(1);
+        m_defInnerTess=vec2(1);
         glGenVertexArrays(1, &m_handle);
         GLErr();
     }
@@ -53,6 +56,14 @@ namespace ogele {
     }
 
     void VertexArray::bDraw(int first, int count) const {
+        if (m_topology == Topology::Patches) {
+            glPatchParameteri(GL_PATCH_VERTICES, m_patchVerticies);
+            GLErr();
+            glPatchParameterfv(GL_PATCH_DEFAULT_OUTER_LEVEL, value_ptr(m_defOuterTess));
+            GLErr();
+            glPatchParameterfv(GL_PATCH_DEFAULT_INNER_LEVEL, value_ptr(m_defInnerTess));
+            GLErr();
+        }
         if (m_indexed) {
             glDrawElements(static_cast<GLenum>(m_topology), count, GL_UNSIGNED_INT,
                            (void *) (sizeof(unsigned int) * first));
@@ -65,6 +76,14 @@ namespace ogele {
     }
 
     void VertexArray::bDraw(int first, int count, int instanceCount) const {
+        if (m_topology == Topology::Patches) {
+            glPatchParameteri(GL_PATCH_VERTICES, m_patchVerticies);
+            GLErr();
+            glPatchParameterfv(GL_PATCH_DEFAULT_OUTER_LEVEL, value_ptr(m_defOuterTess));
+            GLErr();
+            glPatchParameterfv(GL_PATCH_DEFAULT_INNER_LEVEL, value_ptr(m_defInnerTess));
+            GLErr();
+        }
         if (m_indexed) {
             glDrawElementsInstanced(static_cast<GLenum>(m_topology), count, GL_UNSIGNED_INT,
                                     (void *) (sizeof(unsigned int) * first), instanceCount);
