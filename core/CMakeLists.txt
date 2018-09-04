@@ -1,0 +1,20 @@
+cmake_minimum_required(VERSION 3.9)
+project(core)
+
+set(CMAKE_CXX_STANDARD 17)
+
+file(GLOB_RECURSE CORE_SOURCE source/*)
+
+add_library(core STATIC ${CORE_SOURCE})
+
+target_include_directories (core PUBLIC source)
+		
+find_package(OpenGL REQUIRED)
+target_include_directories(core PRIVATE ${OPENGL_INCLUDE_DIRS})
+target_link_libraries(core ${OPENGL_gl_LIBRARY})
+
+target_include_directories(core PUBLIC 3d_party/include)
+find_library(GLFW_LIB NAMES libglfw3 HINTS 3d_party/lib)
+target_link_libraries(core ${GLFW_LIB})
+find_library(GLEW_LIB NAMES libglew32 HINTS 3d_party/lib)
+target_link_libraries(core ${GLEW_LIB})
