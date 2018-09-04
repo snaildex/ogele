@@ -1,3 +1,0 @@
-"E:\Program Files\JetBrains\CLion 2018.2\bin\cmake\win\bin\cmake.exe" -E remove -f CMakeFiles\ogele.dir/objects.a
-E:\PROGRA~2\MINGW-~1\X86_64~1.0-W\mingw64\bin\ar.exe cr CMakeFiles\ogele.dir/objects.a @CMakeFiles\ogele.dir\objects1.rsp
-E:\PROGRA~2\MINGW-~1\X86_64~1.0-W\mingw64\bin\G__~1.EXE -g   -Wl,--whole-archive CMakeFiles\ogele.dir/objects.a -Wl,--no-whole-archive  -o ..\dummy\ogele.exe -Wl,--out-implib,libogele.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\ogele.dir\linklibs.rsp

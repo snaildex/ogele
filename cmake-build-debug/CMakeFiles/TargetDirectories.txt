@@ -1,3 +1,0 @@
-E:/CLionProjects/ogele/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-E:/CLionProjects/ogele/cmake-build-debug/CMakeFiles/ogele.dir
-E:/CLionProjects/ogele/cmake-build-debug/CMakeFiles/edit_cache.dir
