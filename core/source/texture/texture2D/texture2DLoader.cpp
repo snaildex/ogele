@@ -3,7 +3,7 @@
 //
 
 #define STB_IMAGE_IMPLEMENTATION
-#include "../../other/stb_image.h"
+#include <other/stb_image.h>
 #include <ogele.h>
 using namespace std;
 using namespace glm;

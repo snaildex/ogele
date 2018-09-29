@@ -8,5 +8,6 @@ file(GLOB_RECURSE DUMMY_SOURCE source/*)
 
 add_executable(dummy ${DUMMY_SOURCE})
 
-message("core lib:" core)
 target_link_libraries(dummy core)
+
+set_target_properties(dummy PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/resources")

@@ -3,7 +3,6 @@
 //
 
 #include <ogele.h>
-#include "clouds.h"
 
 namespace ogele {
 

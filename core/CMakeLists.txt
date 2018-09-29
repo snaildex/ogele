@@ -3,11 +3,11 @@ project(core)
 
 set(CMAKE_CXX_STANDARD 17)
 
-file(GLOB_RECURSE CORE_SOURCE source/*)
+file(GLOB_RECURSE CORE_SOURCE source/* include/*)
 
 add_library(core STATIC ${CORE_SOURCE})
 
-target_include_directories (core PUBLIC source)
+target_include_directories (core PUBLIC include)
 		
 find_package(OpenGL REQUIRED)
 target_include_directories(core PRIVATE ${OPENGL_INCLUDE_DIRS})

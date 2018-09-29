@@ -26,7 +26,7 @@ THE SOFTWARE.
 #	endif
 #endif
 
-#include "Jzon.h"
+#include <jzon/Jzon.h>
 
 #include <sstream>
 #include <fstream>

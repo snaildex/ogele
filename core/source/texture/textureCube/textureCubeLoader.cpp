@@ -2,7 +2,7 @@
 // Created by ??????? on 21.07.2018.
 //
 
-#include "../../other/stb_image.h"
+#include <other/stb_image.h>
 #include <ogele.h>
 
 using namespace std;

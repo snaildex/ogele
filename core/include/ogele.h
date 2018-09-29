@@ -36,7 +36,6 @@
 #include <glm/gtx/projection.hpp>
 #include <glm/gtx/wrap.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include <tinyxml2/tinyxml2.h>
 #include <jzon/Jzon.h>
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_glfw_gl3.h>
