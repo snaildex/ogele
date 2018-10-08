@@ -72,13 +72,14 @@ float MarchLight(vec3 pos, vec3 light, float rand)
         }
         return BeerPowder(depth);
 }
-
-vec3 clouds(vec3 albedo, vec3 pos, vec3 dir, vec3 sunDir, float sceneDepth){
+//TODO: Fix night clouds
+vec4 clouds(vec3 pos, vec3 dir, vec3 sunDir){
     int samples = int(mix(SampleCount1, SampleCount0, dir.y));
     float dist0 = Altitude0 / dir.y;
     float dist1 = Altitude1 / dir.y;
     float stride = (dist1 - dist0) / samples;
-    if (dir.y < 0.01 || dist0 >= FarDist || dist0>=sceneDepth) return albedo;
+    //if (dir.y < 0.01 || dist0 >= FarDist || dist0>=sceneDepth) return vec4(0);
+    if (dir.y < 0.01 || dist0 >= FarDist) return vec4(0,0,0,1);
     float hg = HenyeyGreenstein(dot(dir, sunDir));
     vec2 uv = gl_FragCoord.xy*1000 + vec2(Time);
     float offs = UVRandom(uv) * (dist1 - dist0) / samples;
@@ -98,7 +99,9 @@ vec3 clouds(vec3 albedo, vec3 pos, vec3 dir, vec3 sunDir, float sceneDepth){
         }
         cpos += dir * stride;
     }
-    acc += albedo*Beer(depth);
-    //return vec3(depth/1000);
-    return  mix(acc, albedo, clamp(dist0 / FarDist,0,1));
+	vec4 result=vec4(acc,Beer(depth));
+	float distFactor=clamp(dist0 / FarDist,0,1);
+    //acc += albedo*Beer(depth);
+    //return  mix(acc, albedo, clamp(dist0 / FarDist,0,1));
+	return mix(result,vec4(0,0,0,1),distFactor);
 }

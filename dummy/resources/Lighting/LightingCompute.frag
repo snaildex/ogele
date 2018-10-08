@@ -9,6 +9,7 @@ uniform sampler2D AlbedoRough;
 uniform sampler2D PosDepth;
 uniform sampler2D NormalMetal;
 uniform sampler2D Emission;
+uniform sampler2D Clouds;
 uniform vec3 sunDir;
 
 layout(location = 0) out vec3 Result;
@@ -17,7 +18,6 @@ layout(location = 0) out vec3 Result;
 #include "includes/DataTypes.glsl"
 #include "includes/PBRCore.glsl"
 #include "includes/Atmosphere.glsl"
-#include "includes/Clouds.glsl"
 
 void main()
 {
@@ -46,10 +46,19 @@ void main()
         sunDir,
         lcol
     );
-
+	
+	vec2 cloudPixelDelta=1.5*vec2(1)/textureSize(Clouds,0);
+	vec4 cloud=textureLod(Clouds,UV,0);
+	cloud+=textureLod(Clouds,UV+vec2(cloudPixelDelta.x,0),0);
+	cloud+=textureLod(Clouds,UV-vec2(cloudPixelDelta.x,0),0);
+	cloud+=textureLod(Clouds,UV+vec2(0,cloudPixelDelta.y),0);
+	cloud+=textureLod(Clouds,UV-vec2(0,cloudPixelDelta.y),0);
+	cloud/=5;
+	
     float realDepth=scene.depth==1 ? 1e8 : distance(NearPos,scene.pos);
     vec3 color=scene.depth==1 ? vec3(0) : DirectLighting(scene,light)+AmbientLighting(scene);
+	color+=emission.rgb;
     color=atmosphere(-view,NearPos,sunDir,color,realDepth,float(scene.depth==1));
-    color=clouds(color, NearPos,-view, sunDir,realDepth);
-    Result=color;
+    if(scene.depth==1) color=color*cloud.a+cloud.rgb;
+	Result=color;
 }

@@ -1,6 +1,7 @@
 #version 430 core
 
-layout(quads, fractional_odd_spacing, ccw) in;
+layout(quads, fractional_even_spacing, ccw) in;
+//layout(quads, equal_spacing, ccw) in;
 
 out vec2 WUV;
 out vec4 WPosDepth;
@@ -16,9 +17,10 @@ layout(std430) buffer Offsets
 };
 
 void main(){
-        float u = gl_TessCoord.x;
+		float u = gl_TessCoord.x;
         float v = gl_TessCoord.y;
-        vec4 a = mix(gl_in[1].gl_Position, gl_in[0].gl_Position, u);
+        
+		vec4 a = mix(gl_in[1].gl_Position, gl_in[0].gl_Position, u);
         vec4 b = mix(gl_in[2].gl_Position, gl_in[3].gl_Position, u);
         vec4 position = mix(a, b, v);
 

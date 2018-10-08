@@ -64,8 +64,9 @@ namespace ogele {
         vec2 camindex = {campos.x, campos.z};
         m_terrainDraw->Bind();
         m_terrainDraw->Set("VP", cam->GetViewProjMatrix());
-        m_terrainDraw->Set("CamPos", cam->GetLocalPos());
-        m_mat->Apply(m_terrainDraw);
+		m_terrainDraw->Set("CamPos", cam->GetLocalPos());
+		//m_terrainDraw->Set("CamPos", vec3(0,cam->GetLocalPos().y,0));
+		m_mat->Apply(m_terrainDraw);
         m_currentChunks.clear();
         for (int x = 0; x < m_size.x / step; x++)
             for (int y = 0; y < m_size.y / step; y++)

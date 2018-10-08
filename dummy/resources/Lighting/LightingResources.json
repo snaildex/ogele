@@ -12,6 +12,17 @@
   },
   {
     "type": "Shader",
+    "name": "RenderClouds",
+    "tags": [
+      "Lighting"
+    ],
+    "stages": {
+      "vertex": "CloudsRender.vert",
+      "fragment": "CloudsRender.frag"
+    }
+  },
+  {
+    "type": "Shader",
     "name": "Tonemapping",
     "tags": [
       "Lighting"

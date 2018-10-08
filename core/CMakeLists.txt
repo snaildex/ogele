@@ -4,6 +4,7 @@ project(core)
 set(CMAKE_CXX_STANDARD 17)
 
 file(GLOB_RECURSE CORE_SOURCE source/* include/*)
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX "Sources" FILES ${CORE_SOURCE})
 
 add_library(core STATIC ${CORE_SOURCE})
 
@@ -18,3 +19,5 @@ find_library(GLFW_LIB NAMES libglfw3 HINTS 3d_party/lib)
 target_link_libraries(core ${GLFW_LIB})
 find_library(GLEW_LIB NAMES libglew32 HINTS 3d_party/lib)
 target_link_libraries(core ${GLEW_LIB})
+
+set_target_properties(core PROPERTIES VS_GLOBAL_ROOTNAMESPACE "ogele")

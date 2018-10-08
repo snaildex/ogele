@@ -18,6 +18,7 @@ namespace ogele {
         Texture2D *m_brdflut;
         unique_ptr<TextureCube> m_skybox;
         unique_ptr<Clouds> m_clouds;
+		ivec2 m_frameSize;
 
         vec3 m_sunDir;
 

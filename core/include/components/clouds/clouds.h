@@ -13,19 +13,24 @@ namespace ogele {
         unique_ptr<Texture3D> m_density;
         unique_ptr<Texture3D> m_noise;
         unique_ptr<Material> m_material;
-        ShaderProgram* m_cloudsGen;
-        ShaderProgram* m_cloudNoiseGen;
+		swapchain<RenderTarget> m_buffer;
+		ShaderProgram* m_cloudsGen;
+		ShaderProgram* m_cloudNoiseGen;
+		ShaderProgram* m_render;
+		ScreenQuadMesh *m_screenQuad;
+		trmat4 m_prevVP;
 
     public:
 
-        Clouds(const ivec3 &resolution);
+        Clouds(const ivec3 &resolution, const ivec2& frameSize);
 
         inline const ivec3 &GetResolution() const noexcept { return m_resolution; }
-
-        inline Material* GetMaterial() const noexcept { return m_material.get(); }
+		inline Material* GetMaterial() const noexcept { return m_material.get(); }
+		inline RenderTarget* GetFrame() const noexcept { return m_buffer.get(); }
+		void SetFrameSize(const ivec2& size);
 
         void Generate();
-
+		void Render(const Camera* cam, const vec3& sunDir);
     };
 }
 #endif //OGELE_CLOUDS_H
