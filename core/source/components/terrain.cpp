@@ -1,14 +1,12 @@
-//
-// Created by ??????? on 22.07.2018.
-//
-
-#include <ogele.h>
+#include <components/terrain.h>
+#include <application/application.h>
+#include <other/glstatic.h>
 
 using namespace std;
 using namespace glm;
-namespace fs = std::experimental::filesystem;
 
 namespace ogele {
+
 
     Terrain::Terrain(const ivec2 &size, int chunkSize) {
         m_mat=make_unique<Material>();
@@ -60,17 +58,16 @@ namespace ogele {
 
     void Terrain::Draw(Camera *cam) const {
         int step = std::pow(2, m_lods);
-        vec3 campos = (cam->GetLocalPos() - m_offset) / (float) (m_chunkSize * step);
-        vec2 camindex = {campos.x, campos.z};
+        dvec3 campos = (cam->GetLocalPos() - m_offset) / (double) (m_chunkSize * step);
+        dvec2 camindex = {campos.x, campos.z};
         m_terrainDraw->Bind();
         m_terrainDraw->Set("VP", cam->GetViewProjMatrix());
 		m_terrainDraw->Set("CamPos", cam->GetLocalPos());
-		//m_terrainDraw->Set("CamPos", vec3(0,cam->GetLocalPos().y,0));
 		m_mat->Apply(m_terrainDraw);
         m_currentChunks.clear();
         for (int x = 0; x < m_size.x / step; x++)
             for (int y = 0; y < m_size.y / step; y++)
-                if (glm::distance(vec2(x, y), camindex) < m_drawRange)
+                if (glm::distance(dvec2(x, y), camindex) < m_drawRange)
                     m_currentChunks.push_back(ivec2(x, y) * (m_chunkSize * step));
         m_offsets->Bind();
         m_offsets->bSetData(m_currentChunks.data(), 0, m_currentChunks.size());

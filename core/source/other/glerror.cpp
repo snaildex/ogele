@@ -1,12 +1,6 @@
-//
-// Created by ??????? on 18.07.2018.
-//
-
-#include <ogele.h>
+#include <other/glerror.h>
 
 using namespace std;
-using namespace glm;
-namespace fs = std::experimental::filesystem;
 
 namespace ogele {
     GLError::GLError(GLenum code) noexcept : std::runtime_error("OpenGL runtime error") {

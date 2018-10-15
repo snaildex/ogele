@@ -1,18 +1,24 @@
-//
-// Created by ??????? on 22.07.2018.
-//
+#pragma once
 
-#ifndef OGELE_RENDERTARGET_H
-#define OGELE_RENDERTARGET_H
+#include <memory>
+#include <vector>
+
+#include <GL/glew.h>
+#include <glm/glm.hpp>
+
+#include "../other/enums.h"
+#include "../texture/texture2D/texture2D.h"
+#include "framebuffer.h"
+
 namespace ogele {
 
     class RenderTarget {
-        unique_ptr<Framebuffer> m_frameBuf;
-        vector<unique_ptr<Texture2D>> m_colorBufs;
-        unique_ptr<Renderbuffer> m_depthBuffer;
-        unique_ptr<Renderbuffer> m_stencilBuffer;
+        std::unique_ptr<Framebuffer> m_frameBuf;
+        std::vector<std::unique_ptr<Texture2D>> m_colorBufs;
+        std::unique_ptr<Renderbuffer> m_depthBuffer;
+        std::unique_ptr<Renderbuffer> m_stencilBuffer;
     public:
-        RenderTarget(const ivec2 &size, int colorBufNum, TextureFormat format, bool mipmaps = false,
+        RenderTarget(const glm::ivec2 &size, int colorBufNum, TextureFormat format, bool mipmaps = false,
                      bool depthBuffer = false, bool stencilBuffer = false);
 
         inline Texture2D *operator[](int num) { return m_colorBufs[num].get(); }
@@ -28,4 +34,3 @@ namespace ogele {
         inline void Unbind() const { m_frameBuf->Unbind(); }
     };
 }
-#endif //OGELE_RENDERTARGET_H

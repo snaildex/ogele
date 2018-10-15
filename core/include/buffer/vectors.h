@@ -1,11 +1,9 @@
-//
-// Created by ??????? on 18.07.2018.
-//
-
-#ifndef OGELE_VECTORS_H
-#define OGELE_VECTORS_H
+#pragma once
+#include <glm/glm.hpp>
 
 namespace ogele {
+
+	using namespace glm;
 
     typedef tvec2<char, lowp> lowp_cvec2;
     typedef tvec3<char, lowp> lowp_cvec3;
@@ -100,4 +98,3 @@ namespace ogele {
 #endif//GLM_PRECISION
 
 }
-#endif //OGELE_VECTORS_H

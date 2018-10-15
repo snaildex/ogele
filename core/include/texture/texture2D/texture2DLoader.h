@@ -1,9 +1,9 @@
-//
-// Created by ??????? on 21.07.2018.
-//
+#pragma once
 
-#ifndef OGELE_TEXTURE2DLOADER_H
-#define OGELE_TEXTURE2DLOADER_H
+#include <jzon/Jzon.h>
+
+#include "../../object/resource.h"
+
 namespace ogele {
     class Texture2DLoader : public ResourceLoader {
 
@@ -13,4 +13,3 @@ namespace ogele {
 
     };
 }
-#endif //OGELE_TEXTURE2DLOADER_H

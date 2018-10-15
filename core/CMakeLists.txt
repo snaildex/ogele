@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.9)
 project(core)
 
-set(CMAKE_CXX_STANDARD 17)
-
 file(GLOB_RECURSE CORE_SOURCE source/* include/*)
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX "Sources" FILES ${CORE_SOURCE})
 

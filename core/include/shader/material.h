@@ -1,9 +1,20 @@
-//
-// Created by ??????? on 22.07.2018.
-//
+#pragma once
 
-#ifndef OGELE_MATERIAL_H
-#define OGELE_MATERIAL_H
+#include <string>
+#include <map>
+
+#include <imgui/imgui.h>
+#include <glm/glm.hpp>
+#include <glm/gtx/string_cast.hpp>
+
+#include "../texture/textureBase.h"
+#include "../helpers/guiHelper.h"
+#include "../shader/shaderProgram.h"
+#include "shaderProgram.h"
+
+using namespace glm;
+using namespace std;
+
 namespace ogele {
 
     class Material : Resource {
@@ -12,41 +23,41 @@ namespace ogele {
             UniformBase() = default;
 
         public:
-            virtual void Apply(const string &name, ShaderProgram *sh) const = 0;
+            virtual void Apply(const std::string &name, ShaderProgram *sh) const = 0;
 
-            virtual string GetTypeName() const noexcept = 0;
+            virtual std::string GetTypeName() const noexcept = 0;
 
-            virtual string PrintValue() const noexcept = 0;
+            virtual std::string PrintValue() const noexcept = 0;
 
-            virtual void GUI(const string &name) = 0;
+            virtual void GUI(const std::string &name) = 0;
 
             virtual ~UniformBase() = default;
 
             virtual void TryCopyFrom(UniformBase *other) = 0;
         };
 
-        template<typename T>
+        template<typename valueType>
         class UniformValue : public UniformBase {
-            T m_value;
+			valueType m_value;
         public:
-            inline const T &GetValue() const noexcept { return m_value; }
+            inline const valueType &GetValue() const noexcept { return m_value; }
 
-            inline void SetValue(const T &value) noexcept { m_value = value; }
+            inline void SetValue(const valueType &value) noexcept { m_value = value; }
 
-            void Apply(const string &name, ShaderProgram *sh) const override { sh->Set(name, m_value); }
+            void Apply(const std::string &name, ShaderProgram *sh) const override { sh->Set(name, m_value); }
 
-            string GetTypeName() const noexcept override { return typeid(T).name(); };
+            std::string GetTypeName() const noexcept override { return typeid(valueType).name(); };
 
-            string PrintValue() const noexcept override { return to_string(m_value); };
+            std::string PrintValue() const noexcept override { return to_string(m_value); };
 
             UniformValue() = default;
 
-            UniformValue(const T &val) { m_value = val; }
+            UniformValue(const valueType &val) { m_value = val; }
 
-            void GUI(const string &name) override { PropertyGUI<T>(name, &m_value); }
+            void GUI(const std::string &name) override { PropertyGUI<valueType>(name, &m_value); }
 
             void TryCopyFrom(UniformBase *other) override {
-                UniformValue<T> *cother = dynamic_cast<UniformValue<T> *>(other);
+                UniformValue<valueType> *cother = dynamic_cast<UniformValue<valueType> *>(other);
                 if (cother)
                     m_value = cother->m_value;
             }
@@ -59,17 +70,17 @@ namespace ogele {
 
             inline void SetValue(TextureBase *value) noexcept { m_value = value; }
 
-            void Apply(const string &name, ShaderProgram *sh) const override { sh->SetTexture(name, m_value); }
+            void Apply(const std::string &name, ShaderProgram *sh) const override { sh->SetTexture(name, m_value); }
 
-            string GetTypeName() const noexcept override { return typeid(m_value).name(); };
+            std::string GetTypeName() const noexcept override { return typeid(m_value).name(); };
 
-            string PrintValue() const noexcept override { return m_value->GetName(); };
+            std::string PrintValue() const noexcept override { return m_value->GetName(); };
 
             UniformTexture() = default;
 
             UniformTexture(TextureBase *val) { m_value = val; }
 
-            void GUI(const string &name) override {
+            void GUI(const std::string &name) override {
                 ImGui::Text(name.c_str());
                 ImGui::SameLine();
                 ImGui::Image(reinterpret_cast<ImTextureID >(m_value->GetHandle()),{32,32});
@@ -90,17 +101,17 @@ namespace ogele {
 
             inline void SetValue(BufferBase *value) noexcept { m_value = value; }
 
-            void Apply(const string &name, ShaderProgram *sh) const override { sh->SetBuffer(name, m_value); }
+            void Apply(const std::string &name, ShaderProgram *sh) const override { sh->SetBuffer(name, m_value); }
 
-            string GetTypeName() const noexcept override { return typeid(m_value).name(); };
+            std::string GetTypeName() const noexcept override { return typeid(m_value).name(); };
 
-            string PrintValue() const noexcept override { return "Buffer"; };
+            std::string PrintValue() const noexcept override { return "Buffer"; };
 
             UniformBuffer() = default;
 
             UniformBuffer(BufferBase *val) { m_value = val; }
 
-            void GUI(const string &name) override {
+            void GUI(const std::string &name) override {
                 ImGui::LabelText(name.c_str(),typeid(m_value).name());
             }
 
@@ -111,32 +122,32 @@ namespace ogele {
             }
         };
 
-        mutable map<string, unique_ptr<UniformBase>> m_data;
+        mutable std::map<std::string, std::unique_ptr<UniformBase>> m_data;
     public:
-        void AddUniform(const string &name, UniformType type);
+        void AddUniform(const std::string &name, UniformType type);
 
-        template<typename T>
-        inline void Set(const string &name, const T &value) noexcept {
+		template<typename T>
+		inline void Set(const std::string &name, const T &value) noexcept {
             m_data[name] = unique_ptr<UniformBase>(new UniformValue<T>(value));
         }
 
         template<typename T>
         inline T
-        Get(const string &name) const { return dynamic_cast<UniformValue<T> *>(m_data[name].get())->GetValue(); }
+        Get(const std::string &name) const { return dynamic_cast<UniformValue<T> *>(m_data[name].get())->GetValue(); }
 
-        inline void SetTexture(const string &name, TextureBase *value) noexcept {
-            m_data[name] = unique_ptr<UniformBase>(new UniformTexture(value));
+        inline void SetTexture(const std::string &name, TextureBase *value) noexcept {
+            m_data[name] = std::unique_ptr<UniformBase>(new UniformTexture(value));
         }
 
         inline TextureBase *
-        GetTexture(const string &name) const { return dynamic_cast<UniformTexture *>(m_data[name].get())->GetValue(); }
+        GetTexture(const std::string &name) const { return dynamic_cast<UniformTexture *>(m_data[name].get())->GetValue(); }
 
-        inline void SetBuffer(const string &name, BufferBase *value) noexcept {
-            m_data[name] = unique_ptr<UniformBase>(new UniformBuffer(value));
+        inline void SetBuffer(const std::string &name, BufferBase *value) noexcept {
+            m_data[name] = std::unique_ptr<UniformBase>(new UniformBuffer(value));
         }
 
         inline BufferBase *
-        GetBuffer(const string &name) const { return dynamic_cast<UniformBuffer *>(m_data[name].get())->GetValue(); }
+        GetBuffer(const std::string &name) const { return dynamic_cast<UniformBuffer *>(m_data[name].get())->GetValue(); }
 
         void Apply(ShaderProgram *sh);
 
@@ -146,4 +157,3 @@ namespace ogele {
     };
 
 }
-#endif //OGELE_MATERIAL_H

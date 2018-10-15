@@ -1,12 +1,9 @@
-//
-// Created by ??????? on 18.07.2018.
-//
-
-#include <ogele.h>
+#include <application/window.h>
+#include <other/enums.h>
+#include <other/glstatic.h>
 
 using namespace std;
 using namespace glm;
-namespace fs = std::experimental::filesystem;
 
 namespace ogele {
 

@@ -1,4 +1,5 @@
 #include <ogele.h>
+#include <iostream>
 
 using namespace ogele;
 
@@ -12,7 +13,7 @@ class RunnerApp : public Application {
 	unique_ptr<DeferredPBRPipeline> m_pipeline;
 	unique_ptr<GPUStopwatch<100>> m_fpsCounter;
 
-	float m_sunRot;
+	double m_sunRot;
 	bool m_wireframe;
 
 	void OnResize(const ivec2 &size) override {
@@ -25,7 +26,7 @@ class RunnerApp : public Application {
 		cam->LookAround(delta, 0.4 * GetTimeDelta(), -1.5, 1.5);
 	}
 
-	void OnScroll(const glm::dvec2 &offset) override {
+	void OnScroll(const dvec2 &offset) override {
 		m_sunRot = clamp((m_sunRot + offset.y*0.1) / (2 * M_PI)) * 2 * M_PI;
 	}
 
@@ -44,14 +45,14 @@ class RunnerApp : public Application {
 
 	void Update() override {
 		m_fpsCounter->Start();
-		vec3 delta;
-		if (GetKey(Key::W)) delta += normalize(ProjectOnPlane(cam->Forward(), vec3(0, 1, 0)));
-		if (GetKey(Key::A)) delta -= normalize(ProjectOnPlane(cam->Right(), vec3(0, 1, 0)));
-		if (GetKey(Key::S)) delta -= normalize(ProjectOnPlane(cam->Forward(), vec3(0, 1, 0)));
-		if (GetKey(Key::D)) delta += normalize(ProjectOnPlane(cam->Right(), vec3(0, 1, 0)));
-		if (GetKey(Key::Space)) delta += vec3(0, 1, 0);
-		if (GetKey(Key::LShift)) delta -= vec3(0, 1, 0);
-		delta *= (float)GetTimeDelta() * 20;
+		dvec3 delta;
+		if (GetKey(Key::W)) delta += normalize(ProjectOnPlane(cam->Forward(), dvec3(0, 1, 0)));
+		if (GetKey(Key::A)) delta -= normalize(ProjectOnPlane(cam->Right(), dvec3(0, 1, 0)));
+		if (GetKey(Key::S)) delta -= normalize(ProjectOnPlane(cam->Forward(), dvec3(0, 1, 0)));
+		if (GetKey(Key::D)) delta += normalize(ProjectOnPlane(cam->Right(), dvec3(0, 1, 0)));
+		if (GetKey(Key::Space)) delta += dvec3(0, 1, 0);
+		if (GetKey(Key::LShift)) delta -= dvec3(0, 1, 0);
+		delta *= (float)GetTimeDelta() * 40;
 		cam->SetLocalPos(cam->GetLocalPos() + delta);
 
 		Enable(Feature::CullFace);
@@ -60,7 +61,7 @@ class RunnerApp : public Application {
 		ClearColor({ 0.4f, 0.6f, 0.8f, 1.0f });
 		Clear(BufferBit::Color | BufferBit::Depth);
 
-		vec3 sunDir = glm::angleAxis(m_sunRot, normalize(vec3(0, 0.3, 1))) * vec3(1, 0, 0);
+		dvec3 sunDir = glm::angleAxis(m_sunRot, normalize(dvec3(0, 0.3, 1))) * dvec3(1, 0, 0);
 		m_pipeline->SetSunDir(sunDir);
 		m_pipeline->Bind();
 		Viewport({ 0, 0 }, GetResolution());
@@ -83,14 +84,13 @@ class RunnerApp : public Application {
 		ImGui::GetStyle().Colors[ImGuiCol_WindowBg] = { 0,0,0,0 };
 		ImGui::Begin("", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
 		ImGui::Text("Frame time: %3.1f ms", m_fpsCounter->GetTime() * 1000);
-		ImGui::Checkbox("Wireframe",&m_wireframe);
+		ImGui::Checkbox("Wireframe", &m_wireframe);
 		ImGui::End();
 	}
 };
 
 int main(int argc, char *argv[]) {
-	cout << std::experimental::filesystem::current_path();
-	auto app = make_unique<RunnerApp>();
+	auto app = std::make_unique<RunnerApp>();
 	app->Run();
 	return 0;
 }

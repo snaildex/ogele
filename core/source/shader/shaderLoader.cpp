@@ -1,13 +1,11 @@
-//
-// Created by ??????? on 21.07.2018.
-//
-
-#include <ogele.h>
+#include <shader/shaderLoader.h>
+#include <shader/shaderProgram.h>
 #include <regex>
+#include <fstream>
+#include <sstream>
+#include <iostream>
 
 using namespace std;
-using namespace glm;
-namespace fs = std::experimental::filesystem;
 
 namespace ogele {
     map<string, ShaderType> ShaderLoader::m_shaderTypeMap = {

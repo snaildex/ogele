@@ -1,14 +1,16 @@
-//
-// Created by ??????? on 21.07.2018.
-//
+#pragma once
 
-#ifndef OGELE_TEXTURELOADERHELPERS_H
-#define OGELE_TEXTURELOADERHELPERS_H
+#include <map>
+#include <string>
+
+#include <jzon/Jzon.h>
+
+#include "../other/enums.h"
+
 namespace ogele {
-    string ReadProperty(const Jzon::Node *reader, const string &propName, const string &defaultValue);
+    std::string ReadProperty(const Jzon::Node *reader, const std::string &propName, const std::string &defaultValue);
 
-    extern map<const string, TextureWrapMode> StrToTexWrapMode;
+    extern std::map<const std::string, TextureWrapMode> StrToTexWrapMode;
 
-    extern map<const string, TextureFilterMode> StrToTexFilterMode;
+    extern std::map<const std::string, TextureFilterMode> StrToTexFilterMode;
 }
-#endif //OGELE_TEXTURELOADERHELPERS_H

@@ -1,9 +1,18 @@
-//
-// Created by ??????? on 21.07.2018.
-//
+#pragma once
+#include <memory>
+#include <string>
 
-#ifndef OGELE_SHADERPROGRAM_H
-#define OGELE_SHADERPROGRAM_H
+#include <GL/glew.h>
+#include <glm/glm.hpp>
+
+#include "../object/resource.h"
+#include "../helpers/helpers.h"
+#include "../other/enums.h"
+#include "../other/glerror.h"
+#include "../texture/textureBase.h"
+#include "../buffer/vertexBuffer.h"
+#include "shaderStage.h"
+
 namespace ogele {
     class TextureBase;
 
@@ -66,7 +75,7 @@ namespace ogele {
         std::vector <BufferInfo> m_buffers;
         std::vector <UniformInfo> m_uniforms;
 
-        int GetUniformLocation(const string &name) const noexcept;
+        int GetUniformLocation(const std::string &name) const noexcept;
 
     public:
         ShaderProgram();
@@ -94,13 +103,13 @@ namespace ogele {
         void Link();
 
         template<typename T>
-        void Set(const string &name, const T &value);
+        void Set(const std::string &name, const T &value);
 
-        void SetTexture(const string &name, TextureBase *value);
+        void SetTexture(const std::string &name, TextureBase *value);
 
-        void SetBuffer(const string &name, BufferBase *value);
+        void SetBuffer(const std::string &name, BufferBase *value);
 
-        inline void bDispatchCompute(const ivec3 &groupNum) const {
+        inline void bDispatchCompute(const glm::ivec3 &groupNum) const {
             glDispatchCompute(groupNum.x, groupNum.y, groupNum.z);
             GLErr();
         }
@@ -110,8 +119,7 @@ namespace ogele {
         ~ShaderProgram();
     };
 
-    ShaderProgram *CreateShaderProgram(const string &vertex, const string &fragment);
+    ShaderProgram *CreateShaderProgram(const std::string &vertex, const std::string &fragment);
 
-    ShaderProgram *CreateShaderProgram(const string &compute);
+    ShaderProgram *CreateShaderProgram(const std::string &compute);
 }
-#endif //OGELE_SHADERPROGRAM_H

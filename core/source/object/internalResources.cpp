@@ -1,38 +1,37 @@
-//
-// Created by ??????? on 19.07.2018.
-//
-#include <ogele.h>
+#include <application/application.h>
+#include <shader/shaderProgram.h>
+#include <shader/shaderCompileException.h>
+#include <iostream>
 
 using namespace std;
 using namespace glm;
-namespace fs = std::experimental::filesystem;
 
 namespace ogele {
 
     const string ScreenQuadUVSource = R"(
-#version 330 core
+#version 400 core
 layout(location = 0) in vec2 vUV;
 layout(location = 1) in vec3 vNearPos;
 out vec2 UV;
 void main(){gl_Position = vec4(vNearPos.xy,0,1);UV=vUV;}
 )";
     const string DrawTexFragSource = R"(
-#version 330 core
+#version 400 core
 uniform sampler2D Tex;
 in vec2 UV;
 layout(location = 0) out vec3 Result;
 void main(){Result=texture(Tex,UV).rgb;}
 )";
     const string CoordBasisVertSource = R"(
-#version 330 core
+#version 400 core
 layout(location = 0) in vec3 vPos;
 layout(location = 1) in vec3 vCol;
 out vec3 Col;
-uniform mat4 MVP;
-void main(){gl_Position = MVP*vec4(vPos,1);Col=vCol;}
+uniform dmat4 MVP;
+void main(){gl_Position = vec4(MVP*dvec4(vPos,1));Col=vCol;}
 )";
     const string CoordBasisFragSource = R"(
-#version 330 core
+#version 400 core
 in vec3 Col;
 layout(location = 0) out vec3 Result;
 void main(){Result=Col;}

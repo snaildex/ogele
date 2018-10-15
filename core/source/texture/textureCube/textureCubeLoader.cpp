@@ -1,13 +1,14 @@
-//
-// Created by ??????? on 21.07.2018.
-//
-
+#include <texture/textureCube/textureCube.h>
+#include <texture/textureCube/textureCubeLoader.h>
+#include <texture/textureLoaderHelpers.h>
+#include <glm/glm.hpp>
+#include <buffer/vectors.h>
+#include <string>
+#include <array>
 #include <other/stb_image.h>
-#include <ogele.h>
 
 using namespace std;
 using namespace glm;
-namespace fs = std::experimental::filesystem;
 
 const array<string, 6> facesNames = {
         "right",

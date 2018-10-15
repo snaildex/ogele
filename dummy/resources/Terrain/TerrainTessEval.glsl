@@ -8,8 +8,8 @@ out vec4 WPosDepth;
 
 uniform sampler2D Heights;
 
-uniform mat4 VP;
-uniform vec3 Offset;
+uniform dmat4 VP;
+uniform dvec3 Offset;
 uniform int Step;
 layout(std430) buffer Offsets
 {
@@ -25,9 +25,9 @@ void main(){
         vec4 position = mix(a, b, v);
 
         vec2 coord=(position.xz+vec2(0.5))/textureSize(Heights,0);
-        vec3 WPos=vec3(position.x,texture(Heights,coord).r,position.z)+Offset;
-        vec4 pos=VP*vec4(WPos,1);
+        dvec3 WPos=dvec3(position.x,texture(Heights,coord).r,position.z)+Offset;
+        dvec4 pos=VP*dvec4(WPos,1);
         WPosDepth=vec4(WPos,pos.z/pos.w);
         WUV=coord;
-        gl_Position = pos;
+        gl_Position = vec4(pos);
 }

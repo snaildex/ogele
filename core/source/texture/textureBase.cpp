@@ -1,12 +1,7 @@
-//
-// Created by ??????? on 21.07.2018.
-//
-
-#include <ogele.h>
+#include <texture/textureBase.h>
 
 using namespace std;
 using namespace glm;
-namespace fs = std::experimental::filesystem;
 
 namespace ogele {
 

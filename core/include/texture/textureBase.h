@@ -1,9 +1,11 @@
-//
-// Created by ??????? on 21.07.2018.
-//
+#pragma once
 
-#ifndef OGELE_TEXTUREBASE_H
-#define OGELE_TEXTUREBASE_H
+#include <glm/glm.hpp>
+
+#include "../other/enums.h"
+#include "../other/glerror.h"
+#include "../object/resource.h"
+
 namespace ogele {
     class TextureBase : public HandleBase<GLenum>, public Resource {
         TextureType m_type;
@@ -52,9 +54,9 @@ namespace ogele {
 
         void bSetDepthStencilMode(TextureDepthStencilMode value);
 
-        vec4 bGetBorderColor() const;
+        glm::vec4 bGetBorderColor() const;
 
-        void bSetBorderColor(vec4 value);
+        void bSetBorderColor(glm::vec4 value);
 
         DepthFuncMode bGetCompareFunc() const;
 
@@ -129,4 +131,3 @@ namespace ogele {
         ~TextureBase();
     };
 }
-#endif //OGELE_TEXTUREBASE_H

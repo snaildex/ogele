@@ -1,12 +1,7 @@
-//
-// Created by ??????? on 22.07.2018.
-//
-
-#include <ogele.h>
+#include <mesh/modelMesh.h>
 
 using namespace std;
 using namespace glm;
-namespace fs = std::experimental::filesystem;
 
 namespace ogele {
     void ModelMesh::SetIndexBuffer(UnsignedIntBuffer<unsigned int> *buffer) {

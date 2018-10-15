@@ -1,36 +1,32 @@
-//
-// Created by ??????? on 22.07.2018.
-//
-
-#include <ogele.h>
+#include <helpers/math3D.h>
+#include <glm/gtx/projection.hpp>
 
 using namespace std;
 using namespace glm;
-namespace fs = std::experimental::filesystem;
 
 namespace ogele {
 
-    trquat RotationBetweenVectors(const trvec3 &from, const trvec3 &to) {
-        trscalar dt = dot(from, to);
-        trscalar rotationAngle = acos(dt);
-        trvec3 rotationAxis = normalize(cross(from, to));
+    dquat RotationBetweenVectors(const dvec3 &from, const dvec3 &to) {
+        double dt = dot(from, to);
+		double rotationAngle = acos(dt);
+        dvec3 rotationAxis = normalize(cross(from, to));
         return normalize(angleAxis(rotationAngle, rotationAxis));
     }
 
-    trscalar AngleBetween(const trvec3 &a, const trvec3 &b, const trvec3 &n) {
+	double AngleBetween(const dvec3 &a, const dvec3 &b, const dvec3 &n) {
         return atan2(dot(cross(b, a), n), dot(a, b));
     }
 
-    trquat LookAtRotation(const trvec3 &dir, const trvec3 &up) {
-        trvec3 afwd(0, 0, -1);
-        trquat yrot = angleAxis(AngleBetween(dir, afwd, up), up);
-        trvec3 fwd = normalize(yrot * afwd);
-        trvec3 rt = cross(fwd, up);
-        trquat xrot = angleAxis(AngleBetween(dir, fwd, rt), rt);
+    dquat LookAtRotation(const dvec3 &dir, const dvec3 &up) {
+        dvec3 afwd(0, 0, -1);
+        dquat yrot = angleAxis(AngleBetween(dir, afwd, up), up);
+        dvec3 fwd = normalize(yrot * afwd);
+        dvec3 rt = cross(fwd, up);
+        dquat xrot = angleAxis(AngleBetween(dir, fwd, rt), rt);
         return xrot * yrot;
     }
 
-    trvec3 ProjectOnPlane(const trvec3 &vec, const trvec3 &up) {
+    dvec3 ProjectOnPlane(const dvec3 &vec, const dvec3 &up) {
         return vec - proj(vec, up);
     }
 }

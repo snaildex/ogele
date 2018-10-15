@@ -1,9 +1,12 @@
-//
-// Created by ??????? on 21.07.2018.
-//
+#pragma once
 
-#ifndef OGELE_QUERY_H
-#define OGELE_QUERY_H
+#include <GL/glew.h>
+
+#include "query.h"
+#include "../helpers/helpers.h"
+#include "../other/enums.h"
+#include "../other/glerror.h"
+
 namespace ogele {
 
     class Query : public HandleBase<GLenum> {
@@ -45,4 +48,3 @@ namespace ogele {
         ~Query();
     };
 }
-#endif //OGELE_QUERY_H

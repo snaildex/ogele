@@ -1,12 +1,16 @@
-//
-// Created by ??????? on 21.07.2018.
-//
+#pragma once
 
-#ifndef OGELE_SHADERLOADER_H
-#define OGELE_SHADERLOADER_H
+#include <map>
+#include <string>
+
+#include <jzon/Jzon.h>
+
+#include "../object/resource.h"
+#include "../other/enums.h"
+
 namespace ogele {
     class ShaderLoader : public ResourceLoader {
-        static map<string, ShaderType> m_shaderTypeMap;
+        static std::map<std::string, ShaderType> m_shaderTypeMap;
 
     public:
 
@@ -14,4 +18,3 @@ namespace ogele {
 
     };
 }
-#endif //OGELE_SHADERLOADER_H

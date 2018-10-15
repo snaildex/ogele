@@ -1,19 +1,15 @@
-//
-// Created by ??????? on 22.07.2018.
-//
-
-#include <ogele.h>
+#include <components/transform.h>
+#include <glm/gtc/matrix_transform.hpp>
 
 using namespace std;
 using namespace glm;
-namespace fs = std::experimental::filesystem;
 
 namespace ogele {
 
-    trmat4 ones(1);
+    dmat4 ones(1);
 
     void Transform::UpdateMatrix() {
-        m_localMatrix = translate(ones, m_localPos);
+        m_localMatrix = glm::translate(ones, m_localPos);
         m_localMatrix *= toMat4(m_localRot);
         UpdateMatrixRecursive();
         OnTransformUpdate();
@@ -29,7 +25,7 @@ namespace ogele {
     Transform::Transform() {
         m_parent = nullptr;
         m_localPos = {0, 0, 0};
-        m_localRot = trquat();
+        m_localRot = dquat();
         UpdateMatrix();
     }
 

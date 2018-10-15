@@ -1,47 +1,57 @@
-//
-// Created by ??????? on 22.07.2018.
-//
+#pragma once
 
-#ifndef OGELE_DEFERREDPBRPIPELINE_H
-#define OGELE_DEFERREDPBRPIPELINE_H
+#include <memory>
+#include <array>
+
+#include <glm/glm.hpp>
+
+#include "../framebuffer/renderTarget.h"
+#include "../shader/shaderProgram.h"
+#include "../components/camera.h"
+#include "../mesh/screenQuadMesh.h"
+#include "../texture/textureCube/textureCube.h"
+#include "../components/clouds.h"
+#include "../helpers/helpers.h"
+
 namespace ogele {
 
-    class DeferredPBRPipeline {
-        unique_ptr<RenderTarget> m_GBufFBO;
-        unique_ptr<RenderTarget> m_FinalFBO;
-        array<unique_ptr<RenderTarget>,2> m_RawFBO;
-        Camera *m_cam;
-        ShaderProgram *m_lightCompute;
-        ShaderProgram *m_tonemap;
-        ShaderProgram *m_skyboxGen;
-        ScreenQuadMesh *m_screenQuad;
-        Texture2D *m_brdflut;
-        unique_ptr<TextureCube> m_skybox;
-        unique_ptr<Clouds> m_clouds;
-		ivec2 m_frameSize;
+	class DeferredPBRPipeline {
+		Entity(DeferredPBRPipeline)
+	private:
+		std::unique_ptr<RenderTarget> m_GBufFBO;
+		std::unique_ptr<RenderTarget> m_FinalFBO;
+		std::array<std::unique_ptr<RenderTarget>, 2> m_RawFBO;
+		Camera *m_cam;
+		ShaderProgram *m_lightCompute;
+		ShaderProgram *m_tonemap;
+		ShaderProgram *m_skyboxGen;
+		ScreenQuadMesh *m_screenQuad;
+		Texture2D *m_brdflut;
+		std::unique_ptr<TextureCube> m_skybox;
+		std::unique_ptr<Clouds> m_clouds;
+		glm::ivec2 m_frameSize;
+		int m_cloudsDownsample;
+		glm::dvec3 m_sunDir;
 
-        vec3 m_sunDir;
+	public:
+		DeferredPBRPipeline(const glm::ivec2 &frameSize);
 
-    public:
-        DeferredPBRPipeline(const ivec2 &frameSize);
+		inline RenderTarget *GetGBuffer() const noexcept { return m_GBufFBO.get(); }
 
-        inline RenderTarget *GetGBuffer() const noexcept { return m_GBufFBO.get(); }
+		inline RenderTarget *GetFinalBuffer() const noexcept { return m_FinalFBO.get(); }
 
-        inline RenderTarget *GetFinalBuffer() const noexcept { return m_FinalFBO.get(); }
+		inline Camera *GetFrameCamera() const noexcept { return m_cam; }
 
-        inline Camera *GetFrameCamera() const noexcept { return m_cam; }
+		inline void SetFrameCamera(Camera *cam) noexcept { m_cam = cam; }
 
-        inline void SetFrameCamera(Camera *cam) noexcept { m_cam = cam; }
+		inline const glm::dvec3 &GetSunDir() const noexcept { return m_sunDir; }
 
-        inline const vec3 &GetSunDir() const noexcept { return m_sunDir; }
+		inline void SetSunDir(const glm::dvec3 &sunDir) noexcept { m_sunDir = sunDir; }
 
-        inline void SetSunDir(const vec3 &sunDir) noexcept { m_sunDir = sunDir; }
+		void Resize(const glm::ivec2 &size);
 
-        void Resize(const ivec2 &size);
+		inline void Bind() const { m_GBufFBO->Bind(); }
 
-        inline void Bind() const { m_GBufFBO->Bind(); }
-
-        void Unbind();
-    };
+		void Unbind();
+	};
 }
-#endif //OGELE_DEFERREDPBRPIPELINE_H

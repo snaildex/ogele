@@ -1,15 +1,21 @@
-//
-// Created by ??????? on 18.07.2018.
-//
+#pragma once
+#include <memory>
+#include <chrono>
+#include <string>
 
-#ifndef OGELE_WINDOW_H
-#define OGELE_WINDOW_H
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+
+#include "../helpers/helpers.h"
+#include "../other/enums.h"
+
 namespace ogele {
     class Window : public HandleBase<GLFWwindow *> {
         Entity(Window)
 
     private:
-        dvec2 m_oldCursorPos;
+        glm::dvec2 m_oldCursorPos;
 
         static void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods);
 
@@ -59,19 +65,19 @@ namespace ogele {
             return static_cast<KeyState>(glfwGetMouseButton(m_handle, static_cast<int>(btn)));
         }
 
-        inline ivec2 GetResolution() const {
-            ivec2 res;
+        inline glm::ivec2 GetResolution() const {
+            glm::ivec2 res;
             glfwGetFramebufferSize(m_handle, &res.x, &res.y);
             return res;
         }
 
-        inline dvec2 GetCursorPos() const {
-            dvec2 res;
+        inline glm::dvec2 GetCursorPos() const {
+            glm::dvec2 res;
             glfwGetCursorPos(m_handle, &res.x, &res.y);
             return res;
         }
 
-        inline void SetCursorPos(const dvec2 &value) { glfwSetCursorPos(m_handle, value.x, value.y); }
+        inline void SetCursorPos(const glm::dvec2 &value) { glfwSetCursorPos(m_handle, value.x, value.y); }
 
         inline void LockCursor(bool value) const {
             glfwSetInputMode(m_handle, GLFW_CURSOR, value ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
@@ -80,4 +86,3 @@ namespace ogele {
         ~Window();
     };
 }
-#endif //OGELE_WINDOW_H

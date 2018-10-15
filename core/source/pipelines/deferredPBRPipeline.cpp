@@ -1,12 +1,9 @@
-//
-// Created by ??????? on 22.07.2018.
-//
-
-#include <ogele.h>
+#include <pipelines/deferredPBRPipeline.h>
+#include <application/application.h>
+#include <other/glstatic.h>
 
 using namespace std;
 using namespace glm;
-namespace fs = std::experimental::filesystem;
 
 namespace ogele {
 
@@ -33,7 +30,10 @@ namespace ogele {
 		m_skybox->bGenerateMipMap();
 		m_skybox->Unbind();
 
-		m_clouds = make_unique<Clouds>(ivec3(64, 64, 64), frameSize / 2);
+		m_cloudsDownsample = 2;
+		m_clouds = make_unique<Clouds>(128, frameSize / m_cloudsDownsample);
+		m_clouds->Generate();
+		Barrier(MemoryBarriers::ShaderImageAccess);
 	}
 
 	void DeferredPBRPipeline::Resize(const ivec2 &size) {
@@ -42,12 +42,12 @@ namespace ogele {
 		m_FinalFBO.reset(new RenderTarget(size, 1, TextureFormat::RGB8));
 		for (int i = 0; i < 2; i++)
 			m_RawFBO[i].reset(new RenderTarget(size, 1, TextureFormat::RGBA16F));
-		m_clouds->SetFrameSize(size / 2);
+		m_clouds->SetFrameSize(size / m_cloudsDownsample);
 	}
 
 	void DeferredPBRPipeline::Unbind() {
-		trmat4 VP = m_cam->GetViewProjMatrix();
-		trmat4 IVP = inverse(VP);
+		dmat4 VP = m_cam->GetViewProjMatrix();
+		dmat4 IVP = inverse(VP);
 
 		Disable(Feature::CullFace);
 		Disable(Feature::DepthTest);
@@ -55,7 +55,7 @@ namespace ogele {
 		Viewport(ivec2(0), m_frameSize);
 
 		m_skyboxGen->Bind();
-		m_skyboxGen->Set("sunDir", m_sunDir);
+		m_skyboxGen->Set("sunDir", (vec3)m_sunDir);
 		m_skyboxGen->SetTexture("Skybox", m_skybox.get());
 		m_skyboxGen->bDispatchCompute({ 16, 16, 6 });
 		m_skyboxGen->Unbind();
@@ -66,16 +66,14 @@ namespace ogele {
 		m_skybox->bGenerateMipMap();
 		m_skybox->Unbind();
 
-		m_clouds->Generate();
-		Barrier(MemoryBarriers::ShaderImageAccess);
-		Viewport(ivec2(0), m_frameSize/2);
+		Viewport(ivec2(0), m_frameSize/ m_cloudsDownsample);
 		m_clouds->Render(m_cam, m_sunDir);
 
 		Viewport(ivec2(0), m_frameSize);
 		m_RawFBO[0]->Bind();
 		m_lightCompute->Bind();
 		m_lightCompute->Set("IVP", IVP);
-		m_lightCompute->Set("sunDir", m_sunDir);
+		m_lightCompute->Set("sunDir", (vec3)m_sunDir);
 		m_lightCompute->SetTexture("AlbedoRough", (*m_GBufFBO.get())[0]);
 		m_lightCompute->SetTexture("PosDepth", (*m_GBufFBO.get())[1]);
 		m_lightCompute->SetTexture("NormalMetal", (*m_GBufFBO.get())[2]);

@@ -6,13 +6,13 @@
 #include "../../other/enums.h"
 
 namespace ogele {
-    class Texture2D : public TextureBase {
+    class Texture2DArray : public TextureBase {
         glm::ivec2 m_size;
 
         void Allocate(const glm::ivec2 &newSize);
 
     public:
-        Texture2D(const glm::ivec2 &size, bool mipmaps, TextureFormat format);
+        Texture2DArray(const glm::ivec2 &size, bool mipmaps, TextureFormat format);
 
         inline const glm::ivec2 &GetSize() const noexcept { return m_size; }
 

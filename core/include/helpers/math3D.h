@@ -1,18 +1,16 @@
-//
-// Created by ??????? on 22.07.2018.
-//
+#pragma once
 
-#ifndef OGELE_MATH3D_H
-#define OGELE_MATH3D_H
+#include <glm/glm.hpp>
+#include <glm/gtc/quaternion.hpp>
+
 namespace ogele {
 
-    trquat RotationBetweenVectors(const trvec3 &from, const trvec3 &to);
+    glm::dquat RotationBetweenVectors(const  glm::dvec3 &from, const  glm::dvec3 &to);
 
-    trscalar AngleBetween(const trvec3 &a, const trvec3 &b, const trvec3 &n);
+    double AngleBetween(const  glm::dvec3 &a, const  glm::dvec3 &b, const  glm::dvec3 &n);
 
-    trquat LookAtRotation(const trvec3 &dir, const trvec3 &up);
+	glm::dquat LookAtRotation(const  glm::dvec3 &dir, const  glm::dvec3 &up);
 
-    trvec3 ProjectOnPlane(const trvec3 &vec, const trvec3 &up);
+	glm::dvec3 ProjectOnPlane(const  glm::dvec3 &vec, const  glm::dvec3 &up);
 
 }
-#endif //OGELE_MATH3D_H

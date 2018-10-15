@@ -49,15 +49,15 @@ void main()
 	
 	vec2 cloudPixelDelta=1.5*vec2(1)/textureSize(Clouds,0);
 	vec4 cloud=textureLod(Clouds,UV,0);
-	cloud+=textureLod(Clouds,UV+vec2(cloudPixelDelta.x,0),0);
-	cloud+=textureLod(Clouds,UV-vec2(cloudPixelDelta.x,0),0);
-	cloud+=textureLod(Clouds,UV+vec2(0,cloudPixelDelta.y),0);
-	cloud+=textureLod(Clouds,UV-vec2(0,cloudPixelDelta.y),0);
-	cloud/=5;
+	cloud+=0.5*textureLod(Clouds,UV+vec2(cloudPixelDelta.x,0),0);
+	cloud+=0.5*textureLod(Clouds,UV-vec2(cloudPixelDelta.x,0),0);
+	cloud+=0.5*textureLod(Clouds,UV+vec2(0,cloudPixelDelta.y),0);
+	cloud+=0.5*textureLod(Clouds,UV-vec2(0,cloudPixelDelta.y),0);
+	cloud/=3;
 	
     float realDepth=scene.depth==1 ? 1e8 : distance(NearPos,scene.pos);
     vec3 color=scene.depth==1 ? vec3(0) : DirectLighting(scene,light)+AmbientLighting(scene);
-	color+=emission.rgb;
+	color+=scene.depth==1? vec3(0) :emission.rgb;
     color=atmosphere(-view,NearPos,sunDir,color,realDepth,float(scene.depth==1));
     if(scene.depth==1) color=color*cloud.a+cloud.rgb;
 	Result=color;

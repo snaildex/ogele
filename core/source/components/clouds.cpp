@@ -1,20 +1,20 @@
-//
-// Created by ??????? on 24.08.2018.
-//
+#include <components/clouds.h>
+#include <application/application.h>
 
-#include <ogele.h>
+using namespace std;
+using namespace glm;
 
 namespace ogele {
 
-	Clouds::Clouds(const ivec3 &resolution, const ivec2& frameSize) {
+	Clouds::Clouds(int resolution, const ivec2& frameSize) {
 		m_resolution = resolution;
-		m_density = make_unique<Texture3D>(resolution, false, TextureFormat::R16F);
+		m_density = make_unique<Texture3D>(ivec3(resolution*4, resolution/16, resolution*4), false, TextureFormat::R16F);
 		m_density->Bind();
 		m_density->bSetMinFilter(TextureFilterMode::Linear);
 		m_density->bSetMagFilter(TextureFilterMode::Linear);
 		m_density->bSetWrap(TextureWrapMode::Repeat);
 		m_density->Unbind();
-		m_noise = make_unique<Texture3D>(m_resolution, false, TextureFormat::R16F);
+		m_noise = make_unique<Texture3D>(ivec3(m_resolution), false, TextureFormat::R16F);
 		m_noise->Bind();
 		m_noise->bSetMinFilter(TextureFilterMode::Linear);
 		m_noise->bSetMagFilter(TextureFilterMode::Linear);
@@ -56,9 +56,9 @@ namespace ogele {
 		m_cloudsGen->Unbind();
 	}
 
-	void Clouds::Render(const Camera* cam, const vec3& sunDir) {
-		trmat4 VP = cam->GetViewProjMatrix();
-		trmat4 IVP = inverse(VP);
+	void Clouds::Render(const Camera* cam, const dvec3& sunDir) {
+		dmat4 VP = cam->GetViewProjMatrix();
+		dmat4 IVP = glm::inverse(VP);
 		m_buffer.swap();
 		m_buffer->Bind();
 		m_render->Bind();
@@ -67,7 +67,7 @@ namespace ogele {
 		m_render->SetTexture("prevFrame", (*m_buffer[1])[0]);
 		m_render->Set("IVP", IVP);
 		m_render->Set("PrevVP", m_prevVP);
-		m_render->Set("sunDir", sunDir);
+		m_render->Set("sunDir", (vec3)sunDir);
 		m_screenQuad->Draw();
 		m_render->Unbind();
 		m_buffer->Unbind();

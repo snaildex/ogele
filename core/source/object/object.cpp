@@ -1,12 +1,7 @@
-//
-// Created by ??????? on 18.07.2018.
-//
-
-#include <ogele.h>
+#include <object/object.h>
+#include <sstream>
 
 using namespace std;
-using namespace glm;
-namespace fs = std::experimental::filesystem;
 
 namespace ogele {
     Object::Object() {

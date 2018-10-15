@@ -1,9 +1,20 @@
-//
-// Created by ??????? on 18.07.2018.
-//
+#pragma once
+#include <memory>
+#include <chrono>
+#include <string>
 
-#ifndef OGELE_APPLICATION_H
-#define OGELE_APPLICATION_H
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+
+#include "window.h"
+#include "../object/resource.h"
+#include "../texture/textureBase.h"
+#include "../shader/shaderProgram.h"
+#include "../mesh/screenQuadMesh.h"
+#include "../mesh/coordBasisMesh.h"
+#include "../helpers/helpers.h"
+
 namespace ogele {
 
     class ResourceContainer;
@@ -21,10 +32,10 @@ namespace ogele {
 
     private:
         static Application *m_instance;
-        unique_ptr<ResourceContainer> m_res;
-        ivec2 m_screenSize;
-        chrono::high_resolution_clock::time_point m_startTimePoint;
-        chrono::high_resolution_clock::time_point m_lastFrameTimePoint;
+        std::unique_ptr<ResourceContainer> m_res;
+        glm::ivec2 m_screenSize;
+        std::chrono::high_resolution_clock::time_point m_startTimePoint;
+        std::chrono::high_resolution_clock::time_point m_lastFrameTimePoint;
         double m_timeDelta, m_time;
 
         void CreateInternal();
@@ -42,7 +53,7 @@ namespace ogele {
 
         void DrawTex(TextureBase *tex);
 
-        void DrawBasis(const trmat4 &MVP);
+        void DrawBasis(const glm::dmat4 &MVP);
 
     public:
         Application();
@@ -57,7 +68,7 @@ namespace ogele {
 
         inline ResourceContainer *GetResources() noexcept { return m_res.get(); }
 
-        inline const ivec2 &GetScreenResolution() const noexcept { return m_screenSize; }
+        inline const glm::ivec2 &GetScreenResolution() const noexcept { return m_screenSize; }
 
         void Run();
 
@@ -65,4 +76,3 @@ namespace ogele {
     };
 
 }
-#endif //OGELE_APPLICATION_H

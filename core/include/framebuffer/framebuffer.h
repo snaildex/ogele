@@ -1,9 +1,15 @@
-//
-// Created by ??????? on 22.07.2018.
-//
+#pragma once
 
-#ifndef OGELE_FRAMEBUFFER_H
-#define OGELE_FRAMEBUFFER_H
+#include <vector>
+
+#include <GL/glew.h>
+#include <glm/glm.hpp>
+
+#include "../helpers/helpers.h"
+#include "../other/enums.h"
+#include "../other/glerror.h"
+#include "../texture/texture2D/texture2D.h"
+
 namespace ogele {
 
     class Renderbuffer : public HandleBase<GLenum> {
@@ -12,7 +18,7 @@ namespace ogele {
     private:
         RenderBufferFormat m_format;
     public:
-        Renderbuffer(RenderBufferFormat format, const ivec2 &size);
+        Renderbuffer(RenderBufferFormat format, const glm::ivec2 &size);
 
         inline void Bind() const { glBindRenderbuffer(GL_RENDERBUFFER, m_handle); GLErr(); }
 
@@ -56,18 +62,18 @@ namespace ogele {
                                       buffer->GetHandle()); GLErr();
         }
 
-        void bDrawBuffers(const vector<int> &attachments);
+        void bDrawBuffers(const std::vector<int> &attachments);
 
-        void bDrawBuffers(const initializer_list<int> &attachments);
+        void bDrawBuffers(const std::initializer_list<int> &attachments);
 
         FrameBufferCompletion bGetCompletionStatus() const;
 
         inline bool bIsComplete() const { return bGetCompletionStatus() == FrameBufferCompletion::Complete; }
 
-        void Copy(Framebuffer *destination, ivec2 uv0, ivec2 uv1, BufferBit buffers, int sourceColorAttachment,
+        void Copy(Framebuffer *destination, glm::ivec2 uv0, glm::ivec2 uv1, BufferBit buffers, int sourceColorAttachment,
                   int destColorAttachment) const;
 
-        void Copy(ivec2 uv0, ivec2 uv1, BufferBit buffers, int sourceColorAttachment,
+        void Copy(glm::ivec2 uv0, glm::ivec2 uv1, BufferBit buffers, int sourceColorAttachment,
                   DefaultColorBuffers destColorBuf) const;
 
         inline void Bind() const { glBindFramebuffer(GL_FRAMEBUFFER, m_handle); GLErr(); }
@@ -77,4 +83,3 @@ namespace ogele {
         ~Framebuffer();
     };
 }
-#endif //OGELE_FRAMEBUFFER_H

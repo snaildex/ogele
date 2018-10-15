@@ -1,12 +1,10 @@
-//
-// Created by ??????? on 21.07.2018.
-//
-
-#include <ogele.h>
+#include <helpers/guiHelper.h>
+#include <glm/glm.hpp>
+#include <glm/gtx/string_cast.hpp>
+#include <imgui/imgui.h>
 
 using namespace std;
 using namespace glm;
-namespace fs = std::experimental::filesystem;
 
 namespace ogele {
 

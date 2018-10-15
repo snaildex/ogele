@@ -1,13 +1,10 @@
-//
-// Created by ??????? on 18.07.2018.
-//
+#pragma once
+#include <list>
+#include <vector>
+#include <string>
+#include <filesystem>
 
-#ifndef OGELE_HELPERS_H
-#define OGELE_HELPERS_H
-
-using namespace std;
-using namespace glm;
-namespace fs = std::experimental::filesystem;
+namespace fs = std::filesystem;
 
 namespace ogele {
 
@@ -32,15 +29,15 @@ inline constexpr Type operator& ( Type l, Type r) noexcept { return static_cast<
 		inline HandleType GetHandle() const noexcept { return m_handle; }
 	};
 
-	list<fs::path> ScanFiles(const string &extension);
+	std::list<fs::path> ScanFiles(const std::string &extension);
 
 	template <typename T>
 	class swapchain {
-		vector<unique_ptr<T>> m_ptrs;
+		std::vector<std::unique_ptr<T>> m_ptrs;
 		int m_current;
 	public:
 		swapchain() { m_current = 0; }
-		inline void add(T* ptr) { m_ptrs.push_back(unique_ptr<T>(ptr)); }
+		inline void add(T* ptr) { m_ptrs.push_back(std::unique_ptr<T>(ptr)); }
 		inline void swap() noexcept { m_current = (m_current + 1) % m_ptrs.size(); }
 		inline T* get() const noexcept { return m_ptrs[m_current].get(); }
 		inline T* operator->() const noexcept { return m_ptrs[m_current].get(); }
@@ -50,5 +47,3 @@ inline constexpr Type operator& ( Type l, Type r) noexcept { return static_cast<
 	};
 
 }
-
-#endif //OGELE_HELPERS_H

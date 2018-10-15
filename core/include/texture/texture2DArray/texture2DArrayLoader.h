@@ -5,7 +5,7 @@
 #include "../../object/resource.h"
 
 namespace ogele {
-    class TextureCubeLoader : public ResourceLoader {
+    class Texture2DArrayLoader : public ResourceLoader {
 
     public:
 

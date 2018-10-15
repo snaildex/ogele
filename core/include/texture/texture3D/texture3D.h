@@ -1,23 +1,23 @@
-//
-// Created by ??????? on 25.08.2018.
-//
+#pragma once
 
-#ifndef OGELE_TEXTURE3D_H
-#define OGELE_TEXTURE3D_H
+#include <glm/glm.hpp>
+
+#include "../textureBase.h"
+#include "../../other/enums.h"
 
 namespace ogele {
     class Texture3D : public TextureBase {
-        ivec3 m_size;
+        glm::ivec3 m_size;
 
-        void Allocate(const ivec3 &newSize);
+        void Allocate(const glm::ivec3 &newSize);
 
     public:
-        Texture3D(const ivec3 &size, bool mipmaps, TextureFormat format);
+        Texture3D(const glm::ivec3 &size, bool mipmaps, TextureFormat format);
 
-        inline const ivec3 &GetSize() const noexcept { return m_size; }
+        inline const glm::ivec3 &GetSize() const noexcept { return m_size; }
 
         template<typename T>
-        void bSetData(int level, const ivec3 &offset, const ivec3 &size, const T *data);
+        void bSetData(int level, const glm::ivec3 &offset, const glm::ivec3 &size, const T *data);
 
         template<typename T>
         void bGetData(int level, T *data) const;
@@ -26,5 +26,3 @@ namespace ogele {
 
 
 }
-
-#endif //OGELE_TEXTURE3D_H

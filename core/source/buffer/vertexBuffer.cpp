@@ -1,11 +1,4 @@
-//
-// Created by ??????? on 20.07.2018.
-//
-#include <ogele.h>
-
-using namespace std;
-using namespace glm;
-namespace fs = std::experimental::filesystem;
+#include <buffer/vertexBuffer.h>
 
 namespace ogele
 {
@@ -37,7 +30,7 @@ namespace ogele
                 m_elemSize = sizeof(double);
                 break;
             default:
-                throw runtime_error("Unsupported vertex buffer data type");
+                throw std::runtime_error("Unsupported vertex buffer data type");
         }
         m_size = size;
         m_dataType = dataType;

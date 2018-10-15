@@ -1,20 +1,22 @@
-//
-// Created by ??????? on 22.07.2018.
-//
+#pragma once
+#include <memory>
 
-#ifndef OGELE_COORDBASISMESH_H
-#define OGELE_COORDBASISMESH_H
+#include <glm/glm.hpp>
+
+#include "../buffer/vertexBuffer.h"
+
+#include "meshBase.h"
+
 namespace ogele {
     class CoordBasisMesh : public MeshBase {
     public:
         struct Vertex {
-            vec3 Position;
-            vec3 Color;
+            glm::vec3 Position;
+			glm::vec3 Color;
         };
     private:
-        unique_ptr<FloatBuffer<Vertex>> m_vertexBuffer;
+        std::unique_ptr<FloatBuffer<Vertex>> m_vertexBuffer;
     public:
         CoordBasisMesh();
     };
 }
-#endif //OGELE_COORDBASISMESH_H

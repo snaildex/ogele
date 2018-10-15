@@ -1,12 +1,8 @@
-//
-// Created by ??????? on 22.07.2018.
-//
-
-#include <ogele.h>
+#include <components/camera.h>
+#include <glm/gtc/matrix_transform.hpp>
 
 using namespace std;
 using namespace glm;
-namespace fs = std::experimental::filesystem;
 
 namespace ogele {
 
@@ -15,13 +11,13 @@ namespace ogele {
     }
 
     void PerspectiveCamera::UpdateProjection() {
-        m_projMatrix = perspectiveFov(m_fov, static_cast<trscalar>(GetFrameSize().x),
-                                      static_cast<trscalar>(GetFrameSize().y), m_zNear, m_zFar);
+        m_projMatrix = glm::perspectiveFov(m_fov, static_cast<double>(GetFrameSize().x),
+                                      static_cast<double>(GetFrameSize().y), m_zNear, m_zFar);
         m_viewProjMatrix = m_projMatrix * m_viewMatrix;
     }
 
     void PerspectiveCamera::UpdateView() {
-        m_viewMatrix = inverse(GetMatrix());
+        m_viewMatrix = glm::inverse(GetMatrix());
         m_viewProjMatrix = m_projMatrix * m_viewMatrix;
     }
 
@@ -33,7 +29,7 @@ namespace ogele {
         UpdateProjection();
     }
 
-    PerspectiveCamera::PerspectiveCamera(const ivec2 &frameSize, trscalar fov, trscalar zNear, trscalar zFar) :
+    PerspectiveCamera::PerspectiveCamera(const ivec2 &frameSize, double fov, double zNear, double zFar) :
             Camera(frameSize) {
         m_fov = fov;
         m_zNear = zNear;
@@ -42,7 +38,7 @@ namespace ogele {
         UpdateView();
     }
 
-    void Camera::LookAround(const dvec2 &delta, trscalar speed, trscalar xMin, trscalar xMax) {
+    void Camera::LookAround(const dvec2 &delta, double speed, double xMin, double xMax) {
         m_eulerAngles.y -= delta.x * speed;
         m_eulerAngles.x -= delta.y * speed;
         m_eulerAngles.x = glm::clamp(m_eulerAngles.x, xMin, xMax);

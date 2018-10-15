@@ -1,18 +1,13 @@
-//
-// Created by ??????? on 18.07.2018.
-//
-
-#include <ogele.h>
+#include <helpers/helpers.h>
 
 using namespace std;
-using namespace glm;
-namespace fs = std::experimental::filesystem;
+namespace fs = std::filesystem;
 
 namespace ogele {
     list<fs::path> ScanFiles(const string &extension) {
         list<fs::path> files;
-        for (const auto &p : experimental::filesystem::v1::recursive_directory_iterator(
-                experimental::filesystem::v1::current_path())) {
+        for (const auto &p : fs::recursive_directory_iterator(
+                fs::current_path())) {
             const string &ext = p.path().extension().string();
             if (ext == extension)
                 files.push_back(p.path());

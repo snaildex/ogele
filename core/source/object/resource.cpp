@@ -1,11 +1,12 @@
-//
-// Created by ??????? on 19.07.2018.
-//
-#include <ogele.h>
+#include <object/resource.h>
+#include <shader/shaderLoader.h>
+#include <texture/texture2D/texture2DLoader.h>
+#include <texture/textureCube/textureCubeLoader.h>
+#include <imgui/imgui.h>
+#include <sstream>
+#include <string>
 
 using namespace std;
-using namespace glm;
-namespace fs = std::experimental::filesystem;
 
 namespace ogele {
 

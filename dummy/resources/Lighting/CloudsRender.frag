@@ -18,6 +18,6 @@ void main()
 {
 	vec3 view=normalize(LookDir);
 	vec4 curr=clouds(NearPos,-view, sunDir);
-	vec4 prev=(distance(PrevUV,UV)<0.002)?textureLod(prevFrame,PrevUV,0):curr;
+	vec4 prev=(distance(PrevUV,UV)<0.005)?textureLod(prevFrame,PrevUV,0):curr;
     Result=(curr+prev)/2;
 }

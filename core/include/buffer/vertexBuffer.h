@@ -1,9 +1,12 @@
-//
-// Created by ??????? on 20.07.2018.
-//
+#pragma once
 
-#ifndef OGELE_VERTEXBUFFER_H
-#define OGELE_VERTEXBUFFER_H
+#include <GL/glew.h>
+#include <glm/glm.hpp>
+
+#include "../other/enums.h"
+#include "../other/glerror.h"
+#include "../helpers/helpers.h"
+
 namespace ogele {
     class BufferBase : public HandleBase<GLenum> {
         Entity(BufferBase)
@@ -122,4 +125,3 @@ namespace ogele {
 
     DefBuffer(Double)
 }
-#endif //OGELE_VERTEXBUFFER_H

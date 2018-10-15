@@ -1,11 +1,12 @@
-//
-// Created by ??????? on 18.07.2018.
-//
-#include <ogele.h>
+#include <imgui/imgui.h>
+#include <imgui/imgui_impl_glfw_gl3.h>
+#include <application/application.h>
+
+#include <other/glstatic.h>
+#include <other/enums.h>
 
 using namespace std;
 using namespace glm;
-namespace fs = std::experimental::filesystem;
 
 namespace ogele {
 
@@ -33,7 +34,7 @@ namespace ogele {
         m_drawTex->Unbind();
     }
 
-    void Application::DrawBasis(const trmat4 &MVP) {
+    void Application::DrawBasis(const dmat4 &MVP) {
         m_drawBasis->Bind();
         m_drawBasis->Set("MVP", MVP);
         m_coordBasis->Draw();

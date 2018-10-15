@@ -1,11 +1,9 @@
-//
-// Created by ??????? on 18.07.2018.
-//
-/** @file
- * All OpenGL enums wrapped in enum classes
- * */
-#ifndef OGELE_ENUMS_H
-#define OGELE_ENUMS_H
+#pragma once
+
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+
+#include "../helpers/helpers.h"
 
 namespace ogele {
     /**
@@ -719,4 +717,3 @@ namespace ogele {
     };
 
 }
-#endif //OGELE_ENUMS_H

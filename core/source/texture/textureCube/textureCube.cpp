@@ -1,12 +1,8 @@
-//
-// Created by ??????? on 21.07.2018.
-//
-
-#include <ogele.h>
+#include <texture/textureCube/textureCube.h>
+#include <buffer/vectors.h>
 
 using namespace std;
 using namespace glm;
-namespace fs = std::experimental::filesystem;
 
 namespace ogele {
 

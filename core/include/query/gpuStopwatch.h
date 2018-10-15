@@ -1,9 +1,12 @@
-//
-// Created by ??????? on 21.07.2018.
-//
+#pragma once
 
-#ifndef OGELE_GPUSTOPWATCH_H
-#define OGELE_GPUSTOPWATCH_H
+#include <memory>
+#include <deque>
+
+#include "query.h"
+#include "../helpers/helpers.h"
+#include "../other/enums.h"
+
 namespace ogele {
 
     template<int SampleCount>
@@ -11,12 +14,12 @@ namespace ogele {
         Entity(GPUStopwatch)
 
     private:
-        unique_ptr<Query> m_query;
-        deque<double> m_samples;
+        std::unique_ptr<Query> m_query;
+        std::deque<double> m_samples;
         double m_time;
     public:
         GPUStopwatch() {
-            m_query = make_unique<Query>(QueryType::TimeElapsed);
+            m_query = std::make_unique<Query>(QueryType::TimeElapsed);
             m_time = 0;
         }
 
@@ -36,4 +39,3 @@ namespace ogele {
         }
     };
 }
-#endif //OGELE_GPUSTOPWATCH_H

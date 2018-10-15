@@ -1,9 +1,10 @@
-//
-// Created by ??????? on 21.07.2018.
-//
+#pragma once
 
-#ifndef OGELE_SHADERCOMPILEEXCEPTION_H
-#define OGELE_SHADERCOMPILEEXCEPTION_H
+#include <stdexcept>
+#include <string>
+
+#include <GL/glew.h>
+
 namespace ogele
 {
     class ShaderCompileException : public std::runtime_error
@@ -18,4 +19,3 @@ namespace ogele
     };
 
 }
-#endif //OGELE_SHADERCOMPILEEXCEPTION_H

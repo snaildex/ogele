@@ -1,9 +1,9 @@
-//
-// Created by ??????? on 18.07.2018.
-//
+#pragma once
 
-#ifndef OGELE_GLERROR_H
-#define OGELE_GLERROR_H
+#include <stdexcept>
+
+#include <GL/glew.h>
+
 namespace ogele {
     class GLError : public std::runtime_error {
         GLenum m_code;
@@ -24,4 +24,3 @@ namespace ogele {
 #define GLErr()
 #endif //_DEBUG
 }
-#endif //OGELE_GLERROR_H

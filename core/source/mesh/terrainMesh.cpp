@@ -1,12 +1,9 @@
-//
-// Created by ??????? on 22.07.2018.
-//
-
-#include <ogele.h>
+#include <mesh/terrainMesh.h>
+#include <other/enums.h>
 
 using namespace std;
 using namespace glm;
-namespace fs = std::experimental::filesystem;
+namespace fs = std::filesystem;
 
 namespace ogele {
     TerrainMesh::TerrainMesh(int size) : MeshBase(Topology::Patches) {

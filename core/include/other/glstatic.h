@@ -1,9 +1,8 @@
-//
-// Created by ??????? on 19.07.2018.
-//
+#pragma once
 
-#ifndef OGELE_GLSTATIC_H
-#define OGELE_GLSTATIC_H
+#include <glm/glm.hpp>
+
+#include "enums.h"
 
 namespace ogele {
 
@@ -21,4 +20,3 @@ namespace ogele {
 
     void SetPolygonMode(PolygonFace face, PolygonMode mode);
 }
-#endif //OGELE_GLSTATIC_H

@@ -1,9 +1,10 @@
-//
-// Created by ??????? on 21.07.2018.
-//
+#pragma once
 
-#ifndef OGELE_SHADERSTAGE_H
-#define OGELE_SHADERSTAGE_H
+#include <string>
+
+#include "../helpers/helpers.h"
+#include "../other/enums.h"
+
 namespace ogele
 {
     class ShaderStage : public HandleBase<GLenum>
@@ -13,4 +14,3 @@ namespace ogele
         ~ShaderStage();
     };
 }
-#endif //OGELE_SHADERSTAGE_H

@@ -1,12 +1,15 @@
-//
-// Created by ??????? on 22.07.2018.
-//
+#pragma once
 
-#ifndef OGELE_MESHBASE_H
-#define OGELE_MESHBASE_H
+#include <memory>
+
+#include "../buffer/vertexBuffer.h"
+#include "../buffer/vertexArray.h"
+#include "../object/resource.h"
+#include "../other/enums.h"
+
 namespace ogele {
     class MeshBase : public Resource {
-        unique_ptr<VertexArray> m_vao;
+        std::unique_ptr<VertexArray> m_vao;
         int m_count;
     protected:
         void SetBuffer(int index, int vectorSize, const BufferBase *buffer, int offset = 0);
@@ -29,4 +32,3 @@ namespace ogele {
         }
     };
 }
-#endif //OGELE_MESHBASE_H

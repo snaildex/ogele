@@ -1,12 +1,8 @@
-//
-// Created by ??????? on 21.07.2018.
-//
-
-#include <ogele.h>
+#include <shader/shaderStage.h>
+#include <other/glerror.h>
+#include <shader/shaderCompileException.h>
 
 using namespace std;
-using namespace glm;
-namespace fs = std::experimental::filesystem;
 
 namespace ogele {
 
