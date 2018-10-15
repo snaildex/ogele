@@ -8,7 +8,7 @@ const int SampleCountL = 10;
 const vec3 NoiseFreq1 = vec3(1.0/4,16,1.0/4)*12e-6;
 const float NoiseFreq2 = 140e-6;
 const float NoiseBias = 0.6;
-const vec3 Scroll1 = vec3(0.0003, 0.0024, 0.0018);
+const vec3 Scroll1 = vec3(0.0001, 0.0008, 0.0006);
 const vec3 Scroll2 = vec3(0.0003, 0.0015, 0.0009);
 const float Altitude0 = 1500;
 const float Altitude1 = 3500;
@@ -74,6 +74,7 @@ float SampleNoise(vec3 uvw)
         float n1 = textureLod(CloudDensityMap, uvw1, 0).r;
         float n2 = textureLod(CloudNoiseMap, uvw2, 0).r;
         float n = n1 + n2;
+        //float n = n1;
         n = max(n+NoiseBias,0);
         float h = (uvw.y - Altitude0)/(Altitude1 - Altitude0);
         n*=(1-exp(-10*h))*exp(-3*h);

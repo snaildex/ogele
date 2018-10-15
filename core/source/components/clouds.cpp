@@ -8,21 +8,23 @@ namespace ogele {
 
 	Clouds::Clouds(int resolution, const ivec2& frameSize) {
 		m_resolution = resolution;
-		m_density = make_unique<Texture3D>(ivec3(resolution*4, resolution/16, resolution*4), false, TextureFormat::R16F);
-		m_density->Bind();
-		m_density->bSetMinFilter(TextureFilterMode::Linear);
-		m_density->bSetMagFilter(TextureFilterMode::Linear);
-		m_density->bSetWrap(TextureWrapMode::Repeat);
-		m_density->Unbind();
-		m_noise = make_unique<Texture3D>(ivec3(m_resolution), false, TextureFormat::R16F);
-		m_noise->Bind();
-		m_noise->bSetMinFilter(TextureFilterMode::Linear);
-		m_noise->bSetMagFilter(TextureFilterMode::Linear);
-		m_noise->bSetWrap(TextureWrapMode::Repeat);
-		m_noise->Unbind();
+		m_noise1Resolution = ivec3(resolution * 4, resolution / 16, resolution * 4);
+		m_noise2Resolution = ivec3(resolution, resolution, resolution);
+		m_noise1 = make_unique<Texture3D>(m_noise1Resolution, false, TextureFormat::R16F);
+		m_noise1->Bind();
+		m_noise1->bSetMinFilter(TextureFilterMode::Linear);
+		m_noise1->bSetMagFilter(TextureFilterMode::Linear);
+		m_noise1->bSetWrap(TextureWrapMode::Repeat);
+		m_noise1->Unbind();
+		m_noise2 = make_unique<Texture3D>(m_noise2Resolution, false, TextureFormat::R16F);
+		m_noise2->Bind();
+		m_noise2->bSetMinFilter(TextureFilterMode::Linear);
+		m_noise2->bSetMagFilter(TextureFilterMode::Linear);
+		m_noise2->bSetWrap(TextureWrapMode::Repeat);
+		m_noise2->Unbind();
 		m_material = make_unique<Material>();
-		m_material->SetTexture("CloudDensityMap", m_density.get());
-		m_material->SetTexture("CloudNoiseMap", m_noise.get());
+		m_material->SetTexture("CloudDensityMap", m_noise1.get());
+		m_material->SetTexture("CloudNoiseMap", m_noise2.get());
 		m_cloudsGen = Application::GetInstance()->GetResources()->GetResourceByName<ShaderProgram>("GenClouds");
 		m_render = Application::GetInstance()->GetResources()->GetResourceByName<ShaderProgram>("RenderClouds");
 		m_cloudNoiseGen = Application::GetInstance()->GetResources()->GetResourceByName<ShaderProgram>("GenCloudNoise");
@@ -52,7 +54,7 @@ namespace ogele {
 	void Clouds::Generate() {
 		m_cloudsGen->Bind();
 		m_material->Apply(m_cloudsGen);
-		m_cloudsGen->bDispatchCompute(m_resolution / ivec3(32, 1, 32));
+		m_cloudsGen->bDispatchCompute(m_noise1Resolution / ivec3(32, 1, 32));
 		m_cloudsGen->Unbind();
 	}
 
@@ -71,7 +73,7 @@ namespace ogele {
 		m_screenQuad->Draw();
 		m_render->Unbind();
 		m_buffer->Unbind();
-		
+
 		m_prevVP = VP;
 	}
 }

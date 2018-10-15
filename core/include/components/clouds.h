@@ -17,10 +17,12 @@ namespace ogele {
 
     class Clouds : public Object {
 	
+		ivec3 m_noise1Resolution;
+		ivec3 m_noise2Resolution;
 		int m_resolution;
 
-        std::unique_ptr<Texture3D> m_density;
-		std::unique_ptr<Texture3D> m_noise;
+        std::unique_ptr<Texture3D> m_noise1;
+		std::unique_ptr<Texture3D> m_noise2;
 		std::unique_ptr<Material> m_material;
 		swapchain<RenderTarget> m_buffer;
 		ShaderProgram* m_cloudsGen;

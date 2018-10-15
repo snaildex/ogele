@@ -31,7 +31,7 @@ float worley3D(vec3 p, vec3 period)
 
 void main()
 {
-    vec3 pos=vec3(gl_GlobalInvocationID)/(gl_NumWorkGroups * gl_WorkGroupSize);
+    vec3 pos=vec3(gl_GlobalInvocationID)/(gl_NumWorkGroups * gl_WorkGroupSize)*vec3(4,1.0/16,4);
 	int scale=10;
     float val=-worley3D(pos*scale,vec3(scale))+1;
     scale=15;
