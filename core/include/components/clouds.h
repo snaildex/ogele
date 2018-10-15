@@ -7,6 +7,7 @@
 #include "../object/object.h"
 #include "../helpers/helpers.h"
 #include "../texture/texture3D/texture3D.h"
+#include "../texture/textureCube/textureCube.h"
 #include "../shader/material.h"
 #include "../framebuffer/renderTarget.h"
 #include "../shader/shaderProgram.h"
@@ -41,6 +42,6 @@ namespace ogele {
 		void SetFrameSize(const glm::ivec2& size);
 
         void Generate();
-		void Render(const Camera* cam, const glm::dvec3& sunDir);
+		void Render(const Camera* cam, const glm::dvec3& sunDir, TextureCube* skybox);
     };
 }

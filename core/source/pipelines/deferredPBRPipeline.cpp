@@ -67,7 +67,7 @@ namespace ogele {
 		m_skybox->Unbind();
 
 		Viewport(ivec2(0), m_frameSize/ m_cloudsDownsample);
-		m_clouds->Render(m_cam, m_sunDir);
+		m_clouds->Render(m_cam, m_sunDir, m_skybox.get());
 
 		Viewport(ivec2(0), m_frameSize);
 		m_RawFBO[0]->Bind();

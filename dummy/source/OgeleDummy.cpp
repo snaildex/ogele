@@ -32,7 +32,7 @@ class RunnerApp : public Application {
 
 	void Start() override {
 		rt = make_unique<RenderTarget>(GetResolution(), 1, TextureFormat::RGB8, false, true);
-		cam = make_unique<PerspectiveCamera>(GetResolution(), 45, 1, 10000);
+		cam = make_unique<PerspectiveCamera>(GetResolution(), 45, 0.1, 10000);
 		m_fpsCounter = make_unique<GPUStopwatch<100>>();
 		m_pipeline = make_unique<DeferredPBRPipeline>(GetResolution());
 		m_terr = make_unique<Terrain>(ivec2(128, 128), 32);
@@ -52,7 +52,7 @@ class RunnerApp : public Application {
 		if (GetKey(Key::D)) delta += normalize(ProjectOnPlane(cam->Right(), dvec3(0, 1, 0)));
 		if (GetKey(Key::Space)) delta += dvec3(0, 1, 0);
 		if (GetKey(Key::LShift)) delta -= dvec3(0, 1, 0);
-		delta *= (float)GetTimeDelta() * 40;
+		delta *= (float)GetTimeDelta() * 4;
 		cam->SetLocalPos(cam->GetLocalPos() + delta);
 
 		Enable(Feature::CullFace);

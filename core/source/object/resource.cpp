@@ -2,6 +2,7 @@
 #include <shader/shaderLoader.h>
 #include <texture/texture2D/texture2DLoader.h>
 #include <texture/textureCube/textureCubeLoader.h>
+#include <texture/texture2DArray/texture2DArrayLoader.h>
 #include <imgui/imgui.h>
 #include <sstream>
 #include <string>
@@ -13,8 +14,9 @@ namespace ogele {
     ResourceContainer::ResourceContainer() {
         m_loaders["Shader"] = make_unique<ShaderLoader>();
         m_loaders["Texture2D"] = make_unique<Texture2DLoader>();
-        m_loaders["TextureCube"] = make_unique<TextureCubeLoader>();
-    }
+		m_loaders["TextureCube"] = make_unique<TextureCubeLoader>();
+		m_loaders["Texture2DArray"] = make_unique<Texture2DArrayLoader>();
+	}
 
     template<typename Out>
     void split(const std::string &s, char delim, Out result) {

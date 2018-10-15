@@ -9,7 +9,7 @@ namespace ogele {
 	Clouds::Clouds(int resolution, const ivec2& frameSize) {
 		m_resolution = resolution;
 		m_noise1Resolution = ivec3(resolution * 4, resolution / 16, resolution * 4);
-		m_noise2Resolution = ivec3(resolution, resolution, resolution);
+		m_noise2Resolution = ivec3(resolution / 2 , resolution /2 , resolution / 2);
 		m_noise1 = make_unique<Texture3D>(m_noise1Resolution, false, TextureFormat::R16F);
 		m_noise1->Bind();
 		m_noise1->bSetMinFilter(TextureFilterMode::Linear);
@@ -30,7 +30,7 @@ namespace ogele {
 		m_cloudNoiseGen = Application::GetInstance()->GetResources()->GetResourceByName<ShaderProgram>("GenCloudNoise");
 		m_cloudNoiseGen->Bind();
 		m_material->Apply(m_cloudNoiseGen);
-		m_cloudNoiseGen->bDispatchCompute(m_resolution / ivec3(32, 1, 32));
+		m_cloudNoiseGen->bDispatchCompute(m_noise2Resolution / ivec3(32, 1, 32));
 		m_cloudNoiseGen->Unbind();
 		m_screenQuad = Application::GetInstance()->GetResources()->GetResourceByName<ScreenQuadMesh>("ScreenQuad");
 		for (int i = 0; i < 2; i++) {
@@ -58,13 +58,14 @@ namespace ogele {
 		m_cloudsGen->Unbind();
 	}
 
-	void Clouds::Render(const Camera* cam, const dvec3& sunDir) {
+	void Clouds::Render(const Camera* cam, const dvec3& sunDir, TextureCube* skybox) {
 		dmat4 VP = cam->GetViewProjMatrix();
 		dmat4 IVP = glm::inverse(VP);
 		m_buffer.swap();
 		m_buffer->Bind();
 		m_render->Bind();
 		m_material->Apply(m_render);
+		m_render->SetTexture("Skybox", skybox);
 		m_render->Set<float>("Time", Application::GetInstance()->GetTime());
 		m_render->SetTexture("prevFrame", (*m_buffer[1])[0]);
 		m_render->Set("IVP", IVP);

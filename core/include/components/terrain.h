@@ -10,6 +10,7 @@
 #include "../texture/texture3D/texture3D.h"
 #include "../mesh/terrainMesh.h"
 #include "../texture/texture2D/texture2D.h"
+#include "../texture/texture2DArray/texture2DArray.h"
 #include "../buffer/vertexBuffer.h"
 #include "../shader/material.h"
 #include "../shader/shaderProgram.h"
@@ -33,7 +34,11 @@ namespace ogele {
         ShaderProgram *m_heightGen;
         ShaderProgram *m_normals;
         ShaderProgram *m_terrainDraw;
-    public:
+		Texture2DArray *m_terrainAlbedo;
+		Texture2DArray *m_terrainRoughness;
+		Texture2DArray *m_terrainNormal;
+		Texture2DArray *m_terrainHeight;
+	public:
         inline TerrainMesh *GetPlaneMesh() const noexcept { return m_plane.get(); }
 
         inline const glm::ivec2 &GetSize() const noexcept { return m_size; }

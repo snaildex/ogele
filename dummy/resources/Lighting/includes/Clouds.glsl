@@ -1,10 +1,12 @@
 uniform sampler3D CloudDensityMap;
 uniform sampler3D CloudNoiseMap;
+uniform samplerCube Skybox;
 uniform float Time;
 
 const float SampleCount0 = 30;
 const float SampleCount1 = 80;
 const int SampleCountL = 10;
+const int SampleCountI = 6;
 const vec3 NoiseFreq1 = vec3(1.0/4,16,1.0/4)*12e-6;
 const float NoiseFreq2 = 140e-6;
 const float NoiseBias = 0.6;
@@ -64,7 +66,7 @@ float Beer(float depth)
 
 float BeerPowder(float depth)
 {
-    return exp(-Extinct * depth) * (1 - exp(-Extinct * 2 * depth));
+    return max(exp(-Extinct * depth) * (1 - exp(-Extinct * 2 * depth)),0);
 }
 
 float SampleNoise(vec3 uvw)
@@ -74,7 +76,6 @@ float SampleNoise(vec3 uvw)
         float n1 = textureLod(CloudDensityMap, uvw1, 0).r;
         float n2 = textureLod(CloudNoiseMap, uvw2, 0).r;
         float n = n1 + n2;
-        //float n = n1;
         n = max(n+NoiseBias,0);
         float h = (uvw.y - Altitude0)/(Altitude1 - Altitude0);
         n*=(1-exp(-10*h))*exp(-3*h);
@@ -96,6 +97,32 @@ float MarchLight(vec3 pos, vec3 light, float rand)
         return BeerPowder(depth);
 }
 
+float MarchIndirect(vec3 pos, vec3 light, float rand)
+{
+        float lngth1 = clamp((Altitude1 - pos.y)/light.y,0,1000);
+        float lngth0 = clamp((pos.y - Altitude0)/light.y,0,1000);
+        float lngth=max(lngth0,lngth1);
+		float stride = lngth / SampleCountI;
+        pos += light * stride * rand;
+        float depth = 0;
+        for (int s = 0; s < SampleCountI; s++)
+        {
+            depth += SampleNoise(pos) * stride;
+            pos += light * stride;
+        }
+        return BeerPowder(depth);
+}
+
+#define DELTA 10.0
+vec3 Gradient(vec3 pos)
+{
+	return normalize(vec3(
+		SampleNoise(pos-vec3(DELTA,0,0))-SampleNoise(pos+vec3(DELTA,0,0)),
+		SampleNoise(pos-vec3(0,DELTA,0))-SampleNoise(pos+vec3(0,DELTA,0)),
+		SampleNoise(pos-vec3(0,0,DELTA))-SampleNoise(pos+vec3(0,0,DELTA))
+	));
+}
+
 vec4 clouds(vec3 pos, vec3 dir, vec3 sunDir){
     int samples = int(mix(SampleCount1, SampleCount0, dir.y));
     float dist0; 
@@ -108,10 +135,10 @@ vec4 clouds(vec3 pos, vec3 dir, vec3 sunDir){
     dist1 = clamp((Altitude1-pos.y) / dir.y,0,FarDist);
     }
 	float dist = min(abs(dist1 - dist0),FarDist);
-    //float stride = dist / samples;
-	float delta = 2*dist / (samples*(samples+1));
+    float delta = 2*dist / (samples*(samples+1));
 	float stride=delta;
 	float hg = HenyeyGreenstein(dot(dir, sunDir));
+    float hgEnv = HenyeyGreenstein(dir.y);
     vec2 uv = gl_FragCoord.xy*1000 + vec2(Time);
     float offs = UVRandom(uv) * abs(dist1 - dist0) / samples;
     vec3 cpos = pos + dir * (min(dist0,dist1) + offs);
@@ -124,14 +151,15 @@ vec4 clouds(vec3 pos, vec3 dir, vec3 sunDir){
         {
             float density = n * stride;
             float rand = UVRandom(uv + vec2(s + 1));
-            float scatter = density * Scatter * hg * MarchLight(cpos, sunDir, rand * 0.5);
-			
-			float halfSunDist=rsi(cpos+vec3(0,rPlanet,0),sunDir,rAtmos).y;
+            float halfSunDist=rsi(cpos+vec3(0,rPlanet,0),sunDir,rAtmos).y;
             float OdRlh = exp(-cpos.y / shRlh) * halfSunDist;
             float OdMie = exp(-cpos.y / shMie) * halfSunDist;
 			vec3 Fex = exp(-(pRlh * kRlh * OdRlh + pMie * kMie * OdMie));
-			
-			acc += Fex * iSun * scatter * BeerPowder(depth);
+			vec3 scatter = Fex * iSun * hg * MarchLight(cpos, sunDir, rand * 0.5);
+			//vec3 norm=Gradient(cpos);
+			//float hgI=HenyeyGreenstein(dot(dir, norm));
+			//scatter += textureLod(Skybox,norm,8).rgb* hgI * MarchIndirect(cpos, norm, rand * 0.5);
+			acc +=  scatter * density * Scatter* BeerPowder(depth);
             depth += density;
         }
         cpos += dir * stride;
@@ -139,5 +167,6 @@ vec4 clouds(vec3 pos, vec3 dir, vec3 sunDir){
     }
 	vec4 result=vec4(max(acc,0),Beer(depth));
 	float distFactor=clamp(min(dist0,dist1) / FarDist,0,1);
+	//return textureLod(Skybox,dir,8);
     return mix(result,vec4(0,0,0,1),distFactor);
 }

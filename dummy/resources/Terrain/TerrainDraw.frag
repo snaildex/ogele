@@ -9,6 +9,9 @@ in vec2 WUV;
 in vec4 WPosDepth;
 
 uniform sampler2D Normals;
+uniform sampler2DArray Albedo;
+uniform sampler2DArray Roughness;
+uniform sampler2DArray Normal;
 
 layout(location = 0) out vec4 AlbedoRough;
 layout(location = 1) out vec4 PosDepth;
@@ -17,10 +20,17 @@ layout(location = 3) out vec4 Emission;
 
 void main()
 {
-vec3 norm=normalize(texture(Normals,WUV).rgb);
-vec3 col=mix(DirtColor,GrassColor,smoothstep(0.8,0.9,norm.y));
-col=mix(SandColor,col,smoothstep(1,2,WPosDepth.y));
-AlbedoRough=vec4(col,0.9);
+vec3 vnorm=normalize(texture(Normals,WUV).rgb);
+vec3 tang=cross(vec3(0,0,-1),vnorm);
+vec3 btang=cross(vnorm,tang);
+mat3 TBN = mat3(tang,btang,vnorm);
+
+vec3 texCoord=vec3(WPosDepth.xz,0);
+vec3 norm=normalize(TBN*(texture(Normal,texCoord).rgb*2-1));
+vec3 col=texture(Albedo,texCoord).rgb;
+float rough=1-texture(Roughness,texCoord).r;
+
+AlbedoRough=vec4(col,rough);
 PosDepth=WPosDepth;
 NormalMetal=vec4(norm,0.0);
 Emission=vec4(0);

@@ -7,17 +7,17 @@
 
 namespace ogele {
     class Texture2DArray : public TextureBase {
-        glm::ivec2 m_size;
-
-        void Allocate(const glm::ivec2 &newSize);
+        glm::ivec3 m_size;
+		
+        void Allocate(const glm::ivec3 &newSize);
 
     public:
-        Texture2DArray(const glm::ivec2 &size, bool mipmaps, TextureFormat format);
+        Texture2DArray(const glm::ivec3 &size, bool mipmaps, TextureFormat format);
 
-        inline const glm::ivec2 &GetSize() const noexcept { return m_size; }
-
+		inline const glm::ivec3 &GetSize() const noexcept { return m_size; }
+		
         template<typename T>
-        void bSetData(int level, const glm::ivec2 &offset, const glm::ivec2 &size, const T *data);
+        void bSetData(int level, const glm::ivec3 &offset, const glm::ivec3 &size, const T *data);
 
         template<typename T>
         void bGetData(int level, T *data) const;

@@ -14,8 +14,8 @@ target_link_libraries(core ${OPENGL_gl_LIBRARY})
 
 target_include_directories(core PUBLIC 3d_party/include)
 find_library(GLFW_LIB NAMES libglfw3 HINTS 3d_party/lib)
-target_link_libraries(core ${GLFW_LIB})
 find_library(GLEW_LIB NAMES libglew32 HINTS 3d_party/lib)
-target_link_libraries(core ${GLEW_LIB})
+target_link_libraries(core ${GLFW_LIB} ${GLEW_LIB})
+
 
 set_target_properties(core PROPERTIES VS_GLOBAL_ROOTNAMESPACE "ogele")
