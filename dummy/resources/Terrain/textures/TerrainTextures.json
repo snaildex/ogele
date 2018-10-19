@@ -37,5 +37,18 @@
     "wrap": "repeat",
     "minFilter": "linearMipMapLinear",
     "magFilter": "linear"
+  },
+  {
+    "type": "Texture2DArray",
+    "name": "Grass",
+    "tags": [
+      "Terrain"
+    ],
+    "file": [
+      "grass.png"
+    ],
+    "wrap": "clampToEdge",
+    "minFilter": "linearMipMapLinear",
+    "magFilter": "linear"
   }
 ]

@@ -1,0 +1,39 @@
+[
+  {
+    "type": "Shader",
+    "name": "TerrainDraw",
+    "tags": [ "Terrain" ],
+    "stages": {
+      "vertex": "draw/vert.glsl",
+      "tessEvaluation": "draw/tessEval.glsl",
+      "tessControl": "draw/tessControl.glsl",
+      "fragment": "draw/frag.glsl"
+    }
+  },
+  {
+    "type": "Shader",
+    "name": "GrassDraw",
+    "tags": [ "Terrain" ],
+    "stages": {
+      "vertex": "grass/vert.glsl",
+      "geometry": "grass/geom.glsl",
+      "fragment": "grass/frag.glsl"
+    }
+  },
+  {
+    "type": "Shader",
+    "name": "TerrainGen",
+    "tags": [ "Terrain" ],
+    "stages": {
+      "compute": "generation/generate.glsl"
+    }
+  },
+  {
+    "type": "Shader",
+    "name": "TerrainNormals",
+    "tags": [ "Terrain" ],
+    "stages": {
+      "compute": "generation/normals.glsl"
+    }
+  }
+]

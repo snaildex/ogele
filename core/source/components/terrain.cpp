@@ -14,7 +14,9 @@ namespace ogele {
 		m_chunkSize = chunkSize;
 		ivec2 totalSize = size * chunkSize;
 		m_offset = { -totalSize.x / 2, 0, -totalSize.y / 2 };
+		m_grassRange = 160;
 		m_plane = make_unique<TerrainMesh>(chunkSize + 1);
+		m_grid = make_unique<GridMesh>(m_grassRange);
 		m_heightmap = make_unique<Texture2D>(totalSize, false, TextureFormat::R32F);
 		m_heightmap->Bind();
 		m_heightmap->bSetMagFilter(TextureFilterMode::Linear);
@@ -28,6 +30,7 @@ namespace ogele {
 		m_heightGen = Application::GetInstance()->GetResources()->GetResourceByName<ShaderProgram>("TerrainGen");
 		m_normals = Application::GetInstance()->GetResources()->GetResourceByName<ShaderProgram>("TerrainNormals");
 		m_terrainDraw = Application::GetInstance()->GetResources()->GetResourceByName<ShaderProgram>("TerrainDraw");
+		m_grassDraw = Application::GetInstance()->GetResources()->GetResourceByName<ShaderProgram>("GrassDraw");
 		m_offsets = make_unique<IntBuffer<ivec2>>(BufferFlags::DynamicStorage, m_size.x * m_size.y, nullptr);
 		m_drawRange = 3;
 		m_lods = 4;
@@ -37,6 +40,7 @@ namespace ogele {
 		m_mat->Set<float>("MaxLOD", m_lods);
 		m_mat->Set("LODDist", m_lodDist);
 		m_mat->Set<int>("Step", std::pow(2, m_lods));
+		m_mat->Set("MapSize", dvec2(totalSize));
 		m_mat->SetTexture("Normals", m_normalmap.get());
 		m_mat->SetTexture("Heights", m_heightmap.get());
 		m_mat->SetBuffer("Offsets", m_offsets.get());
@@ -44,9 +48,11 @@ namespace ogele {
 		m_terrainAlbedo = Application::GetInstance()->GetResources()->GetResourceByName<Texture2DArray>("TerrainAlbedo");
 		m_terrainRoughness = Application::GetInstance()->GetResources()->GetResourceByName<Texture2DArray>("TerrainRoughness");
 		m_terrainNormal = Application::GetInstance()->GetResources()->GetResourceByName<Texture2DArray>("TerrainNormal");
+		m_grass = Application::GetInstance()->GetResources()->GetResourceByName<Texture2DArray>("Grass");
 		m_mat->SetTexture("Albedo", m_terrainAlbedo);
 		m_mat->SetTexture("Roughness", m_terrainRoughness);
 		m_mat->SetTexture("Normal", m_terrainNormal);
+		m_mat->SetTexture("Grass", m_grass);
 
 	}
 
@@ -64,6 +70,7 @@ namespace ogele {
 	}
 
 	void Terrain::Draw(Camera *cam) const {
+		Enable(Feature::CullFace);
 		int step = std::pow(2, m_lods);
 		dvec3 campos = (cam->GetLocalPos() - m_offset) / (double)(m_chunkSize * step);
 		dvec2 camindex = { campos.x, campos.z };
@@ -81,5 +88,15 @@ namespace ogele {
 		m_offsets->Unbind();
 		m_plane->Draw(m_currentChunks.size());
 		m_terrainDraw->Unbind();
+	
+		m_grassDraw->Bind();
+		m_grassDraw->Set("VP", cam->GetViewProjMatrix());
+		m_grassDraw->Set("CamPos", cam->GetLocalPos());
+		m_grassDraw->Set("Time", Application::GetInstance()->GetTime()*4);
+		m_mat->Apply(m_grassDraw);
+		Disable(Feature::CullFace);
+		m_grid->Draw();
+		Enable(Feature::CullFace);
+		m_grassDraw->Unbind();
 	}
 }

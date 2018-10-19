@@ -21,7 +21,7 @@ layout(location = 3) out vec4 Emission;
 void main()
 {
 vec3 vnorm=normalize(texture(Normals,WUV).rgb);
-vec3 tang=cross(vec3(0,0,-1),vnorm);
+vec3 tang=vnorm.zyx * vec3 (1.0, -1.0, 1.0);
 vec3 btang=cross(vnorm,tang);
 mat3 TBN = mat3(tang,btang,vnorm);
 

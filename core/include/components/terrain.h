@@ -9,6 +9,7 @@
 #include "../helpers/helpers.h"
 #include "../texture/texture3D/texture3D.h"
 #include "../mesh/terrainMesh.h"
+#include "../mesh/gridMesh.h"
 #include "../texture/texture2D/texture2D.h"
 #include "../texture/texture2DArray/texture2DArray.h"
 #include "../buffer/vertexBuffer.h"
@@ -19,7 +20,8 @@
 namespace ogele {
 
     class Terrain : public Object {
-        std::unique_ptr<TerrainMesh> m_plane;
+		std::unique_ptr<TerrainMesh> m_plane;
+		std::unique_ptr<GridMesh> m_grid;
 		std::unique_ptr<Texture2D> m_heightmap;
 		std::unique_ptr<Texture2D> m_normalmap;
 		std::unique_ptr<IntBuffer<glm::ivec2>> m_offsets;
@@ -30,14 +32,17 @@ namespace ogele {
         int m_chunkSize;
         int m_drawRange;
         int m_lods;
+		int m_grassRange;
         double m_lodDist;
         ShaderProgram *m_heightGen;
         ShaderProgram *m_normals;
-        ShaderProgram *m_terrainDraw;
+		ShaderProgram *m_terrainDraw;
+		ShaderProgram *m_grassDraw;
 		Texture2DArray *m_terrainAlbedo;
 		Texture2DArray *m_terrainRoughness;
 		Texture2DArray *m_terrainNormal;
 		Texture2DArray *m_terrainHeight;
+		Texture2DArray *m_grass;
 	public:
         inline TerrainMesh *GetPlaneMesh() const noexcept { return m_plane.get(); }
 
