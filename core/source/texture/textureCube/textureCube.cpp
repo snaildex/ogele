@@ -1,11 +1,8 @@
-#include <texture/textureCube/textureCube.h>
-#include <buffer/vectors.h>
-
+#include <stdafx.h>
+#include <ogele.h>
 using namespace std;
 using namespace glm;
-
 namespace ogele {
-
     void TextureCube::Allocate(const ivec2 &newSize) {
         m_size = newSize;
         Bind();

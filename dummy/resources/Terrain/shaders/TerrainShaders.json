@@ -2,7 +2,7 @@
   {
     "type": "Shader",
     "name": "TerrainDraw",
-    "tags": [ "Terrain" ],
+    "tags": [ "Terrain", "Opaque", "PBR" ],
     "stages": {
       "vertex": "draw/vert.glsl",
       "tessEvaluation": "draw/tessEval.glsl",

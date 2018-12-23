@@ -1,0 +1,95 @@
+{
+  "type": "RenderPipeline",
+  "name": "DeferredPBR",
+  "tags": [ "Main" ],
+  "textures": [
+    {
+      "name": "Skybox",
+      "type": "SingleCubeMap",
+      "format": "RGBA16F",
+      "minFilter": "linearMipMapNearest",
+      "magFilter": "linear",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "name": "BRDFLUT",
+      "type": "Single2D",
+      "wrap": "clampToEdge",
+      "minFilter": "linear",
+      "magFilter": "linear",
+      "file": "BRDFLUT.bmp"
+    },
+    {
+      "name": "CloudDensity",
+      "type": "Single3D",
+      "wrap": "repeat",
+      "minFilter": "linear",
+      "magFilter": "linear",
+      "width": 128,
+      "height": 128,
+      "dpeth": 128
+    },
+    {
+      "name": "CloudNoise",
+      "type": "Single3D",
+      "wrap": "repeat",
+      "minFilter": "linear",
+      "magFilter": "linear",
+      "width": 128,
+      "height": 128,
+      "dpeth": 128
+    }
+  ],
+  "targets": [
+    {
+      "name": "GBuffer",
+      "colorTex": [ "AlbedoRough", "PosDepth", "NormalMetal", "Emission" ],
+      "format": "RGBA16F",
+      "minFilter": "nearest",
+      "magFilter": "nearest",
+      "mipmaps": false,
+      "depthBuffer": true,
+      "stencilBuffer": false
+    },
+    {
+      "name": "FinalHDR",
+      "colorTex": [ "HDRFrame" ],
+      "format": "RGB16F"
+    },
+    {
+      "name": "Final",
+      "colorTex": [ "FinalTex" ],
+      "format": "RGB8"
+    }
+  ],
+  "pass": [
+    {
+      "name": "Generate skybox",
+      "mode": "compute",
+      "shader": "Skybox",
+      "mipmap": [ "Skybox" ],
+      "groupNum": [ 16, 16, 6 ]
+    },
+    {
+      "name": "G-Pass",
+      "mode": "scene",
+      "clear": [ "Color", "Depth" ],
+      "tags": [ "Opaque" ],
+      "shader": [ "PBR" ],
+      "target": "GBuffer"
+    },
+    {
+      "name": "Lighting",
+      "mode": "screen",
+      "shader": "LightingCompute",
+      "target": "FinalHDR"
+    },
+    {
+      "name": "Tonemapping",
+      "mode": "screen",
+      "shader": "Tonemapping",
+      "target": "Final"
+    }
+  ]
+}

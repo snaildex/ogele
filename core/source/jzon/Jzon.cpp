@@ -19,6 +19,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#include <stdafx.h>
 #ifdef JZON_DLL
 #	if defined _WIN32 || defined __CYGWIN__
 #		define JZON_API __declspec(dllexport)
@@ -28,17 +29,11 @@ THE SOFTWARE.
 
 #include <jzon/Jzon.h>
 
-#include <sstream>
-#include <fstream>
-#include <stack>
-#include <algorithm>
-#include <cassert>
-
 namespace Jzon
 {
 	namespace
 	{
-		inline bool isWhitespace(char c)
+		 bool isWhitespace(char c)
 		{
 			return (c == '\n' || c == ' ' || c == '\t' || c == '\r' || c == '\f');
 		}

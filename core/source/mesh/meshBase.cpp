@@ -1,9 +1,7 @@
-#include <mesh/meshBase.h>
-#include <other/enums.h>
-
+#include <stdafx.h>
+#include <ogele.h>
 using namespace std;
 using namespace glm;
-
 namespace ogele {
     MeshBase::MeshBase(Topology topology) {
         m_vao = make_unique<VertexArray>(topology);

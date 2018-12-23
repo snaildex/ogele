@@ -1,12 +1,8 @@
-#include <shader/shaderStage.h>
-#include <other/glerror.h>
-#include <shader/shaderCompileException.h>
-
+#include <stdafx.h>
+#include <ogele.h>
 using namespace std;
-
 namespace ogele {
-
-    ShaderStage::ShaderStage(ShaderType type, const std::string &source) {
+    ShaderStage::ShaderStage(const std::string& name, ShaderType type, const std::string &source) {
         m_handle = glCreateShader(static_cast<GLenum>(type));
         GLErr();
         auto p = source.data();
@@ -25,7 +21,7 @@ namespace ogele {
             char *message = new char[InfoLogLength + 1];
             glGetShaderInfoLog(m_handle, InfoLogLength, nullptr, &message[0]);
             GLErr();
-            throw ShaderCompileException(message);
+            throw ShaderCompileException(name,message);
         }
     }
 

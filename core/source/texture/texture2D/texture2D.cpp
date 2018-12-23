@@ -1,11 +1,8 @@
-#include <texture/texture2D/texture2D.h>
-#include <buffer/vectors.h>
-
+#include <stdafx.h>
+#include <ogele.h>
 using namespace std;
 using namespace glm;
-
 namespace ogele {
-
     void Texture2D::Allocate(const ivec2 &newSize) {
         m_size = newSize;
         Bind();

@@ -1,10 +1,7 @@
-#include <mesh/gridMesh.h>
-#include <other/enums.h>
-#include <vector>
-
+#include <stdafx.h>
+#include <ogele.h>
 using namespace std;
 using namespace glm;
-
 namespace ogele {
 	GridMesh::GridMesh(int range) : MeshBase(Topology::Points) {
 		m_range = range;

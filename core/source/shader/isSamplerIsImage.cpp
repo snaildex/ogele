@@ -1,9 +1,7 @@
-#include <shader/shaderProgram.h>
-
+#include <stdafx.h>
+#include <ogele.h>
 using namespace std;
-
 namespace ogele {
-
     bool ShaderProgram::IsSampler(UniformType type) {
         return (
                 type == UniformType::Sampler1D ||

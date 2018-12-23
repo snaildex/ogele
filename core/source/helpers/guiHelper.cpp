@@ -1,58 +1,53 @@
-#include <helpers/guiHelper.h>
-#include <glm/glm.hpp>
-#include <glm/gtx/string_cast.hpp>
-#include <imgui/imgui.h>
-
+#include <stdafx.h>
+#include <ogele.h>
 using namespace std;
 using namespace glm;
-
 namespace ogele {
+    template<>
+    void PropertyGUI(const string &name, float *value) {  }
 
     template<>
-    void PropertyGUI(const string &name, float *value) { ImGui::InputFloat(name.c_str(), value); }
+    void PropertyGUI(const string &name, vec2 *value) {  }
 
     template<>
-    void PropertyGUI(const string &name, vec2 *value) { ImGui::InputFloat2(name.c_str(), &value->x); }
+    void PropertyGUI(const string &name, vec3 *value) {  }
 
     template<>
-    void PropertyGUI(const string &name, vec3 *value) { ImGui::InputFloat3(name.c_str(), &value->x); }
+    void PropertyGUI(const string &name, vec4 *value) {  }
 
     template<>
-    void PropertyGUI(const string &name, vec4 *value) { ImGui::InputFloat4(name.c_str(), &value->x); }
+    void PropertyGUI(const string &name, int *value) {  }
 
     template<>
-    void PropertyGUI(const string &name, int *value) { ImGui::InputInt(name.c_str(), value); }
+    void PropertyGUI(const string &name, ivec2 *value) {  }
 
     template<>
-    void PropertyGUI(const string &name, ivec2 *value) { ImGui::InputInt2(name.c_str(), &value->x); }
+    void PropertyGUI(const string &name, ivec3 *value) {  }
 
     template<>
-    void PropertyGUI(const string &name, ivec3 *value) { ImGui::InputInt3(name.c_str(), &value->x); }
-
-    template<>
-    void PropertyGUI(const string &name, ivec4 *value) { ImGui::InputInt4(name.c_str(), &value->x); }
+    void PropertyGUI(const string &name, ivec4 *value) {  }
 
     template<>
     void PropertyGUI(const string &name, unsigned int *value) {
-        ImGui::LabelText(name.c_str(), to_string(*value).c_str());
+        
     }
 
     template<>
     void PropertyGUI(const string &name, uvec2 *value) {
-        ImGui::LabelText(name.c_str(), to_string(*value).c_str());
+        
     }
 
     template<>
     void PropertyGUI(const string &name, uvec3 *value) {
-        ImGui::LabelText(name.c_str(), to_string(*value).c_str());
+        
     }
 
     template<>
     void PropertyGUI(const string &name, uvec4 *value) {
-        ImGui::LabelText(name.c_str(), to_string(*value).c_str());
+        
     }
 
-#define NoGUI(type) template<> void PropertyGUI(const string &name, type *value) { ImGui::LabelText(name.c_str(), typeid(type).name()); }
+#define NoGUI(type) template<> void PropertyGUI(const string &name, type *value) {  }
 
     NoGUI(double)
     NoGUI(dvec2)

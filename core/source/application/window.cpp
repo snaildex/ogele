@@ -1,10 +1,7 @@
-#include <application/window.h>
-#include <other/enums.h>
-#include <other/glstatic.h>
-
+#include <stdafx.h>
+#include <ogele.h>
 using namespace std;
 using namespace glm;
-
 namespace ogele {
 
     void Window::KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods) {

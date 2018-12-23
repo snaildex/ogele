@@ -1,9 +1,7 @@
-#include <buffer/vertexArray.h>
-#include <glm/gtc/type_ptr.hpp>
-
+#include <stdafx.h>
+#include <ogele.h>
 using namespace std;
 using namespace glm;
-
 namespace ogele {
 
     VertexArray::VertexArray(Topology topology) {

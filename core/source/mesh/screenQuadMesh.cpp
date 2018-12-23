@@ -1,9 +1,7 @@
-#include <mesh/screenQuadMesh.h>
-#include <other/enums.h>
-
+#include <stdafx.h>
+#include <ogele.h>
 using namespace std;
 using namespace glm;
-
 namespace ogele {
     ScreenQuadMesh::ScreenQuadMesh() : MeshBase(Topology::TriangleStrip) {
         Vertex data[4]{

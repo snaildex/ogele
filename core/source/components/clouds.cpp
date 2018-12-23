@@ -1,11 +1,8 @@
-#include <components/clouds.h>
-#include <application/application.h>
-
+#include <stdafx.h>
+#include <ogele.h>
 using namespace std;
 using namespace glm;
-
 namespace ogele {
-
 	Clouds::Clouds(int resolution, const ivec2& frameSize) {
 		m_resolution = resolution;
 		m_noise1Resolution = ivec3(resolution * 4, resolution / 16, resolution * 4);
@@ -25,14 +22,13 @@ namespace ogele {
 		m_material = make_unique<Material>();
 		m_material->SetTexture("CloudDensityMap", m_noise1.get());
 		m_material->SetTexture("CloudNoiseMap", m_noise2.get());
-		m_cloudsGen = Application::GetInstance()->GetResources()->GetResourceByName<ShaderProgram>("GenClouds");
-		m_render = Application::GetInstance()->GetResources()->GetResourceByName<ShaderProgram>("RenderClouds");
-		m_cloudNoiseGen = Application::GetInstance()->GetResources()->GetResourceByName<ShaderProgram>("GenCloudNoise");
+		m_cloudsGen = Application::GetResourceByName<ShaderProgram>("GenClouds");
+		m_render = Application::GetResourceByName<ShaderProgram>("RenderClouds");
+		m_cloudNoiseGen = Application::GetResourceByName<ShaderProgram>("GenCloudNoise");
 		m_cloudNoiseGen->Bind();
-		m_material->Apply(m_cloudNoiseGen);
+		m_material->Apply(m_cloudNoiseGen.get());
 		m_cloudNoiseGen->bDispatchCompute(m_noise2Resolution / ivec3(32, 1, 32));
 		m_cloudNoiseGen->Unbind();
-		m_screenQuad = Application::GetInstance()->GetResources()->GetResourceByName<ScreenQuadMesh>("ScreenQuad");
 		for (int i = 0; i < 2; i++) {
 			auto rt = new RenderTarget(frameSize, 1, TextureFormat::RGBA16F);
 			auto tex = (*rt)[0];
@@ -53,7 +49,7 @@ namespace ogele {
 
 	void Clouds::Generate() {
 		m_cloudsGen->Bind();
-		m_material->Apply(m_cloudsGen);
+		m_material->Apply(m_cloudsGen.get());
 		m_cloudsGen->bDispatchCompute(m_noise1Resolution / ivec3(32, 1, 32));
 		m_cloudsGen->Unbind();
 	}
@@ -64,14 +60,14 @@ namespace ogele {
 		m_buffer.swap();
 		m_buffer->Bind();
 		m_render->Bind();
-		m_material->Apply(m_render);
+		m_material->Apply(m_render.get());
 		m_render->SetTexture("Skybox", skybox);
-		m_render->Set<float>("Time", Application::GetInstance()->GetTime());
+		m_render->Set<float>("Time", Application::GetTime());
 		m_render->SetTexture("prevFrame", (*m_buffer[1])[0]);
 		m_render->Set("IVP", IVP);
 		m_render->Set("PrevVP", m_prevVP);
 		m_render->Set("sunDir", (vec3)sunDir);
-		m_screenQuad->Draw();
+		Application::DrawScreenQuad();
 		m_render->Unbind();
 		m_buffer->Unbind();
 

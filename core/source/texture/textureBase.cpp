@@ -1,10 +1,8 @@
-#include <texture/textureBase.h>
-
+#include <stdafx.h>
+#include <ogele.h>
 using namespace std;
 using namespace glm;
-
 namespace ogele {
-
     bool IsTexFormatInteger(TextureFormat format) {
         switch (format) {
             case TextureFormat::R8I:

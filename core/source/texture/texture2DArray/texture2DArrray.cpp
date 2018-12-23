@@ -1,12 +1,8 @@
-#include <texture/texture2DArray/texture2DArray.h>
-#include <glm/glm.hpp>
-#include <buffer/vectors.h>
-
+#include <stdafx.h>
+#include <ogele.h>
 using namespace std;
 using namespace glm;
-
 namespace ogele {
-
 	void Texture2DArray::Allocate(const ivec3 &newSize) {
 		m_size = newSize;
 		Bind();

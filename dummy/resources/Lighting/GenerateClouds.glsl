@@ -7,35 +7,35 @@ const float Amplitude = 10;
 
 float noise3D(vec3 p)
 {
-	return fract(sin(dot(p ,vec3(12.9898,78.233,126.7235))) * 43758.5453);
+    return fract(sin(dot(p ,vec3(12.9898,78.233,126.7235))) * 43758.5453);
 }
 
 float worley3D(vec3 p, vec3 period)
-{					 					 
-	float r = 3.0;
+{
+    float r = 3.0;
     vec3 f = floor(p);
     vec3 x = fract(p);
-	for(int i = -1; i<=1; i++)
-		for(int j = -1; j<=1; j++)
-			for(int k = -1; k<=1; k++)
-			{
+    for(int i = -1; i<=1; i++)
+        for(int j = -1; j<=1; j++)
+            for(int k = -1; k<=1; k++)
+            {
                 vec3 q = vec3(i,j,k);
-				vec3 coord=mod(q+f,period);
-				vec3 v = q + vec3(noise3D(coord*1.11), noise3D(coord*1.14), noise3D(coord*1.17)) - x;
-    			float d = dot(v, v);
-				r = min(r, d);
-			}
-	return sqrt(r);
-}	
+                vec3 coord=mod(q+f,period);
+                vec3 v = q + vec3(noise3D(coord*1.11), noise3D(coord*1.14), noise3D(coord*1.17)) - x;
+                float d = dot(v, v);
+                r = min(r, d);
+            }
+    return sqrt(r);
+}
 
 
 void main()
 {
     vec3 pos=vec3(gl_GlobalInvocationID)/(gl_NumWorkGroups * gl_WorkGroupSize)*vec3(4,1.0/16,4);
-	int scale=10;
+    int scale=10;
     float val=-worley3D(pos*scale,vec3(scale))+1;
     scale=15;
-	val-=worley3D(pos*scale,vec3(scale));
+    val-=worley3D(pos*scale,vec3(scale));
     val*=Amplitude;
     imageStore(CloudDensityMap,ivec3(gl_GlobalInvocationID),vec4(val));
 }

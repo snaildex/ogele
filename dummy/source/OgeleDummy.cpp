@@ -1,25 +1,24 @@
+#include <stdafx.h>
 #include <ogele.h>
-#include <iostream>
 
 using namespace ogele;
 
 class RunnerApp : public Application {
-	ShaderProgram *sh;
-
-	Texture2D *tex;
+public:
+	RunnerApp() : Application("Sandbox") {};
+private:
 	unique_ptr<RenderTarget> rt;
-	unique_ptr<Camera> cam;
-	unique_ptr<Terrain> m_terr;
-	unique_ptr<DeferredPBRPipeline> m_pipeline;
-	unique_ptr<GPUStopwatch<100>> m_fpsCounter;
+	Camera* cam;
+	Terrain* m_terr;
+	res_ptr<RenderPipeline> m_pip;
+	Renderer* m_rend;
 
 	double m_sunRot;
-	bool m_wireframe;
 
 	void OnResize(const ivec2 &size) override {
-		rt.reset(new RenderTarget(size, 1, TextureFormat::RGB8, false, true));
+		rt.reset(new RenderTarget(size, 1, TextureFormat::RGB8, TextureFilterMode::Nearest,
+			TextureFilterMode::Nearest, false, true));
 		cam->SetFrameSize(size);
-		m_pipeline->Resize(size);
 	};
 
 	void OnCursorPos(const dvec2 &pos, const dvec2 &delta) override {
@@ -31,67 +30,67 @@ class RunnerApp : public Application {
 	}
 
 	void Start() override {
-		rt = make_unique<RenderTarget>(GetResolution(), 1, TextureFormat::RGB8, false, true);
-		cam = make_unique<PerspectiveCamera>(GetResolution(), 45, 0.1, 10000);
-		m_fpsCounter = make_unique<GPUStopwatch<100>>();
-		m_pipeline = make_unique<DeferredPBRPipeline>(GetResolution());
-		m_terr = make_unique<Terrain>(ivec2(128, 128), 32);
+		rt = make_unique<RenderTarget>(GetResolution(), 1, TextureFormat::RGB8, TextureFilterMode::Nearest,
+			TextureFilterMode::Nearest, false, true);
+		cam = Application::CreateActor("Camera")->AddComponent<PerspectiveCamera>(GetResolution(), 45.0, 0.1, 10000.0);
+		m_terr = Application::CreateActor("Terrain")->AddComponent<Terrain>(ivec2(128, 128), 32);
 		m_terr->Generate();
 		m_terr->SetDrawRange(6);
-		cam->SetLocalPos({ 0, 40, 0 });
-		m_pipeline->SetFrameCamera(cam.get());
+		m_terr->GetActor()->AddTag("Opaque");
+		cam->GetTransform()->SetLocalPos({ 0, 40, 0 });
 		Enable(Feature::SeamlessCubemap);
+		m_pip = Application::GetResourceByTag<RenderPipeline>("Main");
+		m_rend = Application::CreateActor("Submarine")->AddComponent<Renderer>();
+		m_rend->SetModel(Application::GetResourceByName<Model>("Submarine1"));
+		m_sunRot = 0;
+		m_rend->GetTransform()->CreateChildActor("Hull");
 	}
 
 	void Update() override {
-		m_fpsCounter->Start();
 		dvec3 delta;
-		if (GetKey(Key::W)) delta += normalize(ProjectOnPlane(cam->Forward(), dvec3(0, 1, 0)));
-		if (GetKey(Key::A)) delta -= normalize(ProjectOnPlane(cam->Right(), dvec3(0, 1, 0)));
-		if (GetKey(Key::S)) delta -= normalize(ProjectOnPlane(cam->Forward(), dvec3(0, 1, 0)));
-		if (GetKey(Key::D)) delta += normalize(ProjectOnPlane(cam->Right(), dvec3(0, 1, 0)));
+		if (GetKey(Key::W)) delta += normalize(ProjectOnPlane(cam->GetTransform()->Forward(), dvec3(0, 1, 0)));
+		if (GetKey(Key::A)) delta -= normalize(ProjectOnPlane(cam->GetTransform()->Right(), dvec3(0, 1, 0)));
+		if (GetKey(Key::S)) delta -= normalize(ProjectOnPlane(cam->GetTransform()->Forward(), dvec3(0, 1, 0)));
+		if (GetKey(Key::D)) delta += normalize(ProjectOnPlane(cam->GetTransform()->Right(), dvec3(0, 1, 0)));
 		if (GetKey(Key::Space)) delta += dvec3(0, 1, 0);
 		if (GetKey(Key::LShift)) delta -= dvec3(0, 1, 0);
 		delta *= (float)GetTimeDelta() * 4;
-		cam->SetLocalPos(cam->GetLocalPos() + delta);
-
-		Enable(Feature::CullFace);
-		Enable(Feature::DepthTest);
-
-		ClearColor({ 0.4f, 0.6f, 0.8f, 1.0f });
-		Clear(BufferBit::Color | BufferBit::Depth);
+		cam->GetTransform()->SetLocalPos(cam->GetTransform()->GetLocalPos() + delta);
 
 		dvec3 sunDir = glm::angleAxis(m_sunRot, normalize(dvec3(0, 0.3, 1))) * dvec3(1, 0, 0);
-		m_pipeline->SetSunDir(sunDir);
-		m_pipeline->Bind();
-		Viewport({ 0, 0 }, GetResolution());
-		ClearColor({ 0.4f, 0.6f, 0.8f, 1.0f });
-		Clear(BufferBit::Color | BufferBit::Depth);
-		SetPolygonMode(PolygonFace::FrontAndBack, m_wireframe ? PolygonMode::Line : PolygonMode::Fill);
-		m_terr->Draw(cam.get());
-		SetPolygonMode(PolygonFace::FrontAndBack, PolygonMode::Fill);
-		m_pipeline->Unbind();
+		m_pip->GetMaterial()->Set<vec3>("sunDir", sunDir);
+		m_pip->Render(cam);
 
-		DrawBasis(cam->GetViewProjMatrix());
-		Disable(Feature::CullFace);
+		//GUI::Window("Debug",
+		//	GUI::WindowFlags::Title |
+		//	GUI::WindowFlags::Movable |
+		//	GUI::WindowFlags::Scalable |
+		//	GUI::WindowFlags::Border,
+		//	{ 50,50 }, { 320,480 },
+		//	[&] {
+		//	GUI::Layout::RowDynamic(1);
+		//	GUI::LabelColored("Whoooo", { 0.6,0.8,1.0,1.0 });
+		//	//GUI::Image(Application::GetResourceByName<Texture2D>());
+		//});
+
 		Disable(Feature::DepthTest);
-		Disable(Feature::Blend);
-		DrawTex((*m_pipeline->GetFinalBuffer())[0]);
-
+		Disable(Feature::CullFace);
 		DrawBasis(cam->GetViewProjMatrix());
-		m_fpsCounter->Stop();
-		ImGui::SetNextWindowPos({ 0,0 });
-		ImGui::GetStyle().Colors[ImGuiCol_WindowBg] = { 0,0,0,0 };
-		ImGui::Begin("", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
-		ImGui::Text("Frame time: %3.1f ms", m_fpsCounter->GetTime() * 1000);
-		ImGui::Checkbox("Wireframe", &m_wireframe);
-		ImGui::End();
 	}
 };
 
 int main(int argc, char *argv[]) {
-	auto app = std::make_unique<RunnerApp>();
-	app->Run();
-	return 0;
+	try {
+		auto app = std::make_unique<RunnerApp>();
+		app->Run();
+	}
+	catch (const ShaderCompileException& ex) {
+		std::cout << ex.what();
+		std::cin.get();
+	}
+	catch (const GLError& ex) {
+		std::cout << ex.what();
+		std::cin.get();
+	}
 }
 

@@ -1,0 +1,9 @@
+{
+  "type": "Shader",
+  "name": "Submarine",
+  "tags": [ "Opaque", "PBR", "Submarine" ],
+  "stages": {
+    "vertex": "Submarine.vert",
+    "fragment": "Submarine.frag"
+  }
+}

@@ -1,8 +1,6 @@
-#include <object/object.h>
-#include <sstream>
-
+#include <stdafx.h>
+#include <ogele.h>
 using namespace std;
-
 namespace ogele {
     Object::Object() {
         m_name = "New object";
@@ -13,8 +11,18 @@ namespace ogele {
         m_tags = source->m_tags;
     }
 
-    string Object::PrintTags() {
-        stringstream s;
+	bool Object::HasTags(const std::vector<std::string>& tags) const noexcept
+	{
+		for (const auto& tag : tags)
+			if (!HasTag(tag))
+				return false;
+		return true;
+	}
+
+	string Object::PrintTags() {
+		if (m_tags.size() == 0)
+			return string();
+		stringstream s;
         s << '(';
         for (const auto &tag : m_tags) {
             s << tag;

@@ -1,10 +1,8 @@
-#include <mesh/terrainMesh.h>
-#include <other/enums.h>
-
+#include <stdafx.h>
+#include <ogele.h>
 using namespace std;
 using namespace glm;
 namespace fs = std::filesystem;
-
 namespace ogele {
     TerrainMesh::TerrainMesh(int size) : MeshBase(Topology::Patches) {
         m_size = size;

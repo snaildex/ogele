@@ -21,17 +21,18 @@ layout(location = 3) out vec4 Emission;
 void main()
 {
 vec3 vnorm=normalize(texture(Normals,WUV).rgb);
-vec3 tang=vnorm.zyx * vec3 (1.0, -1.0, 1.0);
+vec3 tang=vnorm.zyx * vec3 (-1.0, -1.0, -1.0);
 vec3 btang=cross(vnorm,tang);
 mat3 TBN = mat3(tang,btang,vnorm);
 
 vec3 texCoord=vec3(WPosDepth.xz,0);
-vec3 norm=normalize(TBN*(texture(Normal,texCoord).rgb*2-1));
-vec3 col=texture(Albedo,texCoord).rgb;
+vec4 normHeight=texture(Normal,texCoord);
+vec3 norm=normalize(TBN*(normHeight.rgb*2-1));
+vec4 col=texture(Albedo,texCoord);
 float rough=1-texture(Roughness,texCoord).r;
 
-AlbedoRough=vec4(col,rough);
+AlbedoRough=vec4(col.rgb,rough);
 PosDepth=WPosDepth;
 NormalMetal=vec4(norm,0.0);
-Emission=vec4(0);
+Emission=vec4(0,0,0,col.a);
 }

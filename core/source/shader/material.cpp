@@ -1,11 +1,8 @@
-#include <shader/material.h>
-#include <shader/shaderProgram.h>
-
+#include <stdafx.h>
+#include <ogele.h>
 using namespace std;
 using namespace glm;
-
 namespace ogele {
-
     void Material::AddUniform(const string &name, UniformType type) {
         switch (type) {
 #define MaterialTypeCase(EnumName, TypeName) case UniformType:: EnumName : m_data[name] = unique_ptr<UniformBase>(new UniformValue< TypeName >()); break

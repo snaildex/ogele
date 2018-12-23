@@ -1,9 +1,7 @@
-#include <query/query.h>
-
+#include <stdafx.h>
+#include <ogele.h>
 using namespace std;
-
 namespace ogele {
-
     Query::Query(QueryType type) {
         m_type = type;
         glGenQueries(1, &m_handle);

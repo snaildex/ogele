@@ -22,31 +22,31 @@ layout(location = 0) out vec3 Result;
 void main()
 {
 	vec3 view=normalize(LookDir);
-    vec4 albedoRough=texture(AlbedoRough,UV);
+	vec4 albedoRough=texture(AlbedoRough,UV);
 	vec4 posDepth=texture(PosDepth,UV);
 	vec4 normalMetal=texture(NormalMetal,UV);
 	vec4 emission=texture(Emission,UV);
 	vec3 ldir=normalize(vec3(1,1,1));
 	vec3 lcol=vec3(1)*2;
-    vec3 normal = normalize(normalMetal.xyz);
+	vec3 normal = normalize(normalMetal.xyz);
 
-    sceneData scene=sceneData(
-        (posDepth.w==1) ? vec3(0) : albedoRough.rgb,
-        (posDepth.w==1) ? FarPos : posDepth.xyz,
-        NearPos,
-        normal,
-        view,
-        albedoRough.a,
-        normalMetal.w,
-        emission.rgb,
-        posDepth.w,
-        1.0
-    );
-    lightData light=lightData(
-        sunDir,
-        lcol
-    );
-	
+	sceneData scene=sceneData(
+		(posDepth.w==1) ? vec3(0) : albedoRough.rgb,
+		(posDepth.w==1) ? FarPos : posDepth.xyz,
+		NearPos,
+		normal,
+		view,
+		albedoRough.a,
+		normalMetal.w,
+		emission.rgb,
+		posDepth.w,
+		emission.a
+	);
+	lightData light=lightData(
+		sunDir,
+		lcol
+	);
+
 	vec2 cloudPixelDelta=1.5*vec2(1)/textureSize(Clouds,0);
 	vec4 cloud=textureLod(Clouds,UV,0);
 	cloud+=0.5*textureLod(Clouds,UV+vec2(cloudPixelDelta.x,0),0);
@@ -54,11 +54,11 @@ void main()
 	cloud+=0.5*textureLod(Clouds,UV+vec2(0,cloudPixelDelta.y),0);
 	cloud+=0.5*textureLod(Clouds,UV-vec2(0,cloudPixelDelta.y),0);
 	cloud/=3;
-	
-    float realDepth=scene.depth==1 ? 1e8 : distance(NearPos,scene.pos);
-    vec3 color=scene.depth==1 ? vec3(0) : DirectLighting(scene,light)+AmbientLighting(scene);
+
+	float realDepth=scene.depth==1 ? 1e8 : distance(NearPos,scene.pos);
+	vec3 color=scene.depth==1 ? vec3(0) : DirectLighting(scene,light)+AmbientLighting(scene);
 	color+=scene.depth==1? vec3(0) :emission.rgb;
-    color=atmosphere(-view,NearPos,sunDir,color,realDepth,float(scene.depth==1));
-    if(scene.depth==1) color=color*cloud.a+cloud.rgb;
+	color=atmosphere(-view,NearPos,sunDir,color,realDepth,float(scene.depth==1));
+	if(scene.depth==1) color=color*cloud.a+cloud.rgb;
 	Result=color;
 }

@@ -1,9 +1,7 @@
-#include <mesh/coordBasisMesh.h>
-#include <other/enums.h>
-
+#include <stdafx.h>
+#include <ogele.h>
 using namespace std;
 using namespace glm;
-
 namespace ogele {
     CoordBasisMesh::CoordBasisMesh() : MeshBase(Topology::Lines) {
         Vertex data[6]{

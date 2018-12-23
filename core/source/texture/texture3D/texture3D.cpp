@@ -1,11 +1,8 @@
-#include <texture/texture3D/texture3D.h>
-#include <buffer/vectors.h>
-
+#include <stdafx.h>
+#include <ogele.h>
 using namespace std;
 using namespace glm;
-
 namespace ogele {
-
     void Texture3D::Allocate(const ivec3 &newSize) {
         m_size = newSize;
         Bind();

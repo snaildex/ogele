@@ -1,8 +1,7 @@
-#include <helpers/helpers.h>
-
+#include <stdafx.h>
+#include <ogele.h>
 using namespace std;
 namespace fs = std::filesystem;
-
 namespace ogele {
     list<fs::path> ScanFiles(const string &extension) {
         list<fs::path> files;

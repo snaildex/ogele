@@ -1,11 +1,8 @@
-#include <helpers/math3D.h>
-#include <glm/gtx/projection.hpp>
-
+#include <stdafx.h>
+#include <ogele.h>
 using namespace std;
 using namespace glm;
-
 namespace ogele {
-
     dquat RotationBetweenVectors(const dvec3 &from, const dvec3 &to) {
         double dt = dot(from, to);
 		double rotationAngle = acos(dt);

@@ -1,12 +1,6 @@
-#include <shader/shaderLoader.h>
-#include <shader/shaderProgram.h>
-#include <regex>
-#include <fstream>
-#include <sstream>
-#include <iostream>
-
+#include <stdafx.h>
+#include <ogele.h>
 using namespace std;
-
 namespace ogele {
     map<string, ShaderType> ShaderLoader::m_shaderTypeMap = {
             {"compute",        ShaderType::Compute},
@@ -17,10 +11,12 @@ namespace ogele {
             {"vertex",         ShaderType::Vertex}
     };
 
-    ShaderProgram *CreateShaderProgram(const string &vertex, const string &fragment) {
+    ShaderProgram *CreateShaderProgram(const string &name, const string &vertex, const string &fragment) {
         ShaderProgram *res = new ShaderProgram();
-        auto vertexStage = make_unique<ShaderStage>(ShaderType::Vertex, vertex);
-        auto fragmentStage = make_unique<ShaderStage>(ShaderType::Fragment, fragment);
+        res->SetName(name);
+        res->AddTag("Internal");
+        auto vertexStage = make_unique<ShaderStage>(name, ShaderType::Vertex, vertex);
+        auto fragmentStage = make_unique<ShaderStage>(name, ShaderType::Fragment, fragment);
         res->AttachStage(vertexStage.get());
         res->AttachStage(fragmentStage.get());
         res->Link();
@@ -29,9 +25,11 @@ namespace ogele {
         return res;
     }
 
-    ShaderProgram *CreateShaderProgram(const string &compute) {
+    ShaderProgram *CreateShaderProgram(const string &name, const string &compute) {
         ShaderProgram *res = new ShaderProgram();
-        auto computeStage = make_unique<ShaderStage>(ShaderType::Compute, compute);
+        res->SetName(name);
+        res->AddTag("Internal");
+        auto computeStage = make_unique<ShaderStage>(name, ShaderType::Compute, compute);
         res->AttachStage(computeStage.get());
         res->Link();
         res->DetachStage(computeStage.get());
@@ -63,14 +61,26 @@ namespace ogele {
         return result.str();
     }
 
-    ogele::Resource *ShaderLoader::Load(const Jzon::Node *reader) const {
-        list<unique_ptr<ShaderStage>> stages;
-        ShaderProgram *res = new ShaderProgram();
+    ResourceProxy* ShaderLoader::Load(const Jzon::Node *reader) const {
+        ShaderProgram::Proxy *res = new ShaderProgram::Proxy();
         LoadNameTags(reader, res);
-        for (const auto stage : reader->get("stages")) {
-            string source = ReadFile(stage.second.toString());
+        for (const auto stage : reader->get("stages"))
+            res->AddStage(m_shaderTypeMap[stage.first], fs::absolute(stage.second.toString()));
+        return res;
+    }
+
+    Resource * ShaderProgram::Proxy::Build() const
+    {
+        ShaderProgram* res = new ShaderProgram();
+        res->CopyNameTagsFrom(this);
+        list<unique_ptr<ShaderStage>> stages;
+        for (const auto& stage : m_stages) {
+            fs::path path=fs::current_path();
+            fs::current_path(stage.second.parent_path());
+            string source = ReadFile(stage.second.string());
             source = ApplyIncludes(source);
-            stages.emplace_back(make_unique<ShaderStage>(m_shaderTypeMap[stage.first], source));
+            stages.emplace_back(make_unique<ShaderStage>(res->GetName(), stage.first, source));
+            fs::current_path(path);
         }
         for (const auto &s : stages)
             res->AttachStage(s.get());

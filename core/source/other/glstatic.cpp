@@ -1,12 +1,9 @@
-#include <other/glstatic.h>
-#include <other/glerror.h>
-
+#include <stdafx.h>
+#include <ogele.h>
 using namespace std;
 using namespace glm;
 namespace fs = std::filesystem;
-
 namespace ogele {
-
     void ClearColor(const glm::vec4 &color) {
         glClearColor(color.r, color.g, color.b, color.a);
         GLErr();
@@ -39,6 +36,11 @@ namespace ogele {
 
     void SetPolygonMode(PolygonFace face, PolygonMode mode) {
         glPolygonMode(static_cast<GLenum>(face), static_cast<GLenum>(mode));
+        GLErr();
+    }
+
+    void Finish() {
+        glFinish();
         GLErr();
     }
 }
