@@ -1,7 +1,7 @@
 #version 430 core
 
 layout(local_size_x = 32, local_size_y = 1, local_size_z = 32) in;
-layout(r16f) uniform image3D CloudDensityMap;
+layout(r16f) uniform image3D CloudDensity;
 
 const float Amplitude = 10;
 
@@ -37,5 +37,5 @@ void main()
     scale=15;
     val-=worley3D(pos*scale,vec3(scale));
     val*=Amplitude;
-    imageStore(CloudDensityMap,ivec3(gl_GlobalInvocationID),vec4(val));
+    imageStore(CloudDensity,ivec3(gl_GlobalInvocationID),vec4(val));
 }

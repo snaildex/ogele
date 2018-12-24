@@ -1,5 +1,5 @@
-uniform sampler3D CloudDensityMap;
-uniform sampler3D CloudNoiseMap;
+uniform sampler3D CloudDensity;
+uniform sampler3D CloudNoise;
 uniform samplerCube Skybox;
 uniform float Time;
 
@@ -73,8 +73,8 @@ float SampleNoise(vec3 uvw)
 {
         vec3 uvw1 = uvw * NoiseFreq1+Scroll1 * Time;
         vec3 uvw2 = uvw * NoiseFreq2+Scroll2 * Time;
-        float n1 = textureLod(CloudDensityMap, uvw1, 0).r;
-        float n2 = textureLod(CloudNoiseMap, uvw2, 0).r;
+        float n1 = textureLod(CloudDensity, uvw1, 0).r;
+        float n2 = textureLod(CloudNoise, uvw2, 0).r;
         float n = n1 + n2;
         n = max(n+NoiseBias,0);
         float h = (uvw.y - Altitude0)/(Altitude1 - Altitude0);
@@ -125,8 +125,8 @@ vec3 Gradient(vec3 pos)
 
 vec4 clouds(vec3 pos, vec3 dir, vec3 sunDir){
     int samples = int(mix(SampleCount1, SampleCount0, dir.y));
-    float dist0; 
-    float dist1; 
+    float dist0;
+    float dist1;
     if(abs(dir.y)<=0.01){
 	dist0 = 0;
     dist1 = FarDist;

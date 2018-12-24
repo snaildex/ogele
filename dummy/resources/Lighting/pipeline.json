@@ -23,22 +23,24 @@
     {
       "name": "CloudDensity",
       "type": "Single3D",
+      "format": "R16F",
       "wrap": "repeat",
       "minFilter": "linear",
       "magFilter": "linear",
-      "width": 128,
-      "height": 128,
-      "dpeth": 128
+      "width": 512,
+      "height": 8,
+      "depth": 512
     },
     {
       "name": "CloudNoise",
       "type": "Single3D",
+      "format": "R16F",
       "wrap": "repeat",
       "minFilter": "linear",
       "magFilter": "linear",
-      "width": 128,
-      "height": 128,
-      "dpeth": 128
+      "width": 64,
+      "height": 64,
+      "depth": 64
     }
   ],
   "targets": [
@@ -51,6 +53,11 @@
       "mipmaps": false,
       "depthBuffer": true,
       "stencilBuffer": false
+    },
+    {
+      "name": "Clouds",
+      "colorTex": [ "Clouds" ],
+      "format": "RGB16F"
     },
     {
       "name": "FinalHDR",
@@ -70,6 +77,24 @@
       "shader": "Skybox",
       "mipmap": [ "Skybox" ],
       "groupNum": [ 16, 16, 6 ]
+    },
+    {
+      "name": "Generate cloud density",
+      "mode": "compute",
+      "shader": "GenClouds",
+      "groupNum": [ 16, 8, 16 ]
+    },
+    {
+      "name": "Generate cloud noise",
+      "mode": "compute",
+      "shader": "GenCloudNoise",
+      "groupNum": [ 2, 64, 2 ]
+    },
+    {
+      "name": "Draw clouds",
+      "mode": "screen",
+      "shader": "RenderClouds",
+      "target": "Clouds"
     },
     {
       "name": "G-Pass",

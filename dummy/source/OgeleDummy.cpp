@@ -11,7 +11,7 @@ private:
 	Camera* cam;
 	Terrain* m_terr;
 	res_ptr<RenderPipeline> m_pip;
-	Renderer* m_rend;
+	//Renderer* m_rend;
 
 	double m_sunRot;
 
@@ -40,10 +40,9 @@ private:
 		cam->GetTransform()->SetLocalPos({ 0, 40, 0 });
 		Enable(Feature::SeamlessCubemap);
 		m_pip = Application::GetResourceByTag<RenderPipeline>("Main");
-		m_rend = Application::CreateActor("Submarine")->AddComponent<Renderer>();
-		m_rend->SetModel(Application::GetResourceByName<Model>("Submarine1"));
+		//m_rend = Application::CreateActor("Submarine")->AddComponent<Renderer>();
+		//m_rend->SetModel(Application::GetResourceByName<Model>("Submarine1"));
 		m_sunRot = 0;
-		m_rend->GetTransform()->CreateChildActor("Hull");
 	}
 
 	void Update() override {
