@@ -39,4 +39,23 @@ namespace ogele {
 		m_frameBuf->Unbind();
 
 	}
+
+	void RenderTarget::Resize(const glm::ivec2& newSize) {
+		m_frameBuf->Bind();
+		for (int i = 0; i < m_colorBufs.size(); ++i) {
+			m_colorBufs[i]->Resize(newSize);
+			m_frameBuf->bAttachColorBuffer(i, m_colorBufs[i].get(), 0);
+		}
+		if (m_depthBuffer) {
+			m_depthBuffer->Resize(newSize); 
+			m_frameBuf->bAttachDepthBuffer(m_depthBuffer.get());
+		}
+		if (m_stencilBuffer) {
+			m_stencilBuffer->Resize(newSize);
+			m_frameBuf->bAttachStencilBuffer(m_stencilBuffer.get());
+		}
+		if (!m_frameBuf->bIsComplete())
+			throw runtime_error("Framebuffer is not complete");
+		m_frameBuf->Unbind();
+	}
 }

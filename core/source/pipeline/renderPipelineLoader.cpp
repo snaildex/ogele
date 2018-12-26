@@ -33,7 +33,7 @@ namespace ogele {
 			);
 			for (int i = 0; i < t.Colors.size(); i++)
 				res->GetMaterial()->SetTexture(t.Colors[i], (*rt)[i]);
-			res->AddRenderTarget(t.Name, rt);
+			res->AddRenderTarget(t.Name, t.Size, rt);
 			targets[t.Name] = rt;
 		}
 		for (const auto& t : m_textures) {
@@ -110,6 +110,23 @@ namespace ogele {
 				p.GroupNum
 				});
 		}
+		for (const auto& p : m_inits) {
+			vector<TextureBase*> mipmaps;
+			for (const auto& m : p.Mipmap)
+				mipmaps.push_back(res->GetTexture(m));
+			res->AddInit({
+				p.Name,
+				p.Mode,
+				p.Tags,
+				p.Shader,
+				mipmaps,
+				targets.at(p.Target),
+				p.Mode != RenderPipeline::PassMode::Scene ? Application::GetResourceByName<ShaderProgram>(p.Shader[0]) : nullptr,
+				p.Clear,
+				p.GroupNum
+				});
+		}
+		res->Init();
 		return res;
 	}
 
@@ -135,13 +152,42 @@ namespace ogele {
 					StrToTexFilterMode.at(ReadStringProperty(&target, "magFilter", "nearest")),
 					ReadBoolProperty(&target, "mipmaps", false),
 					ReadBoolProperty(&target, "depthBuffer", false),
-					ReadBoolProperty(&target, "stencilBuffer", false)
+					ReadBoolProperty(&target, "stencilBuffer", false),
+					vec2(ReadFloatProperty(&target,"width",1.0f),ReadFloatProperty(&target,"height",1.0f))
 				});
-
 		}
 		Jzon::Node passes = reader->get("pass");
 		for (size_t i = 0; i < passes.getCount(); ++i) {
 			Jzon::Node pass = passes.get(i);
+			BufferBit clear = (BufferBit)0;
+			if (pass.has("clear"))
+				for (size_t i = 0; i < pass.get("clear").getCount(); ++i)
+					clear = clear | StrToBufBit.at(pass.get("clear").get(i).toString());
+			ivec3 groupNum = { 1,1,1 };
+			if (pass.has("groupNum")) {
+				Jzon::Node gnum = pass.get("groupNum");
+				if (gnum.isArray()) {
+					size_t count = std::min(size_t(3), gnum.getCount());
+					for (size_t i = 0; i < count; ++i)
+						groupNum[i] = gnum.get(i).toInt();
+				}
+				else
+					groupNum[0] = gnum.toInt();
+			}
+			res->AddPass({
+				ReadStringProperty(&pass,"name","Unnamed"),
+				RenderPipeline::StrToMode[ReadStringProperty(&pass,"mode","scene")],
+				ReadStringArrayProperty(&pass,"tags"),
+				ReadStringArrayProperty(&pass,"shader"),
+				ReadStringArrayProperty(&pass,"mipmap"),
+				ReadStringProperty(&pass,"target","Final"),
+				clear,
+				groupNum
+				});
+		}
+		Jzon::Node inits = reader->get("init");
+		for (size_t i = 0; i < inits.getCount(); ++i) {
+			Jzon::Node pass = inits.get(i);
 			BufferBit clear = (BufferBit)0;
 			if (pass.has("clear"))
 				for (size_t i = 0; i < pass.get("clear").getCount(); ++i)

@@ -7,7 +7,6 @@ class RunnerApp : public Application {
 public:
 	RunnerApp() : Application("Sandbox") {};
 private:
-	unique_ptr<RenderTarget> rt;
 	Camera* cam;
 	Terrain* m_terr;
 	res_ptr<RenderPipeline> m_pip;
@@ -16,9 +15,8 @@ private:
 	double m_sunRot;
 
 	void OnResize(const ivec2 &size) override {
-		rt.reset(new RenderTarget(size, 1, TextureFormat::RGB8, TextureFilterMode::Nearest,
-			TextureFilterMode::Nearest, false, true));
 		cam->SetFrameSize(size);
+		m_pip->Resize(size);
 	};
 
 	void OnCursorPos(const dvec2 &pos, const dvec2 &delta) override {
@@ -30,8 +28,6 @@ private:
 	}
 
 	void Start() override {
-		rt = make_unique<RenderTarget>(GetResolution(), 1, TextureFormat::RGB8, TextureFilterMode::Nearest,
-			TextureFilterMode::Nearest, false, true);
 		cam = Application::CreateActor("Camera")->AddComponent<PerspectiveCamera>(GetResolution(), 45.0, 0.1, 10000.0);
 		m_terr = Application::CreateActor("Terrain")->AddComponent<Terrain>(ivec2(128, 128), 32);
 		m_terr->Generate();
@@ -55,7 +51,7 @@ private:
 		if (GetKey(Key::LShift)) delta -= dvec3(0, 1, 0);
 		delta *= (float)GetTimeDelta() * 4;
 		cam->GetTransform()->SetLocalPos(cam->GetTransform()->GetLocalPos() + delta);
-
+		
 		dvec3 sunDir = glm::angleAxis(m_sunRot, normalize(dvec3(0, 0.3, 1))) * dvec3(1, 0, 0);
 		m_pip->GetMaterial()->Set<vec3>("sunDir", sunDir);
 		m_pip->Render(cam);
@@ -68,7 +64,8 @@ private:
 		//	{ 50,50 }, { 320,480 },
 		//	[&] {
 		//	GUI::Layout::RowDynamic(1);
-		//	GUI::LabelColored("Whoooo", { 0.6,0.8,1.0,1.0 });
+		//	GUI::Label(to_string(cam->GetFrameSize()));
+		//	//GUI::LabelColored("Whoooo", { 0.6,0.8,1.0,1.0 });
 		//	//GUI::Image(Application::GetResourceByName<Texture2D>());
 		//});
 

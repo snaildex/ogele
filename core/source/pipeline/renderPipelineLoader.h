@@ -11,6 +11,7 @@ namespace ogele {
 			bool Mipmaps;
 			bool Depth;
 			bool Stencil;
+			vec2 Size;
 		};
 		struct PassDescription {
 			std::string Name;
@@ -37,10 +38,12 @@ namespace ogele {
 		};
 	private:
 		std::vector<RenderTargetDesciption> m_targets;
+		std::vector<PassDescription> m_inits;
 		std::vector<PassDescription> m_passes;
 		std::vector<TexDescription> m_textures;
 	public:
 		void AddTarget(const RenderTargetDesciption& target) noexcept { m_targets.push_back(target); }
+		void AddInit(const PassDescription& pass) noexcept { m_inits.push_back(pass); }
 		void AddPass(const PassDescription& pass) noexcept { m_passes.push_back(pass); }
 		void AddTexture(const TexDescription& pass) noexcept { m_textures.push_back(pass); }
 		virtual Resource* Build() const override;

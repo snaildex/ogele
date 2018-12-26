@@ -18,6 +18,7 @@ namespace ogele {
 		std::chrono::high_resolution_clock::time_point m_startTimePoint;
 		std::chrono::high_resolution_clock::time_point m_lastFrameTimePoint;
 		double m_timeDelta, m_time;
+		std::unique_ptr<Material> m_material;
 		nk_context *m_nuklear;
 		nk_font_atlas *m_fontAtlas;
 		std::mutex m_loadingQueueLock;
@@ -66,6 +67,7 @@ namespace ogele {
 		static dvec3 SceneToSpatial(const dvec3& sceneCoord) noexcept { return sceneCoord + m_instance->m_sceneOffset; }
 		static dvec3 SpatialToScene(const dvec3& spatialCoord) noexcept { return spatialCoord - m_instance->m_sceneOffset; }
 		static std::future<Resource*> LoadAsync(const ResourceProxy* proxy);
+		static const Material* GetMaterial() noexcept { return m_instance->m_material.get(); }
 
 		void Run();
 

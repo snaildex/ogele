@@ -129,7 +129,7 @@ namespace ogele {
          BufferBase *
         GetBuffer(const std::string &name) const { return dynamic_cast<UniformBuffer *>(m_data[name].get())->GetValue(); }
 
-        void Apply(ShaderProgram *sh);
+        void Apply(ShaderProgram *sh) const;
 
         void GUI();
 

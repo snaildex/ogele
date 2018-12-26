@@ -18,6 +18,7 @@ namespace ogele {
 		m_lastFrameTimePoint = chrono::high_resolution_clock::now();
 		m_startTimePoint = chrono::high_resolution_clock::now();
 		CreateInternal();
+		m_material = make_unique<Material>();
 		GUI::Internal::Init(GetHandle());
 		exitLoader = false;
 		const int loaderCount = 4;
@@ -124,6 +125,10 @@ namespace ogele {
 			m_timeDelta = chrono::duration_cast<chrono::duration<double>>(ctime - m_lastFrameTimePoint).count();
 			m_time = chrono::duration_cast<chrono::duration<double>>(ctime - m_startTimePoint).count();
 			m_lastFrameTimePoint = ctime;
+			m_material->Set<double>("Time", m_time);
+			m_material->Set<float>("Time", m_time);
+			m_material->Set<double>("TimeDelta", m_timeDelta);
+			m_material->Set<float>("TimeDelta", m_timeDelta);
 			GUI::Internal::NewFrame();
 			m_fpsCounter->Start();
 			Update();

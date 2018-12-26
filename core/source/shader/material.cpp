@@ -53,7 +53,7 @@ namespace ogele {
             u.second->GUI(u.first);
     }
 
-    void Material::Apply(ShaderProgram *sh) {
+    void Material::Apply(ShaderProgram *sh) const {
         for (const auto &u : m_data)
             u.second->Apply(u.first, sh);
     }

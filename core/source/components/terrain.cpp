@@ -63,7 +63,7 @@ namespace ogele {
 		m_normals->Unbind();
 	}
 
-	void Terrain::Render(Camera* camera, const std::vector<std::string>& tags) const {
+	void Terrain::Render(const Camera* camera, const std::vector<std::string>& tags) const {
 		res_ptr<ShaderProgram> draw = m_shaders.Get(tags);
 		Enable(Feature::CullFace);
 		int step = std::pow(2, m_lods);

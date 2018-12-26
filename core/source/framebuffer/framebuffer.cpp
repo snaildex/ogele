@@ -4,16 +4,29 @@ using namespace std;
 using namespace glm;
 namespace ogele {
 	Renderbuffer::Renderbuffer(RenderBufferFormat format, const ivec2 &size) {
+		m_format = format;
 		glGenRenderbuffers(1, &m_handle);
 		GLErr();
 		Bind();
 		glRenderbufferStorage(GL_RENDERBUFFER, static_cast<GLenum>(format), size.x, size.y);
+		GLErr();
 		Unbind();
 	}
 
 	Renderbuffer::~Renderbuffer() {
 		glDeleteRenderbuffers(1, &m_handle);
 		GLErr();
+	}
+
+	void Renderbuffer::Resize(const glm::ivec2 &newSize) {
+		glDeleteRenderbuffers(1, &m_handle);
+		GLErr();
+		glGenRenderbuffers(1, &m_handle);
+		GLErr();
+		Bind();
+		glRenderbufferStorage(GL_RENDERBUFFER, static_cast<GLenum>(m_format), newSize.x, newSize.y);
+		GLErr();
+		Unbind();
 	}
 
 	Framebuffer::Framebuffer() {

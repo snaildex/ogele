@@ -4,6 +4,6 @@ namespace ogele {
 	class Renderable : public Component {
 	public:
 		virtual ~Renderable() = default;
-		virtual void Render(Camera* camera, const std::vector<std::string>& tags) const = 0;
+		virtual void Render(const Camera* camera, const std::vector<std::string>& tags) const = 0;
 	};
 }

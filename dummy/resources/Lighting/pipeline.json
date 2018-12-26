@@ -57,7 +57,10 @@
     {
       "name": "Clouds",
       "colorTex": [ "Clouds" ],
-      "format": "RGB16F"
+      "format": "RGBA16F",
+      "magFilter": "linear",
+      "width": 0.333,
+      "height": 0.333
     },
     {
       "name": "FinalHDR",
@@ -70,14 +73,7 @@
       "format": "RGB8"
     }
   ],
-  "pass": [
-    {
-      "name": "Generate skybox",
-      "mode": "compute",
-      "shader": "Skybox",
-      "mipmap": [ "Skybox" ],
-      "groupNum": [ 16, 16, 6 ]
-    },
+  "init": [
     {
       "name": "Generate cloud density",
       "mode": "compute",
@@ -89,6 +85,15 @@
       "mode": "compute",
       "shader": "GenCloudNoise",
       "groupNum": [ 2, 64, 2 ]
+    }
+  ],
+  "pass": [
+    {
+      "name": "Generate skybox",
+      "mode": "compute",
+      "shader": "Skybox",
+      "mipmap": [ "Skybox" ],
+      "groupNum": [ 16, 16, 6 ]
     },
     {
       "name": "Draw clouds",

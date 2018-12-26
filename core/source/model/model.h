@@ -27,7 +27,7 @@ namespace ogele {
 		size_t GetMaterialCount() const noexcept { return m_materials.size(); }
 		Material* GetMaterial(size_t num) const { return m_materials[num].get(); }
 		void SetMaterial(size_t num, Material* material) { return m_materials[num].reset(material); }
-		void Render(Camera* cam, const std::vector<std::string>& tags, const Transform* transform = nullptr) const;
+		void Render(const Camera* cam, const std::vector<std::string>& tags, const Transform* transform = nullptr) const;
 		void GUI() const;
 	};
 }

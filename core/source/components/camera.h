@@ -6,8 +6,9 @@ namespace ogele {
 		glm::ivec2 m_frameSize;
 	protected:
 		glm::dmat4 m_projMatrix;
+		std::unique_ptr<Material> m_material;
 
-		virtual void OnFrameSizeChanged() {};
+		virtual void UpdateProjection() {};
 	protected:
 		Camera(const glm::ivec2 &frameSize);
 
@@ -16,9 +17,10 @@ namespace ogele {
 
 		void SetFrameSize(const glm::ivec2 &value) noexcept {
 			m_frameSize = value;
-			OnFrameSizeChanged();
+			UpdateProjection();
 		}
-		
+
+		virtual void UpdateMaterial();
 		virtual std::string GetName() const override { return "Camera"; };
 
 		const glm::ivec2 &GetFrameSize() const noexcept { return m_frameSize; }
@@ -26,6 +28,7 @@ namespace ogele {
 		glm::dmat4 GetViewMatrix() const noexcept { return glm::inverse(GetTransform()->GetMatrix()); }
 		const glm::dmat4 &GetProjMatrix() const noexcept { return m_projMatrix; }
 		glm::dmat4 GetViewProjMatrix() const noexcept { return m_projMatrix * glm::inverse(GetTransform()->GetMatrix()); }
+		const Material* GetMaterial() const noexcept { return m_material.get(); }
 	};
 
 	class PerspectiveCamera : public Camera {
@@ -33,9 +36,7 @@ namespace ogele {
 		double m_zNear;
 		double m_zFar;
 
-		void OnFrameSizeChanged() override;
-
-		void UpdateProjection();
+		void UpdateProjection() override;
 
 	public:
 		void SetFOV(double value) noexcept {

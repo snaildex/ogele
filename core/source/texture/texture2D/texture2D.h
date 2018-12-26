@@ -5,20 +5,22 @@ namespace ogele {
 		class Proxy;
 
 	private:
-        glm::ivec2 m_size;
+		glm::ivec2 m_size;
 
-        void Allocate(const glm::ivec2 &newSize);
+		void Allocate(const glm::ivec2 &newSize);
 
-    public:
-        Texture2D(const glm::ivec2 &size, bool mipmaps, TextureFormat format);
+	public:
+		Texture2D(const glm::ivec2 &size, bool mipmaps, TextureFormat format);
 
-         const glm::ivec2 &GetSize() const noexcept { return m_size; }
+		const glm::ivec2 &GetSize() const noexcept { return m_size; }
 
-        template<typename T>
-        void bSetData(int level, const glm::ivec2 &offset, const glm::ivec2 &size, const T *data);
+		void Resize(const glm::ivec2& newSize);
 
-        template<typename T>
-        void bGetData(int level, T *data) const;
+		template<typename T>
+		void bSetData(int level, const glm::ivec2 &offset, const glm::ivec2 &size, const T *data);
 
-    };
+		template<typename T>
+		void bGetData(int level, T *data) const;
+
+	};
 }

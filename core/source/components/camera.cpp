@@ -5,6 +5,18 @@ using namespace glm;
 namespace ogele {
 	Camera::Camera(const ivec2 &frameSize) {
 		m_frameSize = frameSize;
+		m_material = make_unique<Material>();
+	}
+
+	void Camera::UpdateMaterial() {
+		dmat4 V = GetViewMatrix();
+		dmat4 VP = m_projMatrix * V;
+		m_material->Set("P", m_projMatrix);
+		m_material->Set("V", V);
+		m_material->Set("VP", VP);
+		m_material->Set("IVP", inverse(VP));
+		m_material->Set("CamPos", GetTransform()->GetPos());
+		m_material->Set("CamDir", GetTransform()->Forward());
 	}
 
 	void PerspectiveCamera::UpdateProjection() {
@@ -14,10 +26,6 @@ namespace ogele {
 			static_cast<double>(GetFrameSize().y),
 			m_zNear,
 			m_zFar);
-	}
-
-	void PerspectiveCamera::OnFrameSizeChanged() {
-		UpdateProjection();
 	}
 
 	PerspectiveCamera::PerspectiveCamera(const ivec2 &frameSize, double fov, double zNear, double zFar) :

@@ -42,7 +42,7 @@ namespace ogele {
 
 		void Generate();
 
-		virtual void Render(Camera* camera, const std::vector<std::string>& tags) const override;
+		virtual void Render(const Camera* camera, const std::vector<std::string>& tags) const override;
 
 		Terrain(const glm::ivec2 &size, int chunkSize);
 	};

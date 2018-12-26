@@ -10,24 +10,26 @@ namespace ogele {
 		m_materials.resize(materialCount);
 	}
 
-	void RenderNode(ShaderProgram* shader, const dmat4& M, const dmat4& VP, Transform* node) {
+	void RenderNode(ShaderProgram* shader, const Camera* cam, const dmat4& M, const dmat4& VP, Transform* node) {
 		Actor* act = node->GetActor();
 		if (act)
 			if (auto mnode = act->GetComponent<Model::Node>()) {
+				cam->GetMaterial()->Apply(shader);
+				Application::GetMaterial()->Apply(shader);
 				shader->Set("MVP", VP*M*node->GetMatrix());
 				for (size_t i = 0; i < mnode->GetMeshCount(); ++i)
 					mnode->GetMesh(i)->Draw();
 			}
 		for (const auto& cnode : node->GetChilds())
-			RenderNode(shader, M, VP, cnode.get());
+			RenderNode(shader, cam, M, VP, cnode.get());
 	}
 
-	void Model::Render(Camera* cam, const std::vector<std::string>& tags, const Transform* transform) const {
+	void Model::Render(const Camera* cam, const std::vector<std::string>& tags, const Transform* transform) const {
 		auto shader = m_shaders->Get(tags);
 		dmat4 M = transform == nullptr ? dmat4() : transform->GetMatrix();
 		dmat4 VP = cam->GetViewProjMatrix();
 		shader->Bind();
-		RenderNode(shader.get(), M, VP, m_root.get());
+		RenderNode(shader.get(), cam, M, VP, m_root.get());
 		shader->Unbind();
 	}
 
