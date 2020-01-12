@@ -2,47 +2,47 @@
 #include <ogele.h>
 using namespace std;
 namespace ogele {
-    GLError::GLError(GLenum code, const std::string& file, int line) noexcept : 
+	GLError::GLError(GLErrorType type, const std::string& file, int line) noexcept :
 		std::runtime_error("OpenGL runtime error") {
-        stringstream str;
+		stringstream str;
 		str << '[' << file << ':' << line << "] ";
-		switch (code) {
-		case GL_INVALID_OPERATION:
+		switch (type) {
+		case GLErrorType::InvalidOperation:
 			str << "Invalid operation";
 			break;
-		case GL_INVALID_ENUM:
+		case GLErrorType::InvalidEnum:
 			str << "Invalid enum";
 			break;
-		case GL_INVALID_VALUE:
+		case GLErrorType::InvalidValue:
 			str << "Invalid value";
 			break;
-		case GL_OUT_OF_MEMORY:
+		case GLErrorType::OutOfMemory:
 			str << "Out of memory";
 			break;
-		case GL_INVALID_FRAMEBUFFER_OPERATION:
+		case GLErrorType::InvalidFramebufferOperation:
 			str << "Invalid frame buffer operation";
 			break;
-		case GL_STACK_UNDERFLOW:
+		case GLErrorType::StackUnderflow:
 			str << "Stack underflow";
 			break;
-		case GL_STACK_OVERFLOW:
+		case GLErrorType::StackOverflow:
 			str << "Stack overflow";
 			break;
 		default:
-			str << "Code " + code;
+			str << "Code " + (int)type;
 			break;
 		}
 		m_text = str.str();
-    }
+	}
 
-    const char *GLError::what() const noexcept {
+	const char *GLError::what() const noexcept {
 		return m_text.c_str();
-    }
+	}
 
-    void CheckGLError(const std::string& file, int line) {
-        auto err = glGetError();
-        if (err == GL_NO_ERROR) return;
-        throw GLError(err,file,line);
-    }
+	void CheckGLError(const std::string& file, int line) {
+		GLErrorType err = (GLErrorType)glGetError();
+		if (err == GLErrorType::NoError) return;
+		throw GLError(err, file, line);
+	}
 
 }

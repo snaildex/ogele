@@ -77,6 +77,7 @@ namespace ogele {
     EnumFlags(BufferFlags)
 
     enum class MappingOptionsFlags : GLenum {
+		None = 0,
         InvalidateRange = GL_MAP_INVALIDATE_RANGE_BIT,
         InvalidateBuffer = GL_MAP_INVALIDATE_BUFFER_BIT,
         FlushExplicit = GL_MAP_FLUSH_EXPLICIT_BIT,
@@ -336,7 +337,7 @@ namespace ogele {
         ConstantColor = GL_CONSTANT_COLOR,
         OneMinusConstantColor = GL_ONE_MINUS_CONSTANT_COLOR,
         ConstantAlpha = GL_CONSTANT_ALPHA,
-        OnaMinusConstantAlpha = GL_ONE_MINUS_CONSTANT_ALPHA,
+        OneMinusConstantAlpha = GL_ONE_MINUS_CONSTANT_ALPHA,
         SrcAlphaSaturate = GL_SRC_ALPHA_SATURATE,
         Src1Color = GL_SRC1_COLOR,
         OneMinusSrc1Color = GL_ONE_MINUS_SRC1_COLOR,

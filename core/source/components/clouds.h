@@ -2,7 +2,7 @@
 namespace ogele {
 
     class Clouds : public Object {
-	
+
 		ivec3 m_noise1Resolution;
 		ivec3 m_noise2Resolution;
 		int m_resolution;

@@ -18,6 +18,7 @@ namespace ogele {
 
 	class Texture2DLoader : public ResourceLoader {
 	public:
-		ResourceProxy *Load(const Jzon::Node *reader) const override;
+		bool CanLoad(const fs::path& file) const override;
+		std::vector<ResourceProxy*> Load() const override;
 	};
 }

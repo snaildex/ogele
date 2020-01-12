@@ -15,4 +15,5 @@ void main()
 {
 	vec3 view=normalize(LookDir);
 	Result=clouds(NearPos,-view, sunDir);
+	//Result=vec4(NearPos,1);
 }

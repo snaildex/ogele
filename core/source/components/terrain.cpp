@@ -3,7 +3,7 @@
 using namespace std;
 using namespace glm;
 namespace ogele {
-	Terrain::Terrain(const ivec2 &size, int chunkSize) {
+	Terrain::Terrain(Actor* actor, const ivec2 &size, int chunkSize) :Renderable(actor) {
 		m_mat = make_unique<Material>();
 		m_size = size;
 		m_chunkSize = chunkSize;
@@ -11,7 +11,7 @@ namespace ogele {
 		m_offset = { -totalSize.x / 2, 0, -totalSize.y / 2 };
 		m_grassRange = 160;
 		m_plane = make_unique<TerrainMesh>(chunkSize + 1);
-		m_grid = make_unique<GridMesh>(m_grassRange);
+		m_grid = make_unique<GridMesh2D>(m_grassRange);
 		m_heightmap = make_unique<Texture2D>(totalSize, false, TextureFormat::R32F);
 		m_heightmap->Bind();
 		m_heightmap->bSetMagFilter(TextureFilterMode::Linear);
@@ -29,7 +29,9 @@ namespace ogele {
 		m_lods = 4;
 		m_lodDist = 50;
 
-		m_shaders.FindResouces({ "Terrain" });
+		m_layerBuffer = make_unique<FloatBuffer<Layer>>(BufferFlags::DynamicStorage, 64, nullptr);
+
+		m_shaders.FindResouces({ "Terrain", "Draw" });
 
 		m_mat->Set("Offset", m_offset);
 		m_mat->Set<float>("MaxLOD", m_lods);
@@ -39,6 +41,7 @@ namespace ogele {
 		m_mat->SetTexture("Normals", m_normalmap.get());
 		m_mat->SetTexture("Heights", m_heightmap.get());
 		m_mat->SetBuffer("Offsets", m_offsets.get());
+		m_mat->SetBuffer("GenLayers", m_layerBuffer.get());
 
 		m_terrainAlbedo = Application::GetResourceByName<Texture2DArray>("TerrainAlbedo").async();
 		m_terrainRoughness = Application::GetResourceByName<Texture2DArray>("TerrainRoughness").async();
@@ -52,6 +55,10 @@ namespace ogele {
 
 	void Terrain::Generate() {
 		ivec2 groupNum = m_chunkSize * m_size / 32;
+		m_layerBuffer->Bind();
+		m_layerBuffer->bSetData(m_layers.data(), 0, m_layers.size());
+		m_layerBuffer->Unbind();
+		m_mat->Set<uint>("GenLayersCount", m_layers.size());
 		m_heightGen->Bind();
 		m_mat->Apply(m_heightGen.get());
 		m_heightGen->bDispatchCompute({ groupNum.x, 1, groupNum.y });
@@ -63,7 +70,7 @@ namespace ogele {
 		m_normals->Unbind();
 	}
 
-	void Terrain::Render(const Camera* camera, const std::vector<std::string>& tags) const {
+	void Terrain::Render(const Camera* camera, const std::vector<std::string>& tags, const ogele::Material* material) const {
 		res_ptr<ShaderProgram> draw = m_shaders.Get(tags);
 		Enable(Feature::CullFace);
 		int step = std::pow(2, m_lods);
@@ -71,6 +78,7 @@ namespace ogele {
 		dvec2 camindex = { campos.x, campos.z };
 		draw->Bind();
 		m_mat->Apply(draw.get());
+		if (material) material->Apply(draw.get());
 		draw->Set("VP", camera->GetViewProjMatrix());
 		draw->Set("CamPos", camera->GetTransform()->GetLocalPos());
 		m_currentChunks.clear();
@@ -93,5 +101,46 @@ namespace ogele {
 		m_grid->Draw();
 		Enable(Feature::CullFace);
 		m_grassDraw->Unbind();*/
+	}
+
+	vector<string> NoiseTypes = {
+		"Perlin"
+	};
+	vector<string> BlendModes = {
+		"Add",
+		"Multiply"
+	};
+
+	void Terrain::Layer::GUI()
+	{
+		GUI::Checkbox(TextID("Enabled"), (bool*)&Enabled);
+		GUI::Combo(TextID("Noise type"), reinterpret_cast<int&>(Type), NoiseTypes);
+		GUI::Combo(TextID("Blend type"), reinterpret_cast<int&>(BlendMode), BlendModes);
+		GUI::Input(TextID("Octaves"), Octaves);
+		GUI::Input(TextID("Offset"), Offset);
+		GUI::Input(TextID("Scale"), Scale);
+		GUI::Input(TextID("Amplitude"), Amplitude);
+		GUI::Input(TextID("Scale factor"), ScaleFactor);
+		GUI::Input(TextID("Amplitude factor"), AmplitudeFactor);
+	}
+
+	void Terrain::GUI()
+	{
+		GUI::Window(TextID("Terrain"), [&] {
+			int rm = -1;
+			for (int i = 0; i < m_layers.size(); ++i)
+				if (GUI::CollapsingHeader(TextID("Layer " + to_string(i)))) {
+					m_layers[i].GUI();
+					if (GUI::Button(TextID("Remove##" + to_string(i))))
+						rm = i;
+					GUI::Spacing();
+				}
+			if (rm >= 0) m_layers.erase(m_layers.begin() + rm);
+			if (GUI::Button(TextID("Add new layer")))
+				m_layers.push_back({});
+			GUI::Separator();
+			if (GUI::Button(TextID("Generate")))
+				Generate();
+		});
 	}
 }

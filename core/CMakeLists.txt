@@ -16,6 +16,7 @@ target_include_directories (core PUBLIC source)
 find_package(OpenGL REQUIRED)
 target_include_directories(core PRIVATE ${OPENGL_INCLUDE_DIRS})
 target_link_libraries(core ${OPENGL_gl_LIBRARY})
-target_link_libraries(core libglew_static glfw assimp)
+target_link_libraries(core libglew_static glfw assimp lua_static)
+target_link_libraries (core Bullet3Common BulletCollision BulletDynamics BulletInverseDynamics BulletSoftBody LinearMath)
 
 set_target_properties(core PROPERTIES VS_GLOBAL_ROOTNAMESPACE "ogele")

@@ -2,6 +2,7 @@
 #include <memory>
 #include <chrono>
 #include <string>
+#include <string_view>
 #include <sstream>
 #include <array>
 #include <vector>
@@ -20,20 +21,15 @@
 #include <thread>
 #include <mutex>
 #include <future>
-
-#define NK_INCLUDE_FIXED_TYPES
-#define NK_INCLUDE_STANDARD_IO
-#define NK_INCLUDE_DEFAULT_ALLOCATOR
-#define NK_INCLUDE_VERTEX_BUFFER_OUTPUT
-#define NK_INCLUDE_FONT_BAKING
-#define NK_INCLUDE_DEFAULT_FONT
-#define NK_KEYSTATE_BASED_INPUT
+#include <limits>
+#include <cctype>
+#include <stdio.h>
+#include <stdarg.h>
 
 #include <stb_image.h>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <nuklear.h>
-#include <demo/glfw_opengl3/nuklear_glfw_gl3.h>
+#define GLM_FORCE_SWIZZLE
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -46,3 +42,7 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
+#include <lua.hpp>
+#define BT_USE_DOUBLE_PRECISION
+#include <btBulletCollisionCommon.h>
+#include <btBulletDynamicsCommon.h>

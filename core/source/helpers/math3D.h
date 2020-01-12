@@ -9,4 +9,5 @@ namespace ogele {
 
 	glm::dvec3 ProjectOnPlane(const  glm::dvec3 &vec, const  glm::dvec3 &up);
 
+	double SimplexNoise(dvec2 v);
 }

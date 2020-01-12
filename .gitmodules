@@ -22,3 +22,9 @@
 [submodule "CImg"]
 	path = CImg
 	url = https://framagit.org/dtschump/CImg.git
+[submodule "Lua"]
+	path = Lua
+	url = https://github.com/walterschell/Lua.git
+[submodule "bullet3"]
+	path = bullet3
+	url = https://github.com/bulletphysics/bullet3.git

@@ -3,32 +3,52 @@
 using namespace std;
 namespace ogele {
 	ResourceContainer::ResourceContainer() {
-		m_loaders["Shader"] = make_unique<ShaderLoader>();
-		m_loaders["Texture2D"] = make_unique<Texture2DLoader>();
-		m_loaders["TextureCube"] = make_unique<TextureCubeLoader>();
-		m_loaders["Texture2DArray"] = make_unique<Texture2DArrayLoader>();
-		m_loaders["RenderPipeline"] = make_unique<RenderPipelineLoader>();
-		m_loaders["Model"] = make_unique<ModelLoader>();
+		m_loaders.emplace_back(new ShaderLoader());
+		m_loaders.emplace_back(new ModelLoader());
+		m_loaders.emplace_back(new RenderPipelineLoader());
+		m_loaders.emplace_back(new TextureCubeLoader());
+		m_loaders.emplace_back(new Texture2DArrayLoader());
+		m_loaders.emplace_back(new Texture2DLoader());
+	}
+
+	void ResourceContainer::HandleDirectory(const fs::path& path) {
+		Log("%s/", path.filename().string().c_str());
+		LogIndent;
+		for (auto& p : fs::directory_iterator(path)) {
+			if (p.is_directory()) {
+				HandleDirectory(p);
+			}
+			if (p.is_regular_file())
+				for (auto& loader : m_loaders)
+					if (loader->CanLoad(fs::absolute(p.path()))) {
+						Log("+ %s", p.path().filename().string().data());
+						loader->EnlistFile(fs::absolute(p.path()));
+						break;
+					}
+		}
 	}
 
 	void ResourceContainer::LoadFromFilesystem() {
 		fs::path cpath = fs::current_path();
-		Jzon::Parser parser;
-		list<fs::path> configs = ScanFiles(".json");
-		for (const auto &p : configs) {
-			Jzon::Node node = parser.parseFile(p.string());
-			if (node.isValid()) {
-				fs::current_path(p.parent_path());
-				if (node.isArray())
-					for (int i = 0; i < node.getCount(); i++) {
-						Jzon::Node cnode = node.get(i);
-						AddResource(m_loaders[cnode.get("type").toString()]->Load(&cnode));
-					}
-				else
-					AddResource(m_loaders[node.get("type").toString()]->Load(&node));
+		HandleDirectory(cpath);
+		fs::current_path(cpath);
+		for (auto& loader : m_loaders) {
+			vector<ResourceProxy*> res;
+			LogSpace();
+			Log("Loading from %s", typeid(*loader.get()).name());
+			{
+				LogIndent;
+				res = loader->Load();
+			}
+			Log("Loaded resources:");
+			{
+				LogIndent;
+				for (auto& r : res) {
+					AddResource(r);
+					Log("%s %s",r->GetName().data(), r->PrintTags().data());
+				}
 			}
 		}
-		fs::current_path(cpath);
 	}
 
 	void ResourceContainer::GUI() {

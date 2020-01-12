@@ -3,13 +3,14 @@
 using namespace std;
 using namespace glm;
 namespace ogele {
-	const array<string, 6> facesNames = {
-			"right",
-			"left",
-			"up",
-			"down",
-			"back",
-			"front"
+
+	const map<string, int> facesNames = {
+		{"Right", 0},
+		{"Left", 1},
+		{"Up", 2},
+		{"Down", 3},
+		{"Back", 4},
+		{"Front", 5}
 	};
 
 	TextureCube::Proxy::Proxy(
@@ -17,7 +18,7 @@ namespace ogele {
 		TextureWrapMode wrap,
 		TextureFilterMode minFilter,
 		TextureFilterMode magFilter,
-		const std::vector<std::filesystem::path>& files) {
+		const std::array<std::filesystem::path, 6>& files) {
 		m_format = format;
 		m_wrap = wrap;
 		m_minFilter = minFilter;
@@ -25,20 +26,34 @@ namespace ogele {
 		m_files = files;
 	}
 
-	ResourceProxy* TextureCubeLoader::Load(const Jzon::Node *reader) const {
-		auto filePath = reader->get("file"); 
-		std::vector<std::filesystem::path> files;
-		for (int i = 0; i < 6; i++)
-			files.emplace_back(fs::absolute(filePath.get(facesNames[i]).toString().c_str()));
-		TextureCube::Proxy *tex = new TextureCube::Proxy(
-			StrToTexFormat.at(ReadStringProperty(reader, "format", "RGBA8")),
-			StrToTexWrapMode.at(ReadStringProperty(reader, "wrap", "repeat")),
-			StrToTexFilterMode.at(ReadStringProperty(reader, "minFilter", "linearMipMapNearest")),
-			StrToTexFilterMode.at(ReadStringProperty(reader, "magFilter", "linear")),
-			files
-		);
-		LoadNameTags(reader, tex);
-		return tex;
+	bool TextureCubeLoader::CanLoad(const fs::path& file) const {
+		if (!Is2DImage(file)) return false;
+		for (const auto& face : facesNames)
+			if (CheckTail(file.stem().filename().string(), face.first)) return true;
+		return false;
+	}
+
+	std::vector<ResourceProxy*> TextureCubeLoader::Load() const {
+		std::vector<ResourceProxy*> res;
+		map<fs::path, array<fs::path, 6>> texFaces;
+		for (const auto& f : GetFiles()) {
+			string p = f.stem().string();
+			for (const auto& face : facesNames)
+				if (CheckTail(p, face.first))
+					texFaces[StripTail(p, face.first.length())][face.second] = f;
+		}
+		for (const auto& tf : texFaces) {
+			TextureCube::Proxy *tex = new TextureCube::Proxy(
+				TextureFormat::RGBA8,
+				TextureWrapMode::Repeat,
+				TextureFilterMode::LinearMipMapNearest,
+				TextureFilterMode::Linear,
+				tf.second
+			);
+			tex->SetName(tf.first.filename().string());
+			res.push_back(tex);
+		}
+		return res;
 	}
 
 	Resource* TextureCube::Proxy::Build() const {

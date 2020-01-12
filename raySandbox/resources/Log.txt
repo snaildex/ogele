@@ -1,0 +1,218 @@
+[resourcecontainer.cpp:015,       th 06900] resources/
+[resourcecontainer.cpp:024,       th 06900]     + Bake.comp
+[resourcecontainer.cpp:024,       th 06900]     + Cube.obj
+[resourcecontainer.cpp:024,       th 06900]     + Raytrace.frag
+[resourcecontainer.cpp:024,       th 06900]     + Raytrace.vert
+[resourcecontainer.cpp:024,       th 06900]     + Sphere.obj
+[resourcecontainer.cpp:024,       th 06900]     + SphereHigh.obj
+
+[resourcecontainer.cpp:038,       th 06900] Loading from class ogele::ShaderLoader
+[shaderloader.cpp:079,            th 06900]     Bake
+[shaderloader.cpp:082,            th 06900]         Bake.comp
+[shaderloader.cpp:079,            th 06900]     Raytrace
+[shaderloader.cpp:082,            th 06900]         Raytrace.frag
+[shaderloader.cpp:082,            th 06900]         Raytrace.vert
+[resourcecontainer.cpp:043,       th 06900] Loaded resources:
+[resourcecontainer.cpp:048,       th 06900]     Bake (.) 
+[resourcecontainer.cpp:048,       th 06900]     Raytrace (.) 
+
+[resourcecontainer.cpp:038,       th 06900] Loading from class ogele::ModelLoader
+[resourcecontainer.cpp:043,       th 06900] Loaded resources:
+[resourcecontainer.cpp:048,       th 06900]     Cube (.) 
+[resourcecontainer.cpp:048,       th 06900]     Sphere (.) 
+[resourcecontainer.cpp:048,       th 06900]     SphereHigh (.) 
+
+[resourcecontainer.cpp:038,       th 06900] Loading from class ogele::RenderPipelineLoader
+[resourcecontainer.cpp:043,       th 06900] Loaded resources:
+
+[resourcecontainer.cpp:038,       th 06900] Loading from class ogele::TextureCubeLoader
+[resourcecontainer.cpp:043,       th 06900] Loaded resources:
+
+[resourcecontainer.cpp:038,       th 06900] Loading from class ogele::Texture2DArrayLoader
+[resourcecontainer.cpp:043,       th 06900] Loaded resources:
+
+[resourcecontainer.cpp:038,       th 06900] Loading from class ogele::Texture2DLoader
+[resourcecontainer.cpp:043,       th 06900] Loaded resources:
+[main.cpp:041,                    th 06900] Baking Cube
+[main.cpp:044,                    th 06900]     Triangle   0
+[main.cpp:046,                    th 06900]           pos.x( -0.5, -0.5,  0.5),   pos.y( -0.5, -0.5, -0.5),  pos.z(  0.5, -0.5, -0.5)
+[main.cpp:047,                    th 06900]          norm.x(    0,   -1,   -0),  norm.y(    0,   -1,   -0), norm.z(    0,   -1,   -0)
+[main.cpp:048,                    th 06900]         trinorm(    0,   -1,    0), normdot(    1,    1,    1)
+
+[main.cpp:044,                    th 06900]     Triangle   1
+[main.cpp:046,                    th 06900]           pos.x(  0.5, -0.5, -0.5),   pos.y(  0.5, -0.5,  0.5),  pos.z( -0.5, -0.5,  0.5)
+[main.cpp:047,                    th 06900]          norm.x(    0,   -1,   -0),  norm.y(    0,   -1,   -0), norm.z(    0,   -1,   -0)
+[main.cpp:048,                    th 06900]         trinorm(    0,   -1,    0), normdot(    1,    1,    1)
+
+[main.cpp:044,                    th 06900]     Triangle   2
+[main.cpp:046,                    th 06900]           pos.x( -0.5,  0.5,  0.5),   pos.y(  0.5,  0.5,  0.5),  pos.z(  0.5,  0.5, -0.5)
+[main.cpp:047,                    th 06900]          norm.x(    0,    1,   -0),  norm.y(    0,    1,   -0), norm.z(    0,    1,   -0)
+[main.cpp:048,                    th 06900]         trinorm(   -0,    1,    0), normdot(    1,    1,    1)
+
+[main.cpp:044,                    th 06900]     Triangle   3
+[main.cpp:046,                    th 06900]           pos.x(  0.5,  0.5, -0.5),   pos.y( -0.5,  0.5, -0.5),  pos.z( -0.5,  0.5,  0.5)
+[main.cpp:047,                    th 06900]          norm.x(    0,    1,   -0),  norm.y(    0,    1,   -0), norm.z(    0,    1,   -0)
+[main.cpp:048,                    th 06900]         trinorm(    0,    1,    0), normdot(    1,    1,    1)
+
+[main.cpp:044,                    th 06900]     Triangle   4
+[main.cpp:046,                    th 06900]           pos.x( -0.5, -0.5,  0.5),   pos.y(  0.5, -0.5,  0.5),  pos.z(  0.5,  0.5,  0.5)
+[main.cpp:047,                    th 06900]          norm.x(    0,    0,    1),  norm.y(    0,    0,    1), norm.z(    0,    0,    1)
+[main.cpp:048,                    th 06900]         trinorm(    0,    0,    1), normdot(    1,    1,    1)
+
+[main.cpp:044,                    th 06900]     Triangle   5
+[main.cpp:046,                    th 06900]           pos.x(  0.5,  0.5,  0.5),   pos.y( -0.5,  0.5,  0.5),  pos.z( -0.5, -0.5,  0.5)
+[main.cpp:047,                    th 06900]          norm.x(    0,    0,    1),  norm.y(    0,    0,    1), norm.z(    0,    0,    1)
+[main.cpp:048,                    th 06900]         trinorm(    0,    0,    1), normdot(    1,    1,    1)
+
+[main.cpp:044,                    th 06900]     Triangle   6
+[main.cpp:046,                    th 06900]           pos.x(  0.5, -0.5,  0.5),   pos.y(  0.5, -0.5, -0.5),  pos.z(  0.5,  0.5, -0.5)
+[main.cpp:047,                    th 06900]          norm.x(    1,    0,   -0),  norm.y(    1,    0,   -0), norm.z(    1,    0,   -0)
+[main.cpp:048,                    th 06900]         trinorm(    1,    0,    0), normdot(    1,    1,    1)
+
+[main.cpp:044,                    th 06900]     Triangle   7
+[main.cpp:046,                    th 06900]           pos.x(  0.5,  0.5, -0.5),   pos.y(  0.5,  0.5,  0.5),  pos.z(  0.5, -0.5,  0.5)
+[main.cpp:047,                    th 06900]          norm.x(    1,    0,   -0),  norm.y(    1,    0,   -0), norm.z(    1,    0,   -0)
+[main.cpp:048,                    th 06900]         trinorm(    1,    0,   -0), normdot(    1,    1,    1)
+
+[main.cpp:044,                    th 06900]     Triangle   8
+[main.cpp:046,                    th 06900]           pos.x(  0.5, -0.5, -0.5),   pos.y( -0.5, -0.5, -0.5),  pos.z( -0.5,  0.5, -0.5)
+[main.cpp:047,                    th 06900]          norm.x(    0,    0,   -1),  norm.y(    0,    0,   -1), norm.z(    0,    0,   -1)
+[main.cpp:048,                    th 06900]         trinorm(    0,    0,   -1), normdot(    1,    1,    1)
+
+[main.cpp:044,                    th 06900]     Triangle   9
+[main.cpp:046,                    th 06900]           pos.x( -0.5,  0.5, -0.5),   pos.y(  0.5,  0.5, -0.5),  pos.z(  0.5, -0.5, -0.5)
+[main.cpp:047,                    th 06900]          norm.x(    0,    0,   -1),  norm.y(    0,    0,   -1), norm.z(    0,    0,   -1)
+[main.cpp:048,                    th 06900]         trinorm(    0,    0,   -1), normdot(    1,    1,    1)
+
+[main.cpp:044,                    th 06900]     Triangle  10
+[main.cpp:046,                    th 06900]           pos.x( -0.5, -0.5, -0.5),   pos.y( -0.5, -0.5,  0.5),  pos.z( -0.5,  0.5,  0.5)
+[main.cpp:047,                    th 06900]          norm.x(   -1,    0,   -0),  norm.y(   -1,    0,   -0), norm.z(   -1,    0,   -0)
+[main.cpp:048,                    th 06900]         trinorm(   -1,    0,    0), normdot(    1,    1,    1)
+
+[main.cpp:044,                    th 06900]     Triangle  11
+[main.cpp:046,                    th 06900]           pos.x( -0.5,  0.5,  0.5),   pos.y( -0.5,  0.5, -0.5),  pos.z( -0.5, -0.5, -0.5)
+[main.cpp:047,                    th 06900]          norm.x(   -1,    0,   -0),  norm.y(   -1,    0,   -0), norm.z(   -1,    0,   -0)
+[main.cpp:048,                    th 06900]         trinorm(   -1,    0,   -0), normdot(    1,    1,    1)
+
+[main.cpp:041,                    th 06900] Baking Sphere
+[main.cpp:044,                    th 06900]     Triangle   0
+[main.cpp:046,                    th 06900]           pos.x(    0,    1,   -0),   pos.y(0.9428,-0.3333,   -0),  pos.z(-0.4714,-0.3333,-0.8165)
+[main.cpp:047,                    th 06900]          norm.x(    0,    1,   -0),  norm.y(0.942819,-0.333307,   -0), norm.z(-0.471405,-0.333303,-0.816508)
+[main.cpp:048,                    th 06900]         trinorm(0.471408,0.333341,-0.816491), normdot(0.333341,0.333348,0.333344)
+
+[main.cpp:044,                    th 06900]     Triangle   1
+[main.cpp:046,                    th 06900]           pos.x(    0,    1,   -0),   pos.y(-0.4714,-0.3333,-0.8165),  pos.z(-0.4714,-0.3333,0.8165)
+[main.cpp:047,                    th 06900]          norm.x(    0,    1,   -0),  norm.y(-0.471405,-0.333303,-0.816508), norm.z(-0.471405,-0.333303,0.816508)
+[main.cpp:048,                    th 06900]         trinorm(-0.942807,0.333338,-8.6824e-09), normdot(0.333338,0.333341,0.333341)
+
+[main.cpp:044,                    th 06900]     Triangle   2
+[main.cpp:046,                    th 06900]           pos.x(    0,    1,   -0),   pos.y(-0.4714,-0.3333,0.8165),  pos.z(0.9428,-0.3333,   -0)
+[main.cpp:047,                    th 06900]          norm.x(    0,    1,   -0),  norm.y(-0.471405,-0.333303,0.816508), norm.z(0.942819,-0.333307,   -0)
+[main.cpp:048,                    th 06900]         trinorm(0.471408,0.333341,0.816491), normdot(0.333341,0.333344,0.333348)
+
+[main.cpp:044,                    th 06900]     Triangle   3
+[main.cpp:046,                    th 06900]           pos.x(0.9428,-0.3333,   -0),   pos.y(-0.4714,-0.3333,0.8165),  pos.z(-0.4714,-0.3333,-0.8165)
+[main.cpp:047,                    th 06900]          norm.x(0.942819,-0.333307,   -0),  norm.y(-0.471405,-0.333303,0.816508), norm.z(-0.471405,-0.333303,-0.816508)
+[main.cpp:048,                    th 06900]         trinorm(   -0,   -1,    0), normdot(0.333307,0.333303,0.333303)
+
+[main.cpp:041,                    th 06900] Baking SphereHigh
+[main.cpp:044,                    th 06900]     Triangle   0
+[main.cpp:046,                    th 06900]           pos.x(    0,    1,   -0),   pos.y(0.8944,0.4472,   -0),  pos.z(0.2764,0.4472,-0.8507)
+[main.cpp:047,                    th 06900]          norm.x(   -0,    1,   -0),  norm.y(0.894427,0.447214,   -0), norm.z(0.27639,0.447183,-0.850668)
+[main.cpp:048,                    th 06900]         trinorm(0.491148,0.79465,-0.356799), normdot(0.79465,0.794674,0.79462)
+
+[main.cpp:044,                    th 06900]     Triangle   1
+[main.cpp:046,                    th 06900]           pos.x(    0,    1,   -0),   pos.y(0.2764,0.4472,-0.8507),  pos.z(-0.7236,0.4472,-0.5257)
+[main.cpp:047,                    th 06900]          norm.x(   -0,    1,   -0),  norm.y(0.27639,0.447183,-0.850668), norm.z(-0.72362,0.447212,-0.525714)
+[main.cpp:048,                    th 06900]         trinorm(-0.187636,0.79465,-0.577342), normdot(0.79465,0.79462,0.794672)
+
+[main.cpp:044,                    th 06900]     Triangle   2
+[main.cpp:046,                    th 06900]           pos.x(    0,    1,   -0),   pos.y(-0.7236,0.4472,-0.5257),  pos.z(-0.7236,0.4472,0.5257)
+[main.cpp:047,                    th 06900]          norm.x(   -0,    1,   -0),  norm.y(-0.72362,0.447212,-0.525714), norm.z(-0.72362,0.447212,0.525714)
+[main.cpp:048,                    th 06900]         trinorm(-0.607075,0.794645,7.90205e-09), normdot(0.794645,0.794666,0.794666)
+
+[main.cpp:044,                    th 06900]     Triangle   3
+[main.cpp:046,                    th 06900]           pos.x(    0,    1,   -0),   pos.y(-0.7236,0.4472,0.5257),  pos.z(0.2764,0.4472,0.8507)
+[main.cpp:047,                    th 06900]          norm.x(   -0,    1,   -0),  norm.y(-0.72362,0.447212,0.525714), norm.z(0.27639,0.447183,0.850668)
+[main.cpp:048,                    th 06900]         trinorm(-0.187636,0.79465,0.577342), normdot(0.79465,0.794672,0.79462)
+
+[main.cpp:044,                    th 06900]     Triangle   4
+[main.cpp:046,                    th 06900]           pos.x(    0,    1,   -0),   pos.y(0.2764,0.4472,0.8507),  pos.z(0.8944,0.4472,   -0)
+[main.cpp:047,                    th 06900]          norm.x(   -0,    1,   -0),  norm.y(0.27639,0.447183,0.850668), norm.z(0.894427,0.447214,   -0)
+[main.cpp:048,                    th 06900]         trinorm(0.491148,0.79465,0.356799), normdot(0.79465,0.79462,0.794674)
+
+[main.cpp:044,                    th 06900]     Triangle   5
+[main.cpp:046,                    th 06900]           pos.x(0.8944,0.4472,   -0),   pos.y(0.7236,-0.4472,0.5257),  pos.z(0.7236,-0.4472,-0.5257)
+[main.cpp:047,                    th 06900]          norm.x(0.894427,0.447214,   -0),  norm.y(0.72362,-0.447212,0.525714), norm.z(0.72362,-0.447212,-0.525714)
+[main.cpp:048,                    th 06900]         trinorm(0.98225,-0.187576,1.69592e-09), normdot(0.794664,0.794662,0.794662)
+
+[main.cpp:044,                    th 06900]     Triangle   6
+[main.cpp:046,                    th 06900]           pos.x(0.2764,0.4472,-0.8507),   pos.y(0.7236,-0.4472,-0.5257),  pos.z(-0.2764,-0.4472,-0.8507)
+[main.cpp:047,                    th 06900]          norm.x(0.27639,0.447183,-0.850668),  norm.y(0.72362,-0.447212,-0.525714), norm.z(-0.27639,-0.447183,-0.850668)
+[main.cpp:048,                    th 06900]         trinorm(0.303596,-0.187643,-0.934141), normdot(0.794644,0.794696,0.794644)
+
+[main.cpp:044,                    th 06900]     Triangle   7
+[main.cpp:046,                    th 06900]           pos.x(-0.7236,0.4472,-0.5257),   pos.y(-0.2764,-0.4472,-0.8507),  pos.z(-0.8944,-0.4472,    0)
+[main.cpp:047,                    th 06900]          norm.x(-0.72362,0.447212,-0.525714),  norm.y(-0.27639,-0.447183,-0.850668), norm.z(-0.894427,-0.447214,   -0)
+[main.cpp:048,                    th 06900]         trinorm(-0.79469,-0.187566,-0.577311), normdot(0.794672,0.79462,0.794674)
+
+[main.cpp:044,                    th 06900]     Triangle   8
+[main.cpp:046,                    th 06900]           pos.x(-0.7236,0.4472,0.5257),   pos.y(-0.8944,-0.4472,    0),  pos.z(-0.2764,-0.4472,0.8507)
+[main.cpp:047,                    th 06900]          norm.x(-0.72362,0.447212,0.525714),  norm.y(-0.894427,-0.447214,   -0), norm.z(-0.27639,-0.447183,0.850668)
+[main.cpp:048,                    th 06900]         trinorm(-0.79469,-0.187566,0.577311), normdot(0.794672,0.794674,0.79462)
+
+[main.cpp:044,                    th 06900]     Triangle   9
+[main.cpp:046,                    th 06900]           pos.x(0.2764,0.4472,0.8507),   pos.y(-0.2764,-0.4472,0.8507),  pos.z(0.7236,-0.4472,0.5257)
+[main.cpp:047,                    th 06900]          norm.x(0.27639,0.447183,0.850668),  norm.y(-0.27639,-0.447183,0.850668), norm.z(0.72362,-0.447212,0.525714)
+[main.cpp:048,                    th 06900]         trinorm(0.303596,-0.187643,0.934141), normdot(0.794644,0.794644,0.794696)
+
+[main.cpp:044,                    th 06900]     Triangle  10
+[main.cpp:046,                    th 06900]           pos.x(0.7236,-0.4472,-0.5257),   pos.y(0.2764,0.4472,-0.8507),  pos.z(0.8944,0.4472,   -0)
+[main.cpp:047,                    th 06900]          norm.x(0.72362,-0.447212,-0.525714),  norm.y(0.27639,0.447183,-0.850668), norm.z(0.894427,0.447214,   -0)
+[main.cpp:048,                    th 06900]         trinorm(0.79469,0.187566,-0.577311), normdot(0.794672,0.79462,0.794674)
+
+[main.cpp:044,                    th 06900]     Triangle  11
+[main.cpp:046,                    th 06900]           pos.x(-0.2764,-0.4472,-0.8507),   pos.y(-0.7236,0.4472,-0.5257),  pos.z(0.2764,0.4472,-0.8507)
+[main.cpp:047,                    th 06900]          norm.x(-0.27639,-0.447183,-0.850668),  norm.y(-0.72362,0.447212,-0.525714), norm.z(0.27639,0.447183,-0.850668)
+[main.cpp:048,                    th 06900]         trinorm(-0.303596,0.187643,-0.934141), normdot(0.794644,0.794696,0.794644)
+
+[main.cpp:044,                    th 06900]     Triangle  12
+[main.cpp:046,                    th 06900]           pos.x(-0.8944,-0.4472,    0),   pos.y(-0.7236,0.4472,0.5257),  pos.z(-0.7236,0.4472,-0.5257)
+[main.cpp:047,                    th 06900]          norm.x(-0.894427,-0.447214,   -0),  norm.y(-0.72362,0.447212,0.525714), norm.z(-0.72362,0.447212,-0.525714)
+[main.cpp:048,                    th 06900]         trinorm(-0.98225,0.187576,1.69592e-09), normdot(0.794664,0.794662,0.794662)
+
+[main.cpp:044,                    th 06900]     Triangle  13
+[main.cpp:046,                    th 06900]           pos.x(-0.2764,-0.4472,0.8507),   pos.y(0.2764,0.4472,0.8507),  pos.z(-0.7236,0.4472,0.5257)
+[main.cpp:047,                    th 06900]          norm.x(-0.27639,-0.447183,0.850668),  norm.y(0.27639,0.447183,0.850668), norm.z(-0.72362,0.447212,0.525714)
+[main.cpp:048,                    th 06900]         trinorm(-0.303596,0.187643,0.934141), normdot(0.794644,0.794644,0.794696)
+
+[main.cpp:044,                    th 06900]     Triangle  14
+[main.cpp:046,                    th 06900]           pos.x(0.7236,-0.4472,0.5257),   pos.y(0.8944,0.4472,   -0),  pos.z(0.2764,0.4472,0.8507)
+[main.cpp:047,                    th 06900]          norm.x(0.72362,-0.447212,0.525714),  norm.y(0.894427,0.447214,   -0), norm.z(0.27639,0.447183,0.850668)
+[main.cpp:048,                    th 06900]         trinorm(0.79469,0.187566,0.577311), normdot(0.794672,0.794674,0.79462)
+
+[main.cpp:044,                    th 06900]     Triangle  15
+[main.cpp:046,                    th 06900]           pos.x(    0,   -1,   -0),   pos.y(-0.2764,-0.4472,-0.8507),  pos.z(0.7236,-0.4472,-0.5257)
+[main.cpp:047,                    th 06900]          norm.x(    0,   -1,   -0),  norm.y(-0.27639,-0.447183,-0.850668), norm.z(0.72362,-0.447212,-0.525714)
+[main.cpp:048,                    th 06900]         trinorm(0.187636,-0.79465,-0.577342), normdot(0.79465,0.79462,0.794672)
+
+[main.cpp:044,                    th 06900]     Triangle  16
+[main.cpp:046,                    th 06900]           pos.x(    0,   -1,   -0),   pos.y(-0.8944,-0.4472,    0),  pos.z(-0.2764,-0.4472,-0.8507)
+[main.cpp:047,                    th 06900]          norm.x(    0,   -1,   -0),  norm.y(-0.894427,-0.447214,   -0), norm.z(-0.27639,-0.447183,-0.850668)
+[main.cpp:048,                    th 06900]         trinorm(-0.491148,-0.79465,-0.356799), normdot(0.79465,0.794674,0.79462)
+
+[main.cpp:044,                    th 06900]     Triangle  17
+[main.cpp:046,                    th 06900]           pos.x(    0,   -1,   -0),   pos.y(-0.2764,-0.4472,0.8507),  pos.z(-0.8944,-0.4472,    0)
+[main.cpp:047,                    th 06900]          norm.x(    0,   -1,   -0),  norm.y(-0.27639,-0.447183,0.850668), norm.z(-0.894427,-0.447214,   -0)
+[main.cpp:048,                    th 06900]         trinorm(-0.491148,-0.79465,0.356799), normdot(0.79465,0.79462,0.794674)
+
+[main.cpp:044,                    th 06900]     Triangle  18
+[main.cpp:046,                    th 06900]           pos.x(    0,   -1,   -0),   pos.y(0.7236,-0.4472,0.5257),  pos.z(-0.2764,-0.4472,0.8507)
+[main.cpp:047,                    th 06900]          norm.x(    0,   -1,   -0),  norm.y(0.72362,-0.447212,0.525714), norm.z(-0.27639,-0.447183,0.850668)
+[main.cpp:048,                    th 06900]         trinorm(0.187636,-0.79465,0.577342), normdot(0.79465,0.794672,0.79462)
+
+[main.cpp:044,                    th 06900]     Triangle  19
+[main.cpp:046,                    th 06900]           pos.x(    0,   -1,   -0),   pos.y(0.7236,-0.4472,-0.5257),  pos.z(0.7236,-0.4472,0.5257)
+[main.cpp:047,                    th 06900]          norm.x(    0,   -1,   -0),  norm.y(0.72362,-0.447212,-0.525714), norm.z(0.72362,-0.447212,0.525714)
+[main.cpp:048,                    th 06900]         trinorm(0.607075,-0.794645,7.90205e-09), normdot(0.794645,0.794666,0.794666)
+

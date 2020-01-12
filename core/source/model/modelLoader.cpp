@@ -3,25 +3,54 @@
 using namespace std;
 using namespace glm;
 namespace ogele {
-	Model::Proxy::Proxy(const fs::path& path, const std::vector<std::string>& shader) {
+
+	const set<string> Resolutions = {
+			".fbx",
+			".dae",
+			".gltf",
+			".glb",
+			".blend",
+			".3ds",
+			".ase",
+			".obj",
+			".ifc",
+			".xgl",
+			".zgl",
+			".ply",
+			".dxf",
+			".lwo",
+			".lws",
+			".lxo",
+			".stl",
+			".x",
+			".ac",
+			".ms3d",
+			".cob",
+			".scn",
+			".bvh"
+	};
+
+	bool ModelLoader::CanLoad(const fs::path & file) const
+	{
+		return Resolutions.count(file.extension().string()) > 0;
+	}
+
+	Model::Proxy::Proxy(const fs::path& path) {
 		m_path = path;
-		m_shader = shader;
 	}
 
 	void ProcessNode(Model* model, Transform* tr, aiNode* node) {
 		tr->CreateActor(node->mName.C_Str());
-		vec3 pos;
+		vec3 pos, scale;
 		aiQuaternion rot;
-		node->mTransformation.DecomposeNoScaling(rot, reinterpret_cast<aiVector3D&>(pos));
-		quat nrot;
-		nrot.x = rot.x;
-		nrot.y = rot.y;
-		nrot.z = rot.z;
-		nrot.w = rot.w;
+		node->mTransformation.Decompose(reinterpret_cast<aiVector3D&>(scale), rot, reinterpret_cast<aiVector3D&>(pos));
 		tr->SetLocalPos(pos);
-		tr->SetLocalRot(nrot);
+		tr->SetLocalRot({ rot.w, rot.x, rot.y, rot.z });
+		tr->SetLocalScale(scale);
 		if (node->mNumMeshes > 0) {
+			tr->GetActor()->AddTag("Model");
 			Model::Node* mnode = tr->GetActor()->AddComponent<Model::Node>();
+			mnode->FindShaders({ "Model" });
 			for (size_t i = 0; i < node->mNumMeshes; ++i)
 				mnode->AddMesh(model->GetMesh(node->mMeshes[i]));
 		}
@@ -32,38 +61,45 @@ namespace ogele {
 	Resource* Model::Proxy::Build() const {
 		Assimp::Importer import;
 		import.SetPropertyBool(AI_CONFIG_IMPORT_FBX_PRESERVE_PIVOTS, false);
-		const aiScene *scene = import.ReadFile(m_path.string(), aiProcessPreset_TargetRealtime_MaxQuality);
+		const aiScene *scene = import.ReadFile(m_path.string(), aiProcessPreset_TargetRealtime_Fast);
 		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 			throw exception(import.GetErrorString());
-		Model* res = new Model(scene->mNumMaterials, m_shader);
+		Model* res = new Model(scene->mNumMaterials);
 		res->CopyNameTagsFrom(this);
 		if (scene->HasMeshes())
 			for (int i = 0; i < scene->mNumMeshes; ++i) {
 				aiMesh *m = scene->mMeshes[i];
 				unsigned int vertCount = m->mNumVertices;
-				ModelMesh* mesh = new ModelMesh();
+				vector<vec4> buffer(vertCount);
+				ModelMesh* mesh = new ModelMesh({ "Model" });
 				if (m->HasPositions()) {
-					FloatBuffer<vec3>* buf = new FloatBuffer<vec3>(BufferFlags::None, vertCount, reinterpret_cast<vec3*>(m->mVertices));
+					for (int v = 0; v < vertCount; ++v) buffer[v] = vec4(reinterpret_cast<const vec3&>(m->mVertices[v]), 0);
+					FloatBuffer<vec4>* buf = new FloatBuffer<vec4>(BufferFlags::None, vertCount, buffer.data());
 					mesh->SetPositionBuffer(buf);
 				}
 				if (m->HasNormals()) {
-					FloatBuffer<vec3>* buf = new FloatBuffer<vec3>(BufferFlags::None, vertCount, reinterpret_cast<vec3*>(m->mNormals));
+					for (int v = 0; v < vertCount; ++v) buffer[v] = vec4(reinterpret_cast<const vec3&>(m->mNormals[v]), 0);
+					FloatBuffer<vec4>* buf = new FloatBuffer<vec4>(BufferFlags::None, vertCount, buffer.data());
 					mesh->SetNormalsBuffer(buf);
 				}
 				if (m->HasTangentsAndBitangents()) {
-					FloatBuffer<vec3>* buf = new FloatBuffer<vec3>(BufferFlags::None, vertCount, reinterpret_cast<vec3*>(m->mTangents));
+					for (int v = 0; v < vertCount; ++v) buffer[v] = vec4(reinterpret_cast<const vec3&>(m->mTangents[v]), 0);
+					FloatBuffer<vec4>* buf = new FloatBuffer<vec4>(BufferFlags::None, vertCount, buffer.data());
 					mesh->SetTangentsBuffer(buf);
-					buf = new FloatBuffer<vec3>(BufferFlags::None, vertCount, reinterpret_cast<vec3*>(m->mBitangents));
+					for (int v = 0; v < vertCount; ++v) buffer[v] = vec4(reinterpret_cast<const vec3&>(m->mBitangents[v]), 0);
+					buf = new FloatBuffer<vec4>(BufferFlags::None, vertCount, buffer.data());
 					mesh->SetBitangentsBuffer(buf);
 				}
 				for (int j = 0; j < 4; ++j)
 					if (m->HasVertexColors(j)) {
-						FloatBuffer<vec4>* buf = new FloatBuffer<vec4>(BufferFlags::None, vertCount, reinterpret_cast<vec4*>(m->mColors[j]));
+						for (int v = 0; v < vertCount; ++v) buffer[v] = reinterpret_cast<const vec4&>(m->mColors[j][v]);
+						FloatBuffer<vec4>* buf = new FloatBuffer<vec4>(BufferFlags::None, vertCount, buffer.data());
 						mesh->SetColorBuffer(j, buf);
 					}
 				for (int j = 0; j < 4; ++j)
 					if (m->HasTextureCoords(j)) {
-						FloatBuffer<vec3>* buf = new FloatBuffer<vec3>(BufferFlags::None, vertCount, reinterpret_cast<vec3*>(m->mTextureCoords[j]));
+						for (int v = 0; v < vertCount; ++v) buffer[v] = vec4(reinterpret_cast<const vec3&>(m->mTextureCoords[j][v]), 0);
+						FloatBuffer<vec4>* buf = new FloatBuffer<vec4>(BufferFlags::None, vertCount, buffer.data());
 						mesh->SetUVBuffer(j, buf);
 					}
 				if (m->HasFaces()) {
@@ -78,14 +114,17 @@ namespace ogele {
 				res->AddMesh(mesh, m->mMaterialIndex);
 			}
 		ProcessNode(res, res->GetRoot(), scene->mRootNode);
+		res->GetRoot()->CreateActor(GetName())->CopyNameTagsFrom(this);
 		return res;
 	}
 
-	ResourceProxy *ModelLoader::Load(const Jzon::Node *reader) const {
-		Model::Proxy* res = new Model::Proxy(
-			fs::absolute(reader->get("file").toString()),
-			ReadStringArrayProperty(reader, "shader"));
-		LoadNameTags(reader, res);
+	std::vector<ResourceProxy*> ModelLoader::Load() const {
+		std::vector<ResourceProxy*> res;
+		for (const auto& f : GetFiles()) {
+			auto proxy = new Model::Proxy(f);
+			LoadNameTags(proxy, f.parent_path() / f.stem());
+			res.push_back(proxy);
+		}
 		return res;
 	}
 }

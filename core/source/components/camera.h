@@ -10,7 +10,7 @@ namespace ogele {
 
 		virtual void UpdateProjection() {};
 	protected:
-		Camera(const glm::ivec2 &frameSize);
+		Camera(Actor* actor, const glm::ivec2 &frameSize);
 
 	public:
 		void LookAround(const glm::dvec2 &delta, double speed, double xMin, double xMax);
@@ -19,6 +19,8 @@ namespace ogele {
 			m_frameSize = value;
 			UpdateProjection();
 		}
+
+		virtual Component* Clone(Actor* actor) const = 0;
 
 		virtual void UpdateMaterial();
 		virtual std::string GetName() const override { return "Camera"; };
@@ -39,6 +41,8 @@ namespace ogele {
 		void UpdateProjection() override;
 
 	public:
+		virtual Component* Clone(Actor* actor) const;
+
 		void SetFOV(double value) noexcept {
 			m_fov = value;
 			UpdateProjection();
@@ -60,6 +64,6 @@ namespace ogele {
 
 		double GetZFar() const noexcept { return m_zFar; }
 
-		PerspectiveCamera(const glm::ivec2 &frameSize, double fov, double zNear, double zFar);
+		PerspectiveCamera(Actor* actor, const glm::ivec2 &frameSize, double fov, double zNear, double zFar);
 	};
 }

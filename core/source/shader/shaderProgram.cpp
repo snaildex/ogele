@@ -24,16 +24,14 @@ namespace ogele {
 			throw ShaderCompileException(GetName(), message);
 		}
 
-		GLint numUnifBlocks = 0;
-		glGetProgramInterfaceiv(m_handle, GL_UNIFORM_BLOCK, GL_ACTIVE_RESOURCES, &numUnifBlocks);
-		GLErr();
 		const GLenum blockProperties[] = { GL_NAME_LENGTH };
 		const GLenum activeUnifProp[] = { GL_ACTIVE_VARIABLES };
 		const GLenum unifProperties[] = { GL_NAME_LENGTH, GL_TYPE, GL_LOCATION };
-		GLint numStorBlocks = 0;
-		glGetProgramInterfaceiv(m_handle, GL_SHADER_STORAGE_BLOCK, GL_ACTIVE_RESOURCES, &numStorBlocks);
-		GLErr();
 		Bind();
+
+		GLint numUnifBlocks = 0;
+		glGetProgramInterfaceiv(m_handle, GL_UNIFORM_BLOCK, GL_ACTIVE_RESOURCES, &numUnifBlocks);
+		GLErr();
 		for (int blockIx = 0; blockIx < numUnifBlocks; ++blockIx) {
 			GLint bufProp[1];
 			glGetProgramResourceiv(m_handle, GL_UNIFORM_BLOCK, blockIx, 1, blockProperties, 1, NULL, bufProp);
@@ -45,6 +43,10 @@ namespace ogele {
 			GLErr();
 			m_buffers.emplace_back(blockIx, string(s.data()), BufferTarget::Uniform);
 		}
+
+		GLint numStorBlocks = 0;
+		glGetProgramInterfaceiv(m_handle, GL_SHADER_STORAGE_BLOCK, GL_ACTIVE_RESOURCES, &numStorBlocks);
+		GLErr();
 		for (int blockIx = 0; blockIx < numStorBlocks; ++blockIx) {
 			GLint bufProp[1];
 			glGetProgramResourceiv(m_handle, GL_SHADER_STORAGE_BLOCK, blockIx, 1, blockProperties, 1, NULL, bufProp);
@@ -56,6 +58,16 @@ namespace ogele {
 			GLErr();
 			m_buffers.emplace_back(blockIx + numUnifBlocks, string(s.data()), BufferTarget::ShaderStorage);
 		}
+
+		GLint numAtomics = 0;
+		glGetProgramInterfaceiv(m_handle, GL_ATOMIC_COUNTER_BUFFER, GL_ACTIVE_RESOURCES, &numAtomics);
+		GLErr();
+		for (int blockIx = 0; blockIx < numAtomics; ++blockIx) {
+			GLint bufProp[1];
+			glGetActiveAtomicCounterBufferiv(m_handle, blockIx, GL_ATOMIC_COUNTER_BUFFER_BINDING, bufProp);
+			m_buffers.emplace_back(bufProp[0], string("AtomicCounter")+to_string(bufProp[0]), BufferTarget::AtomicCounter);
+		}
+
 		GLint numUniforms = 0;
 		glGetProgramInterfaceiv(m_handle, GL_UNIFORM, GL_ACTIVE_RESOURCES, &numUniforms);
 		const GLenum properties[4] = { GL_BLOCK_INDEX, GL_TYPE, GL_NAME_LENGTH, GL_LOCATION };
@@ -371,16 +383,14 @@ namespace ogele {
 
 	void ShaderProgramCollection::FindResouces(const std::vector<std::string>& tags)
 	{
-		auto sh = Application::GetResourcesByTags<ShaderProgram>(tags);
-		for (auto s : sh)
-			m_shaders.push_back(s);
+		m_shaders = Application::GetResourcesByTags<ShaderProgram>(tags);
 	}
 
 	res_ptr<ShaderProgram> ShaderProgramCollection::Get(const std::vector<std::string>& tags) const
 	{
 		for (auto sh : m_shaders)
-			if (sh->HasTags(tags))
+			if (sh.getProxy()->HasTags(tags))
 				return sh;
-		return nullptr;
+		return res_ptr<ShaderProgram>();
 	}
 }

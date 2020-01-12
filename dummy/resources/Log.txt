@@ -1,0 +1,110 @@
+[resourcecontainer.cpp:015,       th 10380] resources/
+[resourcecontainer.cpp:015,       th 10380]     Lighting/
+[resourcecontainer.cpp:024,       th 10380]         + BRDFLUT.bmp
+[resourcecontainer.cpp:024,       th 10380]         + CloudsRender.frag
+[resourcecontainer.cpp:024,       th 10380]         + CloudsRender.vert
+[resourcecontainer.cpp:024,       th 10380]         + GenerateCloudNoise.comp
+[resourcecontainer.cpp:024,       th 10380]         + GenerateClouds.comp
+[resourcecontainer.cpp:015,       th 10380]         includes/
+[resourcecontainer.cpp:024,       th 10380]         + LightingCompute.frag
+[resourcecontainer.cpp:024,       th 10380]         + LightingCompute.vert
+[resourcecontainer.cpp:024,       th 10380]         + Pipeline.lua
+[resourcecontainer.cpp:024,       th 10380]         + Skybox.comp
+[resourcecontainer.cpp:024,       th 10380]         + Tonemapping.frag
+[resourcecontainer.cpp:024,       th 10380]         + Tonemapping.vert
+[resourcecontainer.cpp:015,       th 10380]     Submarines/
+[resourcecontainer.cpp:015,       th 10380]         Meshes/
+[resourcecontainer.cpp:024,       th 10380]             + Submarine1.fbx
+[resourcecontainer.cpp:015,       th 10380]         Shaders/
+[resourcecontainer.cpp:015,       th 10380]             Model/
+[resourcecontainer.cpp:015,       th 10380]                 PBR/
+[resourcecontainer.cpp:024,       th 10380]                     + Submarine.frag
+[resourcecontainer.cpp:024,       th 10380]                     + Submarine.vert
+[resourcecontainer.cpp:015,       th 10380]     Terrain/
+[resourcecontainer.cpp:015,       th 10380]         Shaders/
+[resourcecontainer.cpp:015,       th 10380]             Draw/
+[resourcecontainer.cpp:015,       th 10380]                 PBR/
+[resourcecontainer.cpp:024,       th 10380]                     + TerrainDraw.frag
+[resourcecontainer.cpp:024,       th 10380]                     + TerrainDraw.tesc
+[resourcecontainer.cpp:024,       th 10380]                     + TerrainDraw.tese
+[resourcecontainer.cpp:024,       th 10380]                     + TerrainDraw.vert
+[resourcecontainer.cpp:015,       th 10380]             Generation/
+[resourcecontainer.cpp:024,       th 10380]                 + TerrainGen.comp
+[resourcecontainer.cpp:024,       th 10380]                 + TerrainNormals.comp
+[resourcecontainer.cpp:015,       th 10380]             Grass/
+[resourcecontainer.cpp:015,       th 10380]         Textures/
+[resourcecontainer.cpp:015,       th 10380]             Grass/
+[resourcecontainer.cpp:024,       th 10380]                 + TerrainAlbedo0.png
+[resourcecontainer.cpp:024,       th 10380]                 + TerrainNormal0.png
+[resourcecontainer.cpp:024,       th 10380]                 + TerrainRoughness0.png
+[resourcecontainer.cpp:024,       th 10380]             + Grass0.png
+
+[resourcecontainer.cpp:038,       th 10380] Loading from class ogele::ShaderLoader
+[shaderloader.cpp:079,            th 10380]     CloudsRender
+[shaderloader.cpp:082,            th 10380]         Lighting\CloudsRender.frag
+[shaderloader.cpp:082,            th 10380]         Lighting\CloudsRender.vert
+[shaderloader.cpp:079,            th 10380]     GenerateCloudNoise
+[shaderloader.cpp:082,            th 10380]         Lighting\GenerateCloudNoise.comp
+[shaderloader.cpp:079,            th 10380]     GenerateClouds
+[shaderloader.cpp:082,            th 10380]         Lighting\GenerateClouds.comp
+[shaderloader.cpp:079,            th 10380]     LightingCompute
+[shaderloader.cpp:082,            th 10380]         Lighting\LightingCompute.frag
+[shaderloader.cpp:082,            th 10380]         Lighting\LightingCompute.vert
+[shaderloader.cpp:079,            th 10380]     Skybox
+[shaderloader.cpp:082,            th 10380]         Lighting\Skybox.comp
+[shaderloader.cpp:079,            th 10380]     Tonemapping
+[shaderloader.cpp:082,            th 10380]         Lighting\Tonemapping.frag
+[shaderloader.cpp:082,            th 10380]         Lighting\Tonemapping.vert
+[shaderloader.cpp:079,            th 10380]     Submarine
+[shaderloader.cpp:082,            th 10380]         Submarines\Shaders\Model\PBR\Submarine.frag
+[shaderloader.cpp:082,            th 10380]         Submarines\Shaders\Model\PBR\Submarine.vert
+[shaderloader.cpp:079,            th 10380]     TerrainDraw
+[shaderloader.cpp:082,            th 10380]         Terrain\Shaders\Draw\PBR\TerrainDraw.frag
+[shaderloader.cpp:082,            th 10380]         Terrain\Shaders\Draw\PBR\TerrainDraw.vert
+[shaderloader.cpp:082,            th 10380]         Terrain\Shaders\Draw\PBR\TerrainDraw.tese
+[shaderloader.cpp:082,            th 10380]         Terrain\Shaders\Draw\PBR\TerrainDraw.tesc
+[shaderloader.cpp:079,            th 10380]     TerrainGen
+[shaderloader.cpp:082,            th 10380]         Terrain\Shaders\Generation\TerrainGen.comp
+[shaderloader.cpp:079,            th 10380]     TerrainNormals
+[shaderloader.cpp:082,            th 10380]         Terrain\Shaders\Generation\TerrainNormals.comp
+[resourcecontainer.cpp:043,       th 10380] Loaded resources:
+[resourcecontainer.cpp:048,       th 10380]     CloudsRender (Lighting) 
+[resourcecontainer.cpp:048,       th 10380]     GenerateCloudNoise (Lighting) 
+[resourcecontainer.cpp:048,       th 10380]     GenerateClouds (Lighting) 
+[resourcecontainer.cpp:048,       th 10380]     LightingCompute (Lighting) 
+[resourcecontainer.cpp:048,       th 10380]     Skybox (Lighting) 
+[resourcecontainer.cpp:048,       th 10380]     Tonemapping (Lighting) 
+[resourcecontainer.cpp:048,       th 10380]     Submarine (Model, PBR, Shaders, Submarines) 
+[resourcecontainer.cpp:048,       th 10380]     TerrainDraw (Draw, PBR, Shaders, Terrain) 
+[resourcecontainer.cpp:048,       th 10380]     TerrainGen (Generation, Shaders, Terrain) 
+[resourcecontainer.cpp:048,       th 10380]     TerrainNormals (Generation, Shaders, Terrain) 
+
+[resourcecontainer.cpp:038,       th 10380] Loading from class ogele::ModelLoader
+[resourcecontainer.cpp:043,       th 10380] Loaded resources:
+[resourcecontainer.cpp:048,       th 10380]     Submarine1 (Meshes, Submarines) 
+
+[resourcecontainer.cpp:038,       th 10380] Loading from class ogele::RenderPipelineLoader
+[resourcecontainer.cpp:043,       th 10380] Loaded resources:
+[resourcecontainer.cpp:048,       th 10380]     Pipeline (Lighting) 
+
+[resourcecontainer.cpp:038,       th 10380] Loading from class ogele::TextureCubeLoader
+[resourcecontainer.cpp:043,       th 10380] Loaded resources:
+
+[resourcecontainer.cpp:038,       th 10380] Loading from class ogele::Texture2DArrayLoader
+[texture2darrayloader.cpp:043,    th 10380]     Grass
+[texture2darrayloader.cpp:045,    th 10380]         0: Terrain\Textures\Grass0.png
+[texture2darrayloader.cpp:043,    th 10380]     TerrainAlbedo
+[texture2darrayloader.cpp:045,    th 10380]         0: Terrain\Textures\Grass\TerrainAlbedo0.png
+[texture2darrayloader.cpp:043,    th 10380]     TerrainNormal
+[texture2darrayloader.cpp:045,    th 10380]         0: Terrain\Textures\Grass\TerrainNormal0.png
+[texture2darrayloader.cpp:043,    th 10380]     TerrainRoughness
+[texture2darrayloader.cpp:045,    th 10380]         0: Terrain\Textures\Grass\TerrainRoughness0.png
+[resourcecontainer.cpp:043,       th 10380] Loaded resources:
+[resourcecontainer.cpp:048,       th 10380]     Grass (Terrain, Textures) 
+[resourcecontainer.cpp:048,       th 10380]     TerrainAlbedo (Grass, Terrain, Textures) 
+[resourcecontainer.cpp:048,       th 10380]     TerrainNormal (Grass, Terrain, Textures) 
+[resourcecontainer.cpp:048,       th 10380]     TerrainRoughness (Grass, Terrain, Textures) 
+
+[resourcecontainer.cpp:038,       th 10380] Loading from class ogele::Texture2DLoader
+[resourcecontainer.cpp:043,       th 10380] Loaded resources:
+[resourcecontainer.cpp:048,       th 10380]     BRDFLUT (Lighting) 

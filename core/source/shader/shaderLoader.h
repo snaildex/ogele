@@ -11,6 +11,7 @@ namespace ogele {
 	class ShaderLoader : public ResourceLoader {
 		static std::map<std::string, ShaderType> m_shaderTypeMap;
 	public:
-		ResourceProxy *Load(const Jzon::Node* reader) const override;
+		bool CanLoad(const fs::path& file) const override;
+		std::vector<ResourceProxy*> Load() const override;
 	};
 }

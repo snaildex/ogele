@@ -3,20 +3,21 @@
 using namespace std;
 using namespace glm;
 namespace ogele {
-	Camera::Camera(const ivec2 &frameSize) {
+	Camera::Camera(Actor* actor, const ivec2 &frameSize) : Component(actor) {
 		m_frameSize = frameSize;
 		m_material = make_unique<Material>();
 	}
 
 	void Camera::UpdateMaterial() {
 		dmat4 V = GetViewMatrix();
-		dmat4 VP = m_projMatrix * V;
+		dmat4 VP = GetViewProjMatrix();
 		m_material->Set("P", m_projMatrix);
 		m_material->Set("V", V);
 		m_material->Set("VP", VP);
 		m_material->Set("IVP", inverse(VP));
 		m_material->Set("CamPos", GetTransform()->GetPos());
 		m_material->Set("CamDir", GetTransform()->Forward());
+		m_material->Set("Depth", GetTransform()->Forward());
 	}
 
 	void PerspectiveCamera::UpdateProjection() {
@@ -28,12 +29,17 @@ namespace ogele {
 			m_zFar);
 	}
 
-	PerspectiveCamera::PerspectiveCamera(const ivec2 &frameSize, double fov, double zNear, double zFar) :
-		Camera(frameSize) {
+	PerspectiveCamera::PerspectiveCamera(Actor* actor, const ivec2 &frameSize, double fov, double zNear, double zFar) :
+		Camera(actor, frameSize) {
 		m_fov = fov;
 		m_zNear = zNear;
 		m_zFar = zFar;
 		UpdateProjection();
+	}
+
+	Component * PerspectiveCamera::Clone(Actor * actor) const
+	{
+		return new PerspectiveCamera(actor, GetFrameSize(), m_fov, m_zFar, m_zFar);
 	}
 
 	void Camera::LookAround(const dvec2 &delta, double speed, double xMin, double xMax) {

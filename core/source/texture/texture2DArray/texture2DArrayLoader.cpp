@@ -16,20 +16,36 @@ namespace ogele {
 		m_files = files;
 	}
 
-	ResourceProxy* Texture2DArrayLoader::Load(const Jzon::Node *reader) const {
-		int count = reader->get("file").getCount();
-		std::vector<std::filesystem::path> files;
-		for (int i = 0; i < count; i++)
-			files.emplace_back(fs::absolute(reader->get("file").get(i).toString()));
-		Texture2DArray::Proxy *tex = new Texture2DArray::Proxy(
-			StrToTexFormat.at(ReadStringProperty(reader, "format", "RGBA8")),
-			StrToTexWrapMode.at(ReadStringProperty(reader, "wrap", "repeat")),
-			StrToTexFilterMode.at(ReadStringProperty(reader, "minFilter", "linearMipMapNearest")),
-			StrToTexFilterMode.at(ReadStringProperty(reader, "magFilter", "linear")),
-			files
-		);
-		LoadNameTags(reader, tex);
-		return tex;
+	bool Texture2DArrayLoader::CanLoad(const fs::path& file) const {
+		if (!Is2DImage(file)) return false;
+		return StripTailNum(file.stem().filename().string()) >= 0;
+	}
+
+	std::vector<ResourceProxy*> Texture2DArrayLoader::Load() const {
+		std::vector<ResourceProxy*> res;
+		map<fs::path, vector<fs::path>> texSlices;
+		for (const auto& f : GetFiles()) {
+			string p = (f.parent_path() / f.stem()).string();
+			string cp;
+			int num = StripTailNum(p, cp);
+			if (texSlices[cp].size() <= num) texSlices[cp].resize(num + 1);
+			texSlices[cp][num] = f;
+		}
+		for (const auto& tf : texSlices) {
+			Texture2DArray::Proxy *tex = new Texture2DArray::Proxy(
+				TextureFormat::RGBA8,
+				TextureWrapMode::Repeat,
+				TextureFilterMode::LinearMipMapNearest,
+				TextureFilterMode::Linear,
+				tf.second
+			);
+			LoadNameTags(tex, tf.first);
+			Log(tex->GetName().c_str());
+			LogIndent;
+			for (int i = 0; i < tf.second.size(); ++i) Log("%d: %s", i, Application::RelativePath(tf.second[i]).string().c_str());
+			res.push_back(tex);
+		}
+		return res;
 	}
 
 	Resource* Texture2DArray::Proxy::Build() const {

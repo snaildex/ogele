@@ -6,51 +6,42 @@ namespace ogele {
 	public:
 		typedef RenderPipelineProxy Proxy;
 
-		enum class PassMode : GLenum {
-			Scene,
-			Screen,
-			Compute
-		};
-
-		struct Pass {
-			std::string Name;
-			PassMode Mode;
-			std::vector<std::string> Tags;
-			std::vector<std::string> Shader;
-			std::vector<TextureBase*> Mipmap;
-			RenderTarget* Target;
-			res_ptr<ShaderProgram> SSShader;
-			BufferBit Clear;
-			ivec3 GroupNum;
-		};
-
-		struct Target {
-			unique_ptr<RenderTarget> RenderTarget;
-			vec2 Size;
-		};
-
 	private:
-		std::unique_ptr<Material> m_material;
-		std::map<std::string, Target> m_renderTargets;
-		std::vector<Pass> m_inits;
-		std::vector<Pass> m_passes;
+		std::unique_ptr<Lua::State> m_lua;
 		std::vector<std::unique_ptr<TextureBase>> m_textures;
+		std::vector<std::unique_ptr<RenderTarget>> m_renderTargets;
+		std::unique_ptr<Material> m_material;
+		Camera* m_cam;
+		World* m_world;
+		RenderTarget* m_finalTarget;
+		int m_finalTargetTextureIndex;
+
+		int CreateTexture(Lua::State* state);
+		int LinkTexture(Lua::State* state);
+		int CreateRenderTarget(Lua::State* state);
+		int FindShader(Lua::State* state);
+		int Enable(Lua::State* state);
+		int Disable(Lua::State* state);
+		int BlendFunc(Lua::State* state);
+		int DispatchCompute(Lua::State* state);
+		int DrawScreen(Lua::State* state);
+		int DrawScene(Lua::State* state);
+		int SetFinalRenderTarget(Lua::State* state);
+		int ClearRenderTarget(Lua::State* state);
+		int ResizeRenderTarget(Lua::State* state);
+
+		void DrawRecursive(const Camera* cam, Transform* node, const std::vector<std::string>& actorTags, const std::vector<std::string>& shaderTags);
 
 	public:
-		static std::map<std::string, PassMode> StrToMode;
-		RenderPipeline();
-		Material* GetMaterial() const { return m_material.get(); }
-		RenderTarget* GetRenderTarget(const std::string& name) const { return m_renderTargets.at(name).RenderTarget.get(); }
-		TextureBase* GetTexture(const std::string& name) const {
-			return std::find_if(m_textures.cbegin(), m_textures.cend(), [&](const std::unique_ptr<TextureBase>& tex) { return tex->GetName() == name; })->get();
-		}
-		void AddRenderTarget(const std::string& name, const glm::vec2& size, RenderTarget* renderTarget) { m_renderTargets.emplace(name, std::move(Target{ std::unique_ptr<RenderTarget>(renderTarget), size })); }
-		void AddInit(const Pass& pass) { m_inits.push_back(pass); }
-		void AddPass(const Pass& pass) { m_passes.push_back(pass); }
-		void AddTexture(TextureBase* texture) { m_textures.emplace_back(texture); m_material->SetTexture(texture->GetName(), texture); }
-		void Init() const;
-		void Render(Camera* cam) const;
-		void Resize(const glm::ivec2& newSize);
+		RenderPipeline(const fs::path& sourcePath);
+		~RenderPipeline();
+
+		Material* GetMaterial() noexcept { return m_material.get(); }
+		void SetCamera(Camera* cam) noexcept { m_cam = cam; }
+		void SetWorld(World* world) noexcept { m_world = world; }
+
+		void Render();
+		void Resize(const ivec2& size);
 	};
 
 }

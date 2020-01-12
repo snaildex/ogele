@@ -26,6 +26,7 @@ namespace ogele {
 	}
 
 	void Texture2D::Resize(const glm::ivec2& newSize) {
+		Log("Resizing %s %d,%d to %d,%d", GetName().data(), m_size.x, m_size.y, newSize.x, newSize.y);
 		Bind();
 		auto baseLevel = bGetBaseLevel();
 		auto borderColor = bGetBorderColor();

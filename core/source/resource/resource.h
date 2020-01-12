@@ -41,6 +41,7 @@ namespace ogele {
 		res_ptr() : m_ptr(nullptr) {}
 		res_ptr(ResourcePtrBase* ptr) : m_ptr(ptr) {}
 		T* get() const noexcept { return reinterpret_cast<T*>(m_ptr->Get()); }
+		ResourceProxy* getProxy() const noexcept { return m_ptr->GetProxy(); }
 		T* operator-> () const noexcept { return get(); }
 		explicit operator bool() const noexcept { return m_ptr != nullptr; }
 		void build() { m_ptr->Build(); }
@@ -50,19 +51,17 @@ namespace ogele {
 
 	class ResourceLoader
 	{
-		Entity(ResourceLoader)
+		Entity(ResourceLoader);
+		std::vector<fs::path> m_files;
+		std::vector<std::string> m_extensions;
 	protected:
 		ResourceLoader() = default;
-		void LoadNameTags(const Jzon::Node* reader, ResourceProxy* res) const;
-		std::string ReadStringProperty(const Jzon::Node *reader, const std::string &propName, const std::string &defaultValue) const;
-		std::vector<std::string> ReadStringArrayProperty(const Jzon::Node *reader, const std::string &propName) const;
-		int ReadIntProperty(const Jzon::Node *reader, const std::string &propName, int defaultValue) const;
-		float ReadFloatProperty(const Jzon::Node *reader, const std::string &propName, float defaultValue) const;
-		double ReadDoubleProperty(const Jzon::Node *reader, const std::string &propName, double defaultValue) const;
-		bool ReadBoolProperty(const Jzon::Node *reader, const std::string &propName, bool defaultValue) const;
-
+		void LoadNameTags(ResourceProxy* res, const fs::path& path) const;
 	public:
+		const std::vector<fs::path>& GetFiles() const noexcept { return m_files; }
+		void EnlistFile(const fs::path& file) noexcept { m_files.push_back(fs::absolute(file)); }
+		virtual bool CanLoad(const fs::path& file) const = 0;
+		virtual std::vector<ResourceProxy*> Load() const = 0;
 		virtual ~ResourceLoader() {}
-		virtual ResourceProxy* Load(const Jzon::Node* reader) const = 0;
 	};
 }

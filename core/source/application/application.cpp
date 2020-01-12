@@ -8,6 +8,7 @@ namespace ogele {
 	bool exitLoader;
 
 	Application::Application(const std::string& caption) : Window(glm::ivec2(800, 600), caption, true) {
+		m_startupPath = fs::absolute(fs::current_path());
 		m_instance = this;
 		MakeContextCurrent();
 		m_res = make_unique<ResourceContainer>();
@@ -28,6 +29,8 @@ namespace ogele {
 			m_loaderWindows.push_back(win);
 			m_loaders.emplace_back(Application::LoaderFunc, win);
 		}
+		InitLineDrawer();
+		Particles::Init();
 	}
 
 	future<Resource*> Application::LoadAsync(const ResourceProxy* proxy) {
@@ -66,56 +69,50 @@ namespace ogele {
 		}
 	}
 
-	Transform* Application::CreateTransform() noexcept {
-		Transform* tr = new Transform();
-		m_instance->m_roots.emplace_back(tr);
-		return tr;
-	}
-
-	Actor* Application::CreateActor(const std::string& name) noexcept {
-		Transform* tr = new Transform();
-		m_instance->m_roots.emplace_back(tr);
-		return tr->CreateActor(name);
+	dvec2 Application::WorldToScreen(const dvec3 & pos)
+	{
+		if (m_instance->m_debugCamera == nullptr) return dvec2(0, 0);
+		dvec4 p = m_instance->m_debugCamera->GetViewProjMatrix() * dvec4(pos, 1);
+		p /= p.w;
+		p = p / 2.0 + 0.5;
+		ivec2 res = m_instance->GetResolution();
+		return { p.x*res.x,p.y*res.y };
 	}
 
 	void Application::DrawTex(TextureBase *tex) {
 		m_instance->m_drawTex->Bind();
+		m_instance->m_drawTex->Set("MVP", dmat4());
 		m_instance->m_drawTex->SetTexture("Tex", tex);
 		m_instance->m_screenQuad->Draw();
 		m_instance->m_drawTex->Unbind();
 	}
 
-	void Application::DrawBasis(const dmat4 &MVP) {
+	void Application::DrawTex(TextureBase * tex, const dvec2 & size, const dvec2 & pos, double rot)
+	{
+		ivec2 res = m_instance->GetResolution();
+		dmat4 mat = dmat4();
+		mat = glm::translate(mat, { -1.0 + 2.0 / res.x * pos.x,-1.0 + 2.0 / res.y * pos.y,0 });
+		mat = glm::scale(mat, dvec3(size.x / res.x, size.y / res.y, 1));
+		//mat = glm::translate(mat, { 1,1,0 });
+		m_instance->m_drawTex->Bind();
+		m_instance->m_drawTex->Set("MVP", mat);
+		m_instance->m_drawTex->SetTexture("Tex", tex);
+		m_instance->m_screenQuad->Draw();
+		m_instance->m_drawTex->Unbind();
+	}
+
+	void Application::DrawBasis(const dmat4 &M) {
+		if (m_instance->m_debugCamera == nullptr) return;
 		m_instance->m_drawBasis->Bind();
-		m_instance->m_drawBasis->Set("MVP", MVP);
+		m_instance->m_drawBasis->Set("MVP", m_instance->m_debugCamera->GetViewProjMatrix() * M);
 		m_instance->m_coordBasis->Draw();
 		m_instance->m_drawBasis->Unbind();
 	}
 
-	void TransformGUI(const Transform* tr, int seed) {
-		const string& name = tr->GetActor() == nullptr ? "transform" : tr->GetActor()->GetName();
-		GUI::Tree(name, &tr, seed, [&] {
-			int s = 0;
-			for (const auto& ch : tr->GetChilds())
-				TransformGUI(ch.get(), s++);
-		});
-	}
-
-	void SceneGUI() {
-		GUI::Window("Scene",
-			GUI::WindowFlags::Title |
-			GUI::WindowFlags::Movable |
-			GUI::WindowFlags::Scalable |
-			GUI::WindowFlags::Border,
-			{ 50,50 }, { 320,480 },
-			[&] {
-			for (const auto& root : Application::GetRoots())
-				TransformGUI(root.get(), 0);
-		});
-	}
-
 	void Application::Run() {
 		m_res->LoadFromFilesystem();
+		m_lastFrameTimePoint = chrono::high_resolution_clock::now();
+		m_startTimePoint = chrono::high_resolution_clock::now();
 		Start();
 		while (!ShouldClose()) {
 			ClearColor(glm::vec4(0.6f, 0.8f, 1.f, 0.f));
@@ -126,14 +123,13 @@ namespace ogele {
 			m_time = chrono::duration_cast<chrono::duration<double>>(ctime - m_startTimePoint).count();
 			m_lastFrameTimePoint = ctime;
 			m_material->Set<double>("Time", m_time);
-			m_material->Set<float>("Time", m_time);
 			m_material->Set<double>("TimeDelta", m_timeDelta);
-			m_material->Set<float>("TimeDelta", m_timeDelta);
 			GUI::Internal::NewFrame();
+			LineDrawerStartFrame();
 			m_fpsCounter->Start();
 			Update();
-			//SceneGUI();
 			m_fpsCounter->Stop();
+			LineDrawerEndFrame();
 			GUI::Internal::Render();
 			SwapBuffers();
 			PollEvents();
@@ -142,7 +138,22 @@ namespace ogele {
 		m_res.reset();
 	}
 
+	World * Application::CreateWorld(const std::string & name)
+	{
+		World* w = new World();
+		w->SetName(name);
+		m_instance->m_worlds.emplace_back(w);
+		return w;
+	}
+
 	Application::~Application() {
+		Particles::Shutdown();
+		ShutdownLineDrawer();
+		m_screenQuad.reset();
+		m_coordBasis.reset();
+		m_drawTex.reset();
+		m_drawBasis.reset();
+		m_drawLines.reset();
 		exitLoader = true;
 		for (auto& t : m_loaders)
 			if (t.joinable())
@@ -151,8 +162,8 @@ namespace ogele {
 			glfwDestroyWindow(w);
 		GUI::Internal::Shutdown();
 		m_fpsCounter.reset();
-		for (auto& root : m_roots)
-			root.reset();
+		for (auto& world : m_worlds)
+			world.reset();
 		glfwTerminate();
 	}
 

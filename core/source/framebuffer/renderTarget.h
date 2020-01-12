@@ -17,6 +17,7 @@ namespace ogele {
 
 		Texture2D *operator[](int num) { return m_colorBufs[num].get(); }
 		const Texture2D *operator[](int num) const { return m_colorBufs[num].get(); }
+		size_t GetColorTexCount() const noexcept { return m_colorBufs.size(); }
 		const Framebuffer *GetFrameBuffer() const noexcept { return m_frameBuf.get(); }
 		Framebuffer *GetFrameBuffer() noexcept { return m_frameBuf.get(); }
 

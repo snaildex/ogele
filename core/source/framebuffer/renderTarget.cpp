@@ -47,7 +47,7 @@ namespace ogele {
 			m_frameBuf->bAttachColorBuffer(i, m_colorBufs[i].get(), 0);
 		}
 		if (m_depthBuffer) {
-			m_depthBuffer->Resize(newSize); 
+			m_depthBuffer->Resize(newSize);
 			m_frameBuf->bAttachDepthBuffer(m_depthBuffer.get());
 		}
 		if (m_stencilBuffer) {

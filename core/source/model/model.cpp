@@ -3,42 +3,49 @@
 using namespace std;
 using namespace glm;
 namespace ogele {
-	Model::Model(size_t materialCount, const std::vector<std::string>& shaderTags) {
-		m_shaders = make_unique<ShaderProgramCollection>();
-		m_shaders->FindResouces(shaderTags);
+	Model::Model(size_t materialCount) {
 		m_root = make_unique<Transform>();
 		m_materials.resize(materialCount);
 	}
 
-	void RenderNode(ShaderProgram* shader, const Camera* cam, const dmat4& M, const dmat4& VP, Transform* node) {
-		Actor* act = node->GetActor();
-		if (act)
-			if (auto mnode = act->GetComponent<Model::Node>()) {
-				cam->GetMaterial()->Apply(shader);
-				Application::GetMaterial()->Apply(shader);
-				shader->Set("MVP", VP*M*node->GetMatrix());
-				for (size_t i = 0; i < mnode->GetMeshCount(); ++i)
-					mnode->GetMesh(i)->Draw();
-			}
-		for (const auto& cnode : node->GetChilds())
-			RenderNode(shader, cam, M, VP, cnode.get());
-	}
-
-	void Model::Render(const Camera* cam, const std::vector<std::string>& tags, const Transform* transform) const {
-		auto shader = m_shaders->Get(tags);
-		dmat4 M = transform == nullptr ? dmat4() : transform->GetMatrix();
-		dmat4 VP = cam->GetViewProjMatrix();
-		shader->Bind();
-		RenderNode(shader.get(), cam, M, VP, m_root.get());
-		shader->Unbind();
+	Actor * Model::Instantiate() const
+	{
+		return m_root->Clone(nullptr)->GetActor();
 	}
 
 	void TransformGUI(Transform* transform) {
-		
+
 	}
 
 	void Model::GUI() const {
 
 		TransformGUI(m_root.get());
 	}
+
+	Component* Model::Node::Clone(Actor* actor) const {
+		Node* res = new Node(actor);
+		res->m_meshes = m_meshes;
+		res->m_shaders = m_shaders;
+		return res;
+	}
+	void Model::Node::FindShaders(const std::vector<std::string>& tags)
+	{
+		m_shaders.FindResouces(tags);
+	}
+	void Model::Node::Render(const Camera * camera, const std::vector<std::string>& tags, const ogele::Material* material) const
+	{
+		auto VP = camera->GetViewProjMatrix();
+		auto M = GetTransform()->GetMatrix();
+		auto shader = m_shaders.Get(tags);
+		shader->Bind();
+		camera->GetMaterial()->Apply(shader.get());
+		Application::GetMaterial()->Apply(shader.get());
+		if (material) material->Apply(shader.get());
+		shader->Set("MVP", VP*M);
+		shader->Set("M", M);
+		for (size_t i = 0; i < GetMeshCount(); ++i)
+			GetMesh(i)->Draw();
+		shader->Unbind();
+	}
+
 }

@@ -1,0 +1,32 @@
+[
+  {
+    "type": "Shader",
+    "name": "Raytrace",
+    "stages": {
+      "vertex": "Raytrace.vert",
+      "fragment": "Raytrace.frag"
+    }
+  },
+  {
+    "type": "Shader",
+    "name": "Bake",
+    "stages": {
+      "compute": "Bake.glsl"
+    }
+  },
+  {
+    "type": "Model",
+    "name": "Cube",
+    "file": "Cube.obj"
+  },
+  {
+    "type": "Model",
+    "name": "Sphere",
+    "file": "Sphere.obj"
+  },
+  {
+    "type": "Model",
+    "name": "SphereHigh",
+    "file": "SphereHigh.obj"
+  }
+]

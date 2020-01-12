@@ -4,7 +4,9 @@ namespace ogele {
 		Entity(ResourceContainer)
 	private:
 		std::list<std::unique_ptr<ResourcePtrBase>> m_data;
-		std::map <std::string, std::unique_ptr<ResourceLoader>> m_loaders;
+		std::vector<std::unique_ptr<ResourceLoader>> m_loaders;
+
+		void HandleDirectory(const fs::path& path);
 
 	public:
 		ResourceContainer();
@@ -18,7 +20,7 @@ namespace ogele {
 
 		void GUI();
 
-		template<typename T> 
+		template<typename T>
 		res_ptr<T> GetResourceByName(const std::string& name) const noexcept
 		{
 			for (const auto& t : m_data)
@@ -31,7 +33,7 @@ namespace ogele {
 			return res_ptr<T>();
 		}
 
-		template<typename T> 
+		template<typename T>
 		res_ptr<T> GetResourceByTag(const std::string& tag) const noexcept
 		{
 			for (const auto& t : m_data)
@@ -44,7 +46,7 @@ namespace ogele {
 			return res_ptr<T>();
 		}
 
-		template<typename T> 
+		template<typename T>
 		res_ptr<T> GetResourceByTags(const std::vector<std::string>& tags) const noexcept
 		{
 			for (const auto& t : m_data)
@@ -57,7 +59,7 @@ namespace ogele {
 			return res_ptr<T>();
 		}
 
-		template<typename T> 
+		template<typename T>
 		std::vector<res_ptr<T>> GetResources() const noexcept
 		{
 			std::vector<res_ptr<T>> res;
@@ -70,7 +72,7 @@ namespace ogele {
 			return res;
 		}
 
-		template<typename T> 
+		template<typename T>
 		std::vector<res_ptr<T>> GetResourcesByTag(const std::string& tag) const noexcept
 		{
 			std::vector<res_ptr<T>> res;
@@ -84,7 +86,7 @@ namespace ogele {
 			return res;
 		}
 
-		template<typename T> 
+		template<typename T>
 		std::vector<res_ptr<T>> GetResourcesByTags(const std::vector<std::string>& tags) const noexcept
 		{
 			std::vector<res_ptr<T>> res;

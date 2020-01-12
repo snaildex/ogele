@@ -33,7 +33,6 @@ vec3 atmosphere(vec3 view, vec3 eyePos, vec3 sunDir, vec3 albedo, float depth, f
     if (p.x > p.y) return vec3(0,0,0);
     p.y = min(p.y, rsi(eyePos, view, rPlanet).x);
     float iStepSize = ( (sky>0.5) ? (p.y - p.x) : depth) / float(iSteps);
-
     // Initialize the primary ray time.
     float iTime = 0.0;
 

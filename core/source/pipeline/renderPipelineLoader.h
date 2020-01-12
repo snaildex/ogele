@@ -1,56 +1,15 @@
 #pragma once
 namespace ogele {
 	class RenderPipelineProxy : public ResourceProxy {
+		fs::path m_sourcePath;
 	public:
-		struct RenderTargetDesciption {
-			std::string Name;
-			std::vector<std::string> Colors;
-			TextureFormat Format;
-			TextureFilterMode MinFilter;
-			TextureFilterMode MagFilter;
-			bool Mipmaps;
-			bool Depth;
-			bool Stencil;
-			vec2 Size;
-		};
-		struct PassDescription {
-			std::string Name;
-			RenderPipeline::PassMode Mode;
-			std::vector<std::string> Tags;
-			std::vector<std::string> Shader;
-			std::vector<std::string> Mipmap;
-			std::string Target;
-			BufferBit Clear;
-			ivec3 GroupNum;
-		};
-		struct TexDescription {
-			std::string Name;
-			TextureType Type;
-			TextureFormat Format;
-			TextureWrapMode Wrap;
-			TextureFilterMode MinFilter;
-			TextureFilterMode MagFilter;
-			int Count;
-			int Width;
-			int Height;
-			int Depth;
-			std::vector<fs::path> Files;
-		};
-	private:
-		std::vector<RenderTargetDesciption> m_targets;
-		std::vector<PassDescription> m_inits;
-		std::vector<PassDescription> m_passes;
-		std::vector<TexDescription> m_textures;
-	public:
-		void AddTarget(const RenderTargetDesciption& target) noexcept { m_targets.push_back(target); }
-		void AddInit(const PassDescription& pass) noexcept { m_inits.push_back(pass); }
-		void AddPass(const PassDescription& pass) noexcept { m_passes.push_back(pass); }
-		void AddTexture(const TexDescription& pass) noexcept { m_textures.push_back(pass); }
+		RenderPipelineProxy(const fs::path& sourcePath);
 		virtual Resource* Build() const override;
 	};
 
 	class RenderPipelineLoader : public ResourceLoader {
 	public:
-		ResourceProxy *Load(const Jzon::Node* reader) const override;
+		bool CanLoad(const fs::path& file) const override;
+		std::vector<ResourceProxy*> Load() const override;
 	};
 }

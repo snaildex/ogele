@@ -26,19 +26,19 @@ namespace ogele {
 		{"SingleRectangleProxy",	TextureType::SingleRectangleProxy}
 	};
 	const map<const string, TextureWrapMode> StrToTexWrapMode = {
-		{"clampToEdge",       TextureWrapMode::ClampToEdge},
-		{"clampToBorder",     TextureWrapMode::ClampToBorder},
-		{"mirroredRepeat",    TextureWrapMode::MirroredRepeat},
-		{"repeat",            TextureWrapMode::Repeat},
-		{"mirrorClampToEdge", TextureWrapMode::MirrorClampToEdge}
+		{"ClampToEdge",       TextureWrapMode::ClampToEdge},
+		{"ClampToBorder",     TextureWrapMode::ClampToBorder},
+		{"MirroredRepeat",    TextureWrapMode::MirroredRepeat},
+		{"Repeat",            TextureWrapMode::Repeat},
+		{"MirrorClampToEdge", TextureWrapMode::MirrorClampToEdge}
 	};
 	const map<const string, TextureFilterMode> StrToTexFilterMode = {
-		{"linear",               TextureFilterMode::Linear},
-		{"linearMipMapLinear",   TextureFilterMode::LinearMipMapLinear},
-		{"linearMipMapNearest",  TextureFilterMode::LinearMipMapNearest},
-		{"nearest",              TextureFilterMode::Nearest},
-		{"nearestMipMapLinear",  TextureFilterMode::NearestMipMapLinear},
-		{"nearestMipMapNearest", TextureFilterMode::NearestMipMapNearest}
+		{"Linear",               TextureFilterMode::Linear},
+		{"LinearMipMapLinear",   TextureFilterMode::LinearMipMapLinear},
+		{"LinearMipMapNearest",  TextureFilterMode::LinearMipMapNearest},
+		{"Nearest",              TextureFilterMode::Nearest},
+		{"NearestMipMapLinear",  TextureFilterMode::NearestMipMapLinear},
+		{"NearestMipMapNearest", TextureFilterMode::NearestMipMapNearest}
 	};
 	const map<const string, TextureFormat> StrToTexFormat = {
 		{"DepthComponent", TextureFormat::DepthComponent},
@@ -127,5 +127,22 @@ namespace ogele {
 		{"Compressed_RGB_BPTC_Signed_Float",TextureFormat::Compressed_RGB_BPTC_Signed_Float },
 		{"Compressed_RGB_BPTC_Unsigned_Float",TextureFormat::Compressed_RGB_BPTC_Unsigned_Float }
 	};
+
+	const set<string> extensions = {
+			".jpeg",
+			".jpg",
+			".png",
+			".tga",
+			".bmp",
+			".psd",
+			".gif",
+			".hdr",
+			".pic",
+			".pnm"
+	};
+
+	bool Is2DImage(const fs::path& file) {
+		return extensions.count(file.extension().string()) > 0;
+	}
 }
 

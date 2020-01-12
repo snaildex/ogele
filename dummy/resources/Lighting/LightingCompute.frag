@@ -57,7 +57,7 @@ void main()
 
 	float realDepth=scene.depth==1 ? 1e8 : distance(NearPos,scene.pos);
 	vec3 color=scene.depth==1 ? vec3(0) : DirectLighting(scene,light)+AmbientLighting(scene);
-	color+=scene.depth==1? vec3(0) :emission.rgb;
+	color+=scene.depth==1? vec3(0) : emission.rgb;
 	color=atmosphere(-view,NearPos,sunDir,color,realDepth,float(scene.depth==1));
 	if(scene.depth==1) color=color*cloud.a+cloud.rgb;
 	Result=color;

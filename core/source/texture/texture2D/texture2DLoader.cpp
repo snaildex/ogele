@@ -15,15 +15,23 @@ namespace ogele {
 		m_magFilter = magFilter;
 		m_file = file;
 	}
-	ResourceProxy *Texture2DLoader::Load(const Jzon::Node *reader) const {
-		Texture2D::Proxy* res = new Texture2D::Proxy(
-			StrToTexFormat.at(ReadStringProperty(reader, "format", "RGBA8")),
-			StrToTexWrapMode.at(ReadStringProperty(reader, "wrap", "repeat")),
-			StrToTexFilterMode.at(ReadStringProperty(reader, "minFilter", "linearMipMapNearest")),
-			StrToTexFilterMode.at(ReadStringProperty(reader, "magFilter", "linear")),
-			fs::absolute(reader->get("file").toString())
-		);
-		LoadNameTags(reader, res);
+	bool Texture2DLoader::CanLoad(const fs::path& file) const {
+		return Is2DImage(file);
+	}
+	std::vector<ResourceProxy*> Texture2DLoader::Load() const {
+		std::vector<ResourceProxy*> res;
+		map<fs::path, vector<fs::path>> texSlices;
+		for (const auto& f : GetFiles()) {
+			Texture2D::Proxy *tex = new Texture2D::Proxy(
+				TextureFormat::RGBA8,
+				TextureWrapMode::Repeat,
+				TextureFilterMode::LinearMipMapNearest,
+				TextureFilterMode::Linear,
+				f
+			);
+			LoadNameTags(tex, f.parent_path()/f.stem());
+			res.push_back(tex);
+		}
 		return res;
 	}
 	Resource * Texture2D::Proxy::Build() const {

@@ -1,11 +1,18 @@
 #pragma once
 namespace ogele {
-	class GridMesh : public MeshBase {
+	class GridMesh2D : public MeshBase {
 		std::unique_ptr <IntBuffer<glm::ivec2>> m_coord;
-		int m_range;
+		int m_size;
 	public:
-		GridMesh(int range);
+		GridMesh2D(int range);
+		int GetRange() const noexcept { return m_size; }
+	};
 
-		 int GetRange() const noexcept { return m_range; }
+	class GridMesh3D : public MeshBase {
+		std::unique_ptr <IntBuffer<glm::ivec3>> m_coord;
+		int m_size;
+	public:
+		GridMesh3D(int range);
+		int GetRange() const noexcept { return m_size; }
 	};
 }

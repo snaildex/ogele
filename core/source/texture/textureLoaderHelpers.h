@@ -4,4 +4,6 @@ namespace ogele {
 	extern const std::map<const std::string, TextureWrapMode> StrToTexWrapMode;
 	extern const std::map<const std::string, TextureFilterMode> StrToTexFilterMode;
 	extern const std::map<const std::string, TextureFormat> StrToTexFormat;
+
+	bool Is2DImage(const fs::path& file);
 }
