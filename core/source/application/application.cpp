@@ -7,7 +7,7 @@ namespace ogele {
 
 	bool exitLoader;
 
-	Application::Application(const std::string& caption) : Window(glm::ivec2(800, 600), caption, true) {
+	Application::Application(const std::string& caption) : Window(glm::ivec2(800, 800), caption, true) {
 		m_startupPath = fs::absolute(fs::current_path());
 		m_instance = this;
 		MakeContextCurrent();

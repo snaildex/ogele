@@ -12,10 +12,12 @@ private:
 		vec4 Normal[3];
 		vec4 TriNormal;
 		vec4 NormDot;
+		vec4 Domain;
 	};
 
 	Camera* cam;
 	res_ptr<ShaderProgram> shader;
+	unique_ptr<Material> material;
 	res_ptr<ShaderProgram> bakeShader;
 	std::vector<res_ptr<Model>> models;
 	std::unique_ptr<FloatBuffer<Triangle>> tris;
@@ -46,6 +48,7 @@ private:
 			Log("  pos.x(%5g,%5g,%5g),   pos.y(%5g,%5g,%5g),  pos.z(%5g,%5g,%5g)", tr[i].Position[0].x, tr[i].Position[0].y, tr[i].Position[0].z, tr[i].Position[1].x, tr[i].Position[1].y, tr[i].Position[1].z, tr[i].Position[2].x, tr[i].Position[2].y, tr[i].Position[2].z);
 			Log(" norm.x(%5g,%5g,%5g),  norm.y(%5g,%5g,%5g), norm.z(%5g,%5g,%5g)", tr[i].Normal[0].x, tr[i].Normal[0].y, tr[i].Normal[0].z, tr[i].Normal[1].x, tr[i].Normal[1].y, tr[i].Normal[1].z, tr[i].Normal[2].x, tr[i].Normal[2].y, tr[i].Normal[2].z);
 			Log("trinorm(%5g,%5g,%5g), normdot(%5g,%5g,%5g)", tr[i].TriNormal.x, tr[i].TriNormal.y, tr[i].TriNormal.z, tr[i].NormDot.x, tr[i].NormDot.y, tr[i].NormDot.z);
+			Log("domain(%5g,%5g,%5g,%5g)", tr[i].Domain.x, tr[i].Domain.y, tr[i].Domain.z, tr[i].Domain.w);
 			LogSpace();
 		}
 	}
@@ -65,6 +68,7 @@ private:
 	void Start() override {
 		tris = std::make_unique<FloatBuffer<Triangle>>(BufferFlags::None, 1024);
 		shader = Application::GetResourceByName<ShaderProgram>("Raytrace");
+		material.reset(shader->CreateMaterial());
 		bakeShader = Application::GetResourceByName<ShaderProgram>("Bake");
 		cam = Application::CreateWorld("Main")->CreateActor("Camera")->AddComponent<PerspectiveCamera>(GetResolution(), 45.0, 0.1, 10000.0);
 		//Application::SetDebugCamera(cam);
@@ -95,9 +99,11 @@ private:
 						PrepareModel(i);
 					}
 			});
+			material->GUI();
 		});
 
 		shader->Bind();
+		material->Apply(shader.get());
 		Application::GetMaterial()->Apply(shader.get());
 		shader->Set("IVP", glm::inverse(cam->GetViewProjMatrix()));
 		shader->SetBuffer("MeshData", tris.get());
