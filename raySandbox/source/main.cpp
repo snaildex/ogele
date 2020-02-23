@@ -32,7 +32,8 @@ private:
 		bakeShader->SetBuffer("NormBuffer", mesh->GetNormalsBuffer());
 		bakeShader->SetBuffer("IndexBuffer", mesh->GetIndexBuffer());
 		bakeShader->SetBuffer("TrisBuffer", tris.get());
-		bakeShader->bDispatchCompute({ std::min(32, triCount),1,1 });
+		//bakeShader->bDispatchCompute({ std::min(32, triCount),1,1 });
+		bakeShader->bDispatchCompute({ triCount,1,1 });
 		bakeShader->Unbind();
 		Barrier(MemoryBarriers::ShaderStorage);
 		std::vector<Triangle> tr;

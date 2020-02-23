@@ -84,10 +84,10 @@ vec2 rsi(vec3 r0, vec3 rd, float sr) {
 //    vec3 norm = normalize(tri.Normal[0].xyz*weights.x+tri.Normal[1].xyz*weights.y+tri.Normal[2].xyz*weights.z);
 //	vec3 center=(tri.Position[0].xyz+tri.Position[1].xyz+tri.Position[2].xyz)/3 + tri.TriNormal.xyz*0.0;
 //	for(int i=0; i<3; i++) ppos[i]=mix(center,tri.Position[i].xyz,weights[i]);
-//	//vec3 tpos = ppos[0]*weights.x+ppos[1]*weights.y+ppos[2]*weights.z;
-//	//return vec4(weights,Height(pos,tpos,norm));
-//    vec3 dir = normalize(cross(normalize(ppos[1]-ppos[0]),normalize(ppos[2]-ppos[0])));
-//	return vec4(weights,Height(pos,ppos[0],dir));
+//	vec3 tpos = ppos[0]*weights.x+ppos[1]*weights.y+ppos[2]*weights.z;
+//	return vec4(weights,Height(pos,tpos,norm));
+//    //vec3 dir = normalize(cross(normalize(ppos[1]-ppos[0]),normalize(ppos[2]-ppos[0])));
+//	//return vec4(weights,Height(pos,ppos[0],dir));
 //}
 
 vec4 PhongField(Triangle tri, vec3 pos) {
@@ -96,11 +96,10 @@ vec4 PhongField(Triangle tri, vec3 pos) {
 	float height=dot(pos-tri.Position[0].xyz,tri.TriNormal.xyz);
     for(int i=0; i<3; i++) ppos[i]=tri.Position[i].xyz+tri.Normal[i].xyz/tri.NormDot[i]*height;
     weights=Barycentric(pos,ppos[0],ppos[1],ppos[2]);
-    float field;
-	if(weights.x>weights.y && weights.x>weights.z) field=Height(pos,tri.Position[0].xyz,tri.Normal[0].xyz);
-	if(weights.y>weights.x && weights.y>weights.z) field=Height(pos,tri.Position[1].xyz,tri.Normal[1].xyz);
-	if(weights.z>weights.y && weights.z>weights.x) field=Height(pos,tri.Position[2].xyz,tri.Normal[2].xyz);
-	return vec4(weights,field);
+    vec3 center = vec3(0);
+	float radius = 2;
+	for(int i=0; i<3; i++) center+=weights[i] * (tri.Position[i].xyz - tri.Normal[i].xyz * radius);
+	return vec4(weights,distance(pos, center) - radius);
 }
 
 void main()
@@ -164,9 +163,9 @@ void main()
 		float depth = distance(NearPos, cpos);
         hit=abs(curScene)<=deltaLength;
         float b = min3(weights);
-        //if(hit && b>=0 && depth < cdepth && dot(curNorm,view)>0) {
+        if(hit && b>=0 && depth < cdepth && dot(curNorm,view)>0) {
         //if(hit && b>=0 && depth < cdepth) {
-        if(hit && b>=0) {
+        //if(hit && b>=0) {
         	float f=Lambert(curNorm,ldir);
         	cdepth=depth;
 			Result=(vec3(1,1,1) + pow(max(cos(cpos*(2*3.14)*10),0),vec3(5)))*(0.3+0.2*f);

@@ -26,7 +26,7 @@ void main()
 		tri.Normal[i] = normalize(Norm[GetIndex(idx * 3 + i)]);
 	}
 	tri.TriNormal.xyz = normalize(cross(tri.Position[1].xyz-tri.Position[0].xyz,tri.Position[2].xyz-tri.Position[0].xyz));
-	for(int i=0; i<3; ++i) tri.Normal[i] = tri.TriNormal;
+	//for(int i=0; i<3; ++i) tri.Normal[i] = tri.TriNormal;
 	tri.NormDot.xyz = vec3(dot(tri.TriNormal.xyz,tri.Normal[0].xyz), dot(tri.TriNormal.xyz,tri.Normal[1].xyz), dot(tri.TriNormal.xyz,tri.Normal[2].xyz));
 
 	float a=distance(tri.Position[1].xyz, tri.Position[2].xyz);
