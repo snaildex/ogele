@@ -18,6 +18,7 @@ struct Triangle {
     vec4 TriNormal;
     vec4 NormDot;
 	vec4 Domain;
+	vec4 Spheres[6];
 };
 
 layout(std430, binding = 0) buffer MeshData { Triangle Tris[]; };
@@ -93,13 +94,28 @@ vec2 rsi(vec3 r0, vec3 rd, float sr) {
 vec4 PhongField(Triangle tri, vec3 pos) {
 	vec3 ppos[3];
     vec3 weights;
-	float height=dot(pos-tri.Position[0].xyz,tri.TriNormal.xyz);
-    for(int i=0; i<3; i++) ppos[i]=tri.Position[i].xyz+tri.Normal[i].xyz/tri.NormDot[i]*height;
+	float height=Height(pos, tri.Position[0].xyz, tri.TriNormal.xyz);
+	for(int i=0; i<3; i++) ppos[i]=tri.Position[i].xyz+tri.Normal[i].xyz/tri.NormDot[i]*height;
     weights=Barycentric(pos,ppos[0],ppos[1],ppos[2]);
-    vec3 center = vec3(0);
-	float radius = 2;
-	for(int i=0; i<3; i++) center+=weights[i] * (tri.Position[i].xyz - tri.Normal[i].xyz * radius);
-	return vec4(weights,distance(pos, center) - radius);
+	if(height < 0) return vec4(weights, height);
+//	tri.Spheres[0]=CalculateSphere(tri.Position[0].xyz,tri.Position[1].xyz,tri.Normal[0].xyz);
+//	tri.Spheres[1]=CalculateSphere(tri.Position[0].xyz,tri.Position[2].xyz,tri.Normal[0].xyz);
+//	tri.Spheres[2]=CalculateSphere(tri.Position[1].xyz,tri.Position[0].xyz,tri.Normal[1].xyz);
+//	tri.Spheres[3]=CalculateSphere(tri.Position[1].xyz,tri.Position[2].xyz,tri.Normal[1].xyz);
+//	tri.Spheres[4]=CalculateSphere(tri.Position[2].xyz,tri.Position[0].xyz,tri.Normal[2].xyz);
+//	tri.Spheres[5]=CalculateSphere(tri.Position[2].xyz,tri.Position[1].xyz,tri.Normal[2].xyz);
+	vec2 w01 = weights.xy/(weights.x+weights.y);
+	vec2 w12 = weights.yz/(weights.y+weights.z);
+	vec2 w02 = weights.xz/(weights.x+weights.z);
+//	vec4 s0 = tri.Spheres[0]*w12.x+tri.Spheres[1]*w12.y;
+//	vec4 s1 = tri.Spheres[2]*w02.x+tri.Spheres[3]*w02.y;
+//	vec4 s2 = tri.Spheres[4]*w01.x+tri.Spheres[5]*w01.y;
+	vec4 s0 = tri.Spheres[0]*0.5+tri.Spheres[1]*0.5;
+	vec4 s1 = tri.Spheres[2]*0.5+tri.Spheres[3]*0.5;
+	vec4 s2 = tri.Spheres[4]*0.5+tri.Spheres[5]*0.5;
+	vec4 s = s0*weights.x+s1*weights.y+s2*weights.z;
+
+	return vec4(weights,distance(pos, s.xyz) - s.w);
 }
 
 void main()

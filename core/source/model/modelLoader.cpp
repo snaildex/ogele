@@ -49,6 +49,7 @@ namespace ogele {
 		tr->SetLocalScale(scale);
 		if (node->mNumMeshes > 0) {
 			tr->GetActor()->AddTag("Model");
+			tr->GetActor()->AddTag("Opaque");
 			Model::Node* mnode = tr->GetActor()->AddComponent<Model::Node>();
 			mnode->FindShaders({ "Model" });
 			for (size_t i = 0; i < node->mNumMeshes; ++i)

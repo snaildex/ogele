@@ -1,677 +1,114 @@
-[resourcecontainer.cpp:015,       th 07780] resources/
-[resourcecontainer.cpp:024,       th 07780]     + Bubbles0.png
-[resourcecontainer.cpp:024,       th 07780]     + Circle.png
-[resourcecontainer.cpp:015,       th 07780]     Lighting/
-[resourcecontainer.cpp:024,       th 07780]         + BRDFLUT.bmp
-[resourcecontainer.cpp:015,       th 07780]         includes/
-[resourcecontainer.cpp:024,       th 07780]         + LightingCompute.frag
-[resourcecontainer.cpp:024,       th 07780]         + LightingCompute.vert
-[resourcecontainer.cpp:024,       th 07780]         + Pipeline.lua
-[resourcecontainer.cpp:015,       th 07780]     Particles/
-[resourcecontainer.cpp:024,       th 07780]         + Particles.frag
-[resourcecontainer.cpp:024,       th 07780]         + Particles.geom
-[resourcecontainer.cpp:024,       th 07780]         + Particles.vert
-[resourcecontainer.cpp:015,       th 07780]     Sparks/
-[resourcecontainer.cpp:024,       th 07780]         + Sparks.frag
-[resourcecontainer.cpp:024,       th 07780]         + Sparks.geom
-[resourcecontainer.cpp:024,       th 07780]         + Sparks.vert
-[resourcecontainer.cpp:024,       th 07780]     + Sparks0.png
-[resourcecontainer.cpp:015,       th 07780]     Submarines/
-[resourcecontainer.cpp:015,       th 07780]         Meshes/
-[resourcecontainer.cpp:024,       th 07780]             + Submarine1.fbx
-[resourcecontainer.cpp:015,       th 07780]         Shaders/
-[resourcecontainer.cpp:015,       th 07780]             Model/
-[resourcecontainer.cpp:015,       th 07780]                 PBR/
-[resourcecontainer.cpp:024,       th 07780]                     + Submarine.frag
-[resourcecontainer.cpp:024,       th 07780]                     + Submarine.vert
+[resourcecontainer.cpp:015,       th 11944] resources/
+[resourcecontainer.cpp:024,       th 11944]     + Bubbles0.png
+[resourcecontainer.cpp:024,       th 11944]     + Circle.png
+[resourcecontainer.cpp:015,       th 11944]     Lighting/
+[resourcecontainer.cpp:024,       th 11944]         + BRDFLUT.bmp
+[resourcecontainer.cpp:015,       th 11944]         includes/
+[resourcecontainer.cpp:024,       th 11944]         + LightingCompute.frag
+[resourcecontainer.cpp:024,       th 11944]         + LightingCompute.vert
+[resourcecontainer.cpp:024,       th 11944]         + Pipeline.lua
+[resourcecontainer.cpp:015,       th 11944]     Particles/
+[resourcecontainer.cpp:024,       th 11944]         + Particles.frag
+[resourcecontainer.cpp:024,       th 11944]         + Particles.geom
+[resourcecontainer.cpp:024,       th 11944]         + Particles.vert
+[resourcecontainer.cpp:015,       th 11944]     Sparks/
+[resourcecontainer.cpp:024,       th 11944]         + Sparks.frag
+[resourcecontainer.cpp:024,       th 11944]         + Sparks.geom
+[resourcecontainer.cpp:024,       th 11944]         + Sparks.vert
+[resourcecontainer.cpp:024,       th 11944]     + Sparks0.png
+[resourcecontainer.cpp:015,       th 11944]     Submarines/
+[resourcecontainer.cpp:015,       th 11944]         Meshes/
+[resourcecontainer.cpp:024,       th 11944]             + Submarine1.fbx
+[resourcecontainer.cpp:015,       th 11944]         Shaders/
+[resourcecontainer.cpp:015,       th 11944]             Model/
+[resourcecontainer.cpp:015,       th 11944]                 PBR/
+[resourcecontainer.cpp:024,       th 11944]                     + Submarine.frag
+[resourcecontainer.cpp:024,       th 11944]                     + Submarine.vert
+[resourcecontainer.cpp:015,       th 11944]     Terrain/
+[resourcecontainer.cpp:015,       th 11944]         Shaders/
+[resourcecontainer.cpp:015,       th 11944]             Draw/
+[resourcecontainer.cpp:015,       th 11944]                 PBR/
+[resourcecontainer.cpp:024,       th 11944]                     + TerrainDraw.frag
+[resourcecontainer.cpp:024,       th 11944]                     + TerrainDraw.tesc
+[resourcecontainer.cpp:024,       th 11944]                     + TerrainDraw.tese
+[resourcecontainer.cpp:024,       th 11944]                     + TerrainDraw.vert
+[resourcecontainer.cpp:015,       th 11944]             Generation/
+[resourcecontainer.cpp:024,       th 11944]                 + TerrainGen.comp
+[resourcecontainer.cpp:024,       th 11944]                 + TerrainNormals.comp
+[resourcecontainer.cpp:015,       th 11944]             Grass/
+[resourcecontainer.cpp:015,       th 11944]         Textures/
+[resourcecontainer.cpp:015,       th 11944]             Grass/
+[resourcecontainer.cpp:024,       th 11944]                 + TerrainAlbedo0.png
+[resourcecontainer.cpp:024,       th 11944]                 + TerrainNormal0.png
+[resourcecontainer.cpp:024,       th 11944]                 + TerrainRoughness0.png
+[resourcecontainer.cpp:024,       th 11944]             + Grass0.png
 
-[resourcecontainer.cpp:038,       th 07780] Loading from class ogele::ShaderLoader
-[shaderloader.cpp:079,            th 07780]     LightingCompute
-[shaderloader.cpp:082,            th 07780]         Lighting\LightingCompute.frag
-[shaderloader.cpp:082,            th 07780]         Lighting\LightingCompute.vert
-[shaderloader.cpp:079,            th 07780]     Particles
-[shaderloader.cpp:082,            th 07780]         Particles\Particles.frag
-[shaderloader.cpp:082,            th 07780]         Particles\Particles.vert
-[shaderloader.cpp:082,            th 07780]         Particles\Particles.geom
-[shaderloader.cpp:079,            th 07780]     Sparks
-[shaderloader.cpp:082,            th 07780]         Sparks\Sparks.frag
-[shaderloader.cpp:082,            th 07780]         Sparks\Sparks.vert
-[shaderloader.cpp:082,            th 07780]         Sparks\Sparks.geom
-[shaderloader.cpp:079,            th 07780]     Submarine
-[shaderloader.cpp:082,            th 07780]         Submarines\Shaders\Model\PBR\Submarine.frag
-[shaderloader.cpp:082,            th 07780]         Submarines\Shaders\Model\PBR\Submarine.vert
-[resourcecontainer.cpp:043,       th 07780] Loaded resources:
-[resourcecontainer.cpp:048,       th 07780]     LightingCompute (Lighting) 
-[resourcecontainer.cpp:048,       th 07780]     Particles (Particles) 
-[resourcecontainer.cpp:048,       th 07780]     Sparks (Sparks) 
-[resourcecontainer.cpp:048,       th 07780]     Submarine (Model, PBR, Shaders, Submarines) 
+[resourcecontainer.cpp:038,       th 11944] Loading from class ogele::ShaderLoader
+[shaderloader.cpp:079,            th 11944]     LightingCompute
+[shaderloader.cpp:082,            th 11944]         Lighting\LightingCompute.frag
+[shaderloader.cpp:082,            th 11944]         Lighting\LightingCompute.vert
+[shaderloader.cpp:079,            th 11944]     Particles
+[shaderloader.cpp:082,            th 11944]         Particles\Particles.frag
+[shaderloader.cpp:082,            th 11944]         Particles\Particles.vert
+[shaderloader.cpp:082,            th 11944]         Particles\Particles.geom
+[shaderloader.cpp:079,            th 11944]     Sparks
+[shaderloader.cpp:082,            th 11944]         Sparks\Sparks.frag
+[shaderloader.cpp:082,            th 11944]         Sparks\Sparks.vert
+[shaderloader.cpp:082,            th 11944]         Sparks\Sparks.geom
+[shaderloader.cpp:079,            th 11944]     Submarine
+[shaderloader.cpp:082,            th 11944]         Submarines\Shaders\Model\PBR\Submarine.frag
+[shaderloader.cpp:082,            th 11944]         Submarines\Shaders\Model\PBR\Submarine.vert
+[shaderloader.cpp:079,            th 11944]     TerrainDraw
+[shaderloader.cpp:082,            th 11944]         Terrain\Shaders\Draw\PBR\TerrainDraw.frag
+[shaderloader.cpp:082,            th 11944]         Terrain\Shaders\Draw\PBR\TerrainDraw.vert
+[shaderloader.cpp:082,            th 11944]         Terrain\Shaders\Draw\PBR\TerrainDraw.tese
+[shaderloader.cpp:082,            th 11944]         Terrain\Shaders\Draw\PBR\TerrainDraw.tesc
+[shaderloader.cpp:079,            th 11944]     TerrainGen
+[shaderloader.cpp:082,            th 11944]         Terrain\Shaders\Generation\TerrainGen.comp
+[shaderloader.cpp:079,            th 11944]     TerrainNormals
+[shaderloader.cpp:082,            th 11944]         Terrain\Shaders\Generation\TerrainNormals.comp
+[resourcecontainer.cpp:043,       th 11944] Loaded resources:
+[resourcecontainer.cpp:048,       th 11944]     LightingCompute (Lighting) 
+[resourcecontainer.cpp:048,       th 11944]     Particles (Particles) 
+[resourcecontainer.cpp:048,       th 11944]     Sparks (Sparks) 
+[resourcecontainer.cpp:048,       th 11944]     Submarine (Model, PBR, Shaders, Submarines) 
+[resourcecontainer.cpp:048,       th 11944]     TerrainDraw (Draw, PBR, Shaders, Terrain) 
+[resourcecontainer.cpp:048,       th 11944]     TerrainGen (Generation, Shaders, Terrain) 
+[resourcecontainer.cpp:048,       th 11944]     TerrainNormals (Generation, Shaders, Terrain) 
 
-[resourcecontainer.cpp:038,       th 07780] Loading from class ogele::ModelLoader
-[resourcecontainer.cpp:043,       th 07780] Loaded resources:
-[resourcecontainer.cpp:048,       th 07780]     Submarine1 (Meshes, Submarines) 
+[resourcecontainer.cpp:038,       th 11944] Loading from class ogele::ModelLoader
+[resourcecontainer.cpp:043,       th 11944] Loaded resources:
+[resourcecontainer.cpp:048,       th 11944]     Submarine1 (Meshes, Submarines) 
 
-[resourcecontainer.cpp:038,       th 07780] Loading from class ogele::RenderPipelineLoader
-[resourcecontainer.cpp:043,       th 07780] Loaded resources:
-[resourcecontainer.cpp:048,       th 07780]     Pipeline (Lighting) 
+[resourcecontainer.cpp:038,       th 11944] Loading from class ogele::RenderPipelineLoader
+[resourcecontainer.cpp:043,       th 11944] Loaded resources:
+[resourcecontainer.cpp:048,       th 11944]     Pipeline (Lighting) 
 
-[resourcecontainer.cpp:038,       th 07780] Loading from class ogele::TextureCubeLoader
-[resourcecontainer.cpp:043,       th 07780] Loaded resources:
+[resourcecontainer.cpp:038,       th 11944] Loading from class ogele::TextureCubeLoader
+[resourcecontainer.cpp:043,       th 11944] Loaded resources:
 
-[resourcecontainer.cpp:038,       th 07780] Loading from class ogele::Texture2DArrayLoader
-[texture2darrayloader.cpp:043,    th 07780]     Bubbles
-[texture2darrayloader.cpp:045,    th 07780]         0: Bubbles0.png
-[texture2darrayloader.cpp:043,    th 07780]     Sparks
-[texture2darrayloader.cpp:045,    th 07780]         0: Sparks0.png
-[resourcecontainer.cpp:043,       th 07780] Loaded resources:
-[resourcecontainer.cpp:048,       th 07780]     Bubbles (.) 
-[resourcecontainer.cpp:048,       th 07780]     Sparks (.) 
+[resourcecontainer.cpp:038,       th 11944] Loading from class ogele::Texture2DArrayLoader
+[texture2darrayloader.cpp:043,    th 11944]     Bubbles
+[texture2darrayloader.cpp:045,    th 11944]         0: Bubbles0.png
+[texture2darrayloader.cpp:043,    th 11944]     Sparks
+[texture2darrayloader.cpp:045,    th 11944]         0: Sparks0.png
+[texture2darrayloader.cpp:043,    th 11944]     Grass
+[texture2darrayloader.cpp:045,    th 11944]         0: Terrain\Textures\Grass0.png
+[texture2darrayloader.cpp:043,    th 11944]     TerrainAlbedo
+[texture2darrayloader.cpp:045,    th 11944]         0: Terrain\Textures\Grass\TerrainAlbedo0.png
+[texture2darrayloader.cpp:043,    th 11944]     TerrainNormal
+[texture2darrayloader.cpp:045,    th 11944]         0: Terrain\Textures\Grass\TerrainNormal0.png
+[texture2darrayloader.cpp:043,    th 11944]     TerrainRoughness
+[texture2darrayloader.cpp:045,    th 11944]         0: Terrain\Textures\Grass\TerrainRoughness0.png
+[resourcecontainer.cpp:043,       th 11944] Loaded resources:
+[resourcecontainer.cpp:048,       th 11944]     Bubbles (.) 
+[resourcecontainer.cpp:048,       th 11944]     Sparks (.) 
+[resourcecontainer.cpp:048,       th 11944]     Grass (Terrain, Textures) 
+[resourcecontainer.cpp:048,       th 11944]     TerrainAlbedo (Grass, Terrain, Textures) 
+[resourcecontainer.cpp:048,       th 11944]     TerrainNormal (Grass, Terrain, Textures) 
+[resourcecontainer.cpp:048,       th 11944]     TerrainRoughness (Grass, Terrain, Textures) 
 
-[resourcecontainer.cpp:038,       th 07780] Loading from class ogele::Texture2DLoader
-[resourcecontainer.cpp:043,       th 07780] Loaded resources:
-[resourcecontainer.cpp:048,       th 07780]     Circle (.) 
-[resourcecontainer.cpp:048,       th 07780]     BRDFLUT (Lighting) 
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 800,600 to 801,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 800,600 to 801,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 800,600 to 801,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 800,600 to 801,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 800,600 to 801,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 801,600 to 802,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 801,600 to 802,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 801,600 to 802,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 801,600 to 802,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 801,600 to 802,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 802,600 to 803,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 802,600 to 803,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 802,600 to 803,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 802,600 to 803,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 802,600 to 803,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 803,600 to 804,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 803,600 to 804,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 803,600 to 804,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 803,600 to 804,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 803,600 to 804,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 804,600 to 805,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 804,600 to 805,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 804,600 to 805,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 804,600 to 805,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 804,600 to 805,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 805,600 to 806,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 805,600 to 806,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 805,600 to 806,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 805,600 to 806,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 805,600 to 806,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 806,600 to 807,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 806,600 to 807,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 806,600 to 807,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 806,600 to 807,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 806,600 to 807,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 807,600 to 808,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 807,600 to 808,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 807,600 to 808,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 807,600 to 808,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 807,600 to 808,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 808,600 to 810,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 808,600 to 810,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 808,600 to 810,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 808,600 to 810,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 808,600 to 810,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 810,600 to 811,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 810,600 to 811,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 810,600 to 811,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 810,600 to 811,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 810,600 to 811,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 811,600 to 815,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 811,600 to 815,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 811,600 to 815,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 811,600 to 815,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 811,600 to 815,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 815,600 to 816,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 815,600 to 816,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 815,600 to 816,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 815,600 to 816,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 815,600 to 816,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 816,600 to 823,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 816,600 to 823,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 816,600 to 823,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 816,600 to 823,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 816,600 to 823,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 823,600 to 826,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 823,600 to 826,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 823,600 to 826,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 823,600 to 826,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 823,600 to 826,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 826,600 to 829,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 826,600 to 829,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 826,600 to 829,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 826,600 to 829,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 826,600 to 829,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 829,600 to 832,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 829,600 to 832,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 829,600 to 832,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 829,600 to 832,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 829,600 to 832,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 832,600 to 835,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 832,600 to 835,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 832,600 to 835,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 832,600 to 835,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 832,600 to 835,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 835,600 to 838,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 835,600 to 838,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 835,600 to 838,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 835,600 to 838,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 835,600 to 838,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 838,600 to 844,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 838,600 to 844,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 838,600 to 844,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 838,600 to 844,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 838,600 to 844,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 844,600 to 845,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 844,600 to 845,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 844,600 to 845,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 844,600 to 845,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 844,600 to 845,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 845,600 to 849,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 845,600 to 849,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 845,600 to 849,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 845,600 to 849,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 845,600 to 849,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 849,600 to 850,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 849,600 to 850,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 849,600 to 850,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 849,600 to 850,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 849,600 to 850,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 850,600 to 851,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 850,600 to 851,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 850,600 to 851,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 850,600 to 851,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 850,600 to 851,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 851,600 to 857,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 851,600 to 857,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 851,600 to 857,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 851,600 to 857,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 851,600 to 857,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 857,600 to 859,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 857,600 to 859,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 857,600 to 859,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 857,600 to 859,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 857,600 to 859,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 859,600 to 861,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 859,600 to 861,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 859,600 to 861,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 859,600 to 861,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 859,600 to 861,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 861,600 to 864,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 861,600 to 864,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 861,600 to 864,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 861,600 to 864,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 861,600 to 864,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 864,600 to 866,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 864,600 to 866,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 864,600 to 866,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 864,600 to 866,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 864,600 to 866,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 866,600 to 869,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 866,600 to 869,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 866,600 to 869,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 866,600 to 869,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 866,600 to 869,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 869,600 to 870,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 869,600 to 870,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 869,600 to 870,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 869,600 to 870,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 869,600 to 870,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 870,600 to 871,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 870,600 to 871,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 870,600 to 871,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 870,600 to 871,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 870,600 to 871,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 871,600 to 876,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 871,600 to 876,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 871,600 to 876,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 871,600 to 876,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 871,600 to 876,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 876,600 to 879,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 876,600 to 879,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 876,600 to 879,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 876,600 to 879,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 876,600 to 879,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 879,600 to 883,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 879,600 to 883,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 879,600 to 883,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 879,600 to 883,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 879,600 to 883,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 883,600 to 888,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 883,600 to 888,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 883,600 to 888,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 883,600 to 888,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 883,600 to 888,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 888,600 to 893,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 888,600 to 893,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 888,600 to 893,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 888,600 to 893,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 888,600 to 893,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 893,600 to 899,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 893,600 to 899,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 893,600 to 899,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 893,600 to 899,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 893,600 to 899,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 899,600 to 901,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 899,600 to 901,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 899,600 to 901,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 899,600 to 901,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 899,600 to 901,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 901,600 to 915,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 901,600 to 915,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 901,600 to 915,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 901,600 to 915,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 901,600 to 915,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 915,600 to 922,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 915,600 to 922,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 915,600 to 922,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 915,600 to 922,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 915,600 to 922,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 922,600 to 931,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 922,600 to 931,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 922,600 to 931,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 922,600 to 931,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 922,600 to 931,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 931,600 to 933,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 931,600 to 933,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 931,600 to 933,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 931,600 to 933,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 931,600 to 933,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 933,600 to 939,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 933,600 to 939,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 933,600 to 939,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 933,600 to 939,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 933,600 to 939,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 939,600 to 942,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 939,600 to 942,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 939,600 to 942,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 939,600 to 942,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 939,600 to 942,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 942,600 to 945,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 942,600 to 945,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 942,600 to 945,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 942,600 to 945,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 942,600 to 945,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 945,600 to 947,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 945,600 to 947,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 945,600 to 947,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 945,600 to 947,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 945,600 to 947,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 947,600 to 948,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 947,600 to 948,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 947,600 to 948,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 947,600 to 948,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 947,600 to 948,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 948,600 to 949,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 948,600 to 949,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 948,600 to 949,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 948,600 to 949,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 948,600 to 949,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 949,600 to 950,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 949,600 to 950,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 949,600 to 950,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 949,600 to 950,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 949,600 to 950,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 950,600 to 951,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 950,600 to 951,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 950,600 to 951,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 950,600 to 951,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 950,600 to 951,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 951,600 to 952,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 951,600 to 952,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 951,600 to 952,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 951,600 to 952,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 951,600 to 952,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 952,600 to 953,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 952,600 to 953,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 952,600 to 953,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 952,600 to 953,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 952,600 to 953,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 953,600 to 954,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 953,600 to 954,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 953,600 to 954,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 953,600 to 954,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 953,600 to 954,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 954,600 to 955,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 954,600 to 955,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 954,600 to 955,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 954,600 to 955,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 954,600 to 955,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 955,600 to 956,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 955,600 to 956,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 955,600 to 956,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 955,600 to 956,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 955,600 to 956,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 956,600 to 958,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 956,600 to 958,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 956,600 to 958,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 956,600 to 958,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 956,600 to 958,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 958,600 to 959,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 958,600 to 959,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 958,600 to 959,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 958,600 to 959,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 958,600 to 959,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 959,600 to 961,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 959,600 to 961,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 959,600 to 961,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 959,600 to 961,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 959,600 to 961,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 961,600 to 964,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 961,600 to 964,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 961,600 to 964,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 961,600 to 964,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 961,600 to 964,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 964,600 to 967,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 964,600 to 967,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 964,600 to 967,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 964,600 to 967,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 964,600 to 967,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 967,600 to 969,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 967,600 to 969,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 967,600 to 969,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 967,600 to 969,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 967,600 to 969,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 969,600 to 970,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 969,600 to 970,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 969,600 to 970,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 969,600 to 970,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 969,600 to 970,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 970,600 to 973,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 970,600 to 973,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 970,600 to 973,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 970,600 to 973,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 970,600 to 973,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 973,600 to 979,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 973,600 to 979,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 973,600 to 979,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 973,600 to 979,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 973,600 to 979,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 979,600 to 981,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 979,600 to 981,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 979,600 to 981,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 979,600 to 981,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 979,600 to 981,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 981,600 to 982,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 981,600 to 982,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 981,600 to 982,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 981,600 to 982,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 981,600 to 982,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 982,600 to 986,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 982,600 to 986,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 982,600 to 986,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 982,600 to 986,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 982,600 to 986,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 986,600 to 988,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 986,600 to 988,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 986,600 to 988,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 986,600 to 988,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 986,600 to 988,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 988,600 to 994,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 988,600 to 994,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 988,600 to 994,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 988,600 to 994,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 988,600 to 994,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 994,600 to 996,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 994,600 to 996,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 994,600 to 996,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 994,600 to 996,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 994,600 to 996,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 996,600 to 998,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 996,600 to 998,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 996,600 to 998,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 996,600 to 998,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 996,600 to 998,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 998,600 to 1012,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 998,600 to 1012,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 998,600 to 1012,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 998,600 to 1012,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 998,600 to 1012,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1012,600 to 1015,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1012,600 to 1015,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1012,600 to 1015,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 1012,600 to 1015,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1012,600 to 1015,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1015,600 to 1027,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1015,600 to 1027,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1015,600 to 1027,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 1015,600 to 1027,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1015,600 to 1027,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1027,600 to 1037,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1027,600 to 1037,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1027,600 to 1037,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 1027,600 to 1037,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1027,600 to 1037,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1037,600 to 1043,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1037,600 to 1043,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1037,600 to 1043,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 1037,600 to 1043,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1037,600 to 1043,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1043,600 to 1061,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1043,600 to 1061,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1043,600 to 1061,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 1043,600 to 1061,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1043,600 to 1061,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1061,600 to 1076,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1061,600 to 1076,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1061,600 to 1076,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 1061,600 to 1076,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1061,600 to 1076,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1076,600 to 1113,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1076,600 to 1113,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1076,600 to 1113,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 1076,600 to 1113,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1076,600 to 1113,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1113,600 to 1127,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1113,600 to 1127,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1113,600 to 1127,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 1113,600 to 1127,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1113,600 to 1127,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1127,600 to 1196,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1127,600 to 1196,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1127,600 to 1196,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 1127,600 to 1196,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1127,600 to 1196,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1196,600 to 1217,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1196,600 to 1217,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1196,600 to 1217,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 1196,600 to 1217,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1196,600 to 1217,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1217,600 to 1283,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1217,600 to 1283,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1217,600 to 1283,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 1217,600 to 1283,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1217,600 to 1283,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1283,600 to 1345,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1283,600 to 1345,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1283,600 to 1345,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 1283,600 to 1345,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1283,600 to 1345,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1345,600 to 1379,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1345,600 to 1379,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1345,600 to 1379,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 1345,600 to 1379,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1345,600 to 1379,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1379,600 to 1420,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1379,600 to 1420,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1379,600 to 1420,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 1379,600 to 1420,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1379,600 to 1420,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1420,600 to 1444,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1420,600 to 1444,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1420,600 to 1444,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 1420,600 to 1444,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1420,600 to 1444,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1444,600 to 1457,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1444,600 to 1457,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1444,600 to 1457,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 1444,600 to 1457,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1444,600 to 1457,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1457,600 to 1466,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1457,600 to 1466,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1457,600 to 1466,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 1457,600 to 1466,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1457,600 to 1466,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1466,600 to 1472,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1466,600 to 1472,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1466,600 to 1472,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 1466,600 to 1472,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1466,600 to 1472,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1472,600 to 1920,1018
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1472,600 to 1920,1018
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1472,600 to 1920,1018
-[texture2d.cpp:029,               th 07780] Resizing Emission 1472,600 to 1920,1018
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1472,600 to 1920,1018
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1920,1018 to 1472,600
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1920,1018 to 1472,600
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1920,1018 to 1472,600
-[texture2d.cpp:029,               th 07780] Resizing Emission 1920,1018 to 1472,600
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1920,1018 to 1472,600
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1472,600 to 1472,601
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1472,600 to 1472,601
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1472,600 to 1472,601
-[texture2d.cpp:029,               th 07780] Resizing Emission 1472,600 to 1472,601
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1472,600 to 1472,601
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1472,601 to 1472,602
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1472,601 to 1472,602
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1472,601 to 1472,602
-[texture2d.cpp:029,               th 07780] Resizing Emission 1472,601 to 1472,602
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1472,601 to 1472,602
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1472,602 to 1472,603
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1472,602 to 1472,603
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1472,602 to 1472,603
-[texture2d.cpp:029,               th 07780] Resizing Emission 1472,602 to 1472,603
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1472,602 to 1472,603
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1472,603 to 1472,604
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1472,603 to 1472,604
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1472,603 to 1472,604
-[texture2d.cpp:029,               th 07780] Resizing Emission 1472,603 to 1472,604
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1472,603 to 1472,604
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1472,604 to 1472,605
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1472,604 to 1472,605
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1472,604 to 1472,605
-[texture2d.cpp:029,               th 07780] Resizing Emission 1472,604 to 1472,605
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1472,604 to 1472,605
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1472,605 to 1472,606
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1472,605 to 1472,606
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1472,605 to 1472,606
-[texture2d.cpp:029,               th 07780] Resizing Emission 1472,605 to 1472,606
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1472,605 to 1472,606
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1472,606 to 1472,609
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1472,606 to 1472,609
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1472,606 to 1472,609
-[texture2d.cpp:029,               th 07780] Resizing Emission 1472,606 to 1472,609
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1472,606 to 1472,609
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1472,609 to 1472,615
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1472,609 to 1472,615
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1472,609 to 1472,615
-[texture2d.cpp:029,               th 07780] Resizing Emission 1472,609 to 1472,615
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1472,609 to 1472,615
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1472,615 to 1472,616
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1472,615 to 1472,616
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1472,615 to 1472,616
-[texture2d.cpp:029,               th 07780] Resizing Emission 1472,615 to 1472,616
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1472,615 to 1472,616
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1472,616 to 1472,618
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1472,616 to 1472,618
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1472,616 to 1472,618
-[texture2d.cpp:029,               th 07780] Resizing Emission 1472,616 to 1472,618
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1472,616 to 1472,618
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1472,618 to 1472,627
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1472,618 to 1472,627
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1472,618 to 1472,627
-[texture2d.cpp:029,               th 07780] Resizing Emission 1472,618 to 1472,627
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1472,618 to 1472,627
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1472,627 to 1472,629
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1472,627 to 1472,629
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1472,627 to 1472,629
-[texture2d.cpp:029,               th 07780] Resizing Emission 1472,627 to 1472,629
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1472,627 to 1472,629
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1472,629 to 1472,640
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1472,629 to 1472,640
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1472,629 to 1472,640
-[texture2d.cpp:029,               th 07780] Resizing Emission 1472,629 to 1472,640
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1472,629 to 1472,640
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1472,640 to 1472,645
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1472,640 to 1472,645
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1472,640 to 1472,645
-[texture2d.cpp:029,               th 07780] Resizing Emission 1472,640 to 1472,645
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1472,640 to 1472,645
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1472,645 to 1472,657
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1472,645 to 1472,657
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1472,645 to 1472,657
-[texture2d.cpp:029,               th 07780] Resizing Emission 1472,645 to 1472,657
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1472,645 to 1472,657
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1472,657 to 1472,659
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1472,657 to 1472,659
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1472,657 to 1472,659
-[texture2d.cpp:029,               th 07780] Resizing Emission 1472,657 to 1472,659
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1472,657 to 1472,659
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1472,659 to 1472,669
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1472,659 to 1472,669
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1472,659 to 1472,669
-[texture2d.cpp:029,               th 07780] Resizing Emission 1472,659 to 1472,669
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1472,659 to 1472,669
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1472,669 to 1472,680
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1472,669 to 1472,680
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1472,669 to 1472,680
-[texture2d.cpp:029,               th 07780] Resizing Emission 1472,669 to 1472,680
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1472,669 to 1472,680
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1472,680 to 1472,682
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1472,680 to 1472,682
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1472,680 to 1472,682
-[texture2d.cpp:029,               th 07780] Resizing Emission 1472,680 to 1472,682
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1472,680 to 1472,682
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1472,682 to 1472,696
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1472,682 to 1472,696
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1472,682 to 1472,696
-[texture2d.cpp:029,               th 07780] Resizing Emission 1472,682 to 1472,696
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1472,682 to 1472,696
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1472,696 to 1472,698
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1472,696 to 1472,698
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1472,696 to 1472,698
-[texture2d.cpp:029,               th 07780] Resizing Emission 1472,696 to 1472,698
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1472,696 to 1472,698
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1472,698 to 1472,709
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1472,698 to 1472,709
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1472,698 to 1472,709
-[texture2d.cpp:029,               th 07780] Resizing Emission 1472,698 to 1472,709
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1472,698 to 1472,709
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1472,709 to 1472,711
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1472,709 to 1472,711
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1472,709 to 1472,711
-[texture2d.cpp:029,               th 07780] Resizing Emission 1472,709 to 1472,711
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1472,709 to 1472,711
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1472,711 to 1472,720
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1472,711 to 1472,720
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1472,711 to 1472,720
-[texture2d.cpp:029,               th 07780] Resizing Emission 1472,711 to 1472,720
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1472,711 to 1472,720
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1472,720 to 1472,721
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1472,720 to 1472,721
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1472,720 to 1472,721
-[texture2d.cpp:029,               th 07780] Resizing Emission 1472,720 to 1472,721
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1472,720 to 1472,721
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1472,721 to 1472,727
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1472,721 to 1472,727
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1472,721 to 1472,727
-[texture2d.cpp:029,               th 07780] Resizing Emission 1472,721 to 1472,727
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1472,721 to 1472,727
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1472,727 to 1472,728
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1472,727 to 1472,728
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1472,727 to 1472,728
-[texture2d.cpp:029,               th 07780] Resizing Emission 1472,727 to 1472,728
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1472,727 to 1472,728
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1472,728 to 1472,730
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1472,728 to 1472,730
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1472,728 to 1472,730
-[texture2d.cpp:029,               th 07780] Resizing Emission 1472,728 to 1472,730
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1472,728 to 1472,730
-[texture2d.cpp:029,               th 07780] Resizing AlbedoRough 1472,730 to 1472,731
-[texture2d.cpp:029,               th 07780] Resizing PosDepth 1472,730 to 1472,731
-[texture2d.cpp:029,               th 07780] Resizing NormalMetal 1472,730 to 1472,731
-[texture2d.cpp:029,               th 07780] Resizing Emission 1472,730 to 1472,731
-[texture2d.cpp:029,               th 07780] Resizing FinalTex 1472,730 to 1472,731
+[resourcecontainer.cpp:038,       th 11944] Loading from class ogele::Texture2DLoader
+[resourcecontainer.cpp:043,       th 11944] Loaded resources:
+[resourcecontainer.cpp:048,       th 11944]     Circle (.) 
+[resourcecontainer.cpp:048,       th 11944]     BRDFLUT (Lighting) 

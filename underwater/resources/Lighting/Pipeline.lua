@@ -13,7 +13,7 @@ function render ()
 	enable(feature.depthTest)
 	enable(feature.cullFace)
 	disable(feature.blend)
-	drawScene(gbuffer, {}, {"Model"})
+	drawScene(gbuffer, {}, {"Opaque"})
 
 	drawScreen(final, lightingComputeShader)
 

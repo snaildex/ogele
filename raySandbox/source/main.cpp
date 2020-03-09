@@ -13,6 +13,7 @@ private:
 		vec4 TriNormal;
 		vec4 NormDot;
 		vec4 Domain;
+		vec4 Spheres[6];
 	};
 
 	Camera* cam;
@@ -32,7 +33,6 @@ private:
 		bakeShader->SetBuffer("NormBuffer", mesh->GetNormalsBuffer());
 		bakeShader->SetBuffer("IndexBuffer", mesh->GetIndexBuffer());
 		bakeShader->SetBuffer("TrisBuffer", tris.get());
-		//bakeShader->bDispatchCompute({ std::min(32, triCount),1,1 });
 		bakeShader->bDispatchCompute({ triCount,1,1 });
 		bakeShader->Unbind();
 		Barrier(MemoryBarriers::ShaderStorage);

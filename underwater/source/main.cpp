@@ -33,6 +33,7 @@ private:
 	res_ptr<RenderPipeline> m_pip;
 	World* m_world;
 	Actor* m_submarine;
+	Terrain* m_terr;
 
 	void OnResize(const ivec2 &size) override {
 		cam->SetFrameSize(size);
@@ -57,6 +58,10 @@ private:
 		m_pip->SetCamera(cam);
 		m_pip->SetWorld(m_world);
 
+		m_terr = m_world->CreateActor("Terrain")->AddComponent<Terrain>(ivec2(128, 128), 32);
+		m_terr->Generate();
+		m_terr->SetDrawRange(6);
+		m_terr->GetActor()->AddTag("Opaque");
 		Sparks* sparks = m_world->CreateActor("Sparks")->AddComponent<Sparks>(10);
 		sparks->SetSprites(Application::GetResourceByName<Texture2DArray>("Sparks"));
 		Particles* particles = m_world->CreateActor("Bubbles")->AddComponent<Particles>(50 * 1024);
@@ -82,6 +87,7 @@ private:
 		Enable(Feature::Blend);
 		BlendFunc(BlendFactor::SrcAlpha, BlendFactor::OneMinusSrcAlpha);
 		m_world->OnGui();
+		m_terr->GUI();
 	}
 };
 

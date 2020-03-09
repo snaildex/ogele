@@ -4,6 +4,7 @@ using namespace std;
 using namespace glm;
 namespace ogele {
 	Terrain::Terrain(Actor* actor, const ivec2 &size, int chunkSize) :Renderable(actor) {
+		actor->AddTag("Opaque");
 		m_mat = make_unique<Material>();
 		m_size = size;
 		m_chunkSize = chunkSize;
