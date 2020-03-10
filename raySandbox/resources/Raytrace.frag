@@ -91,6 +91,10 @@ vec2 rsi(vec3 r0, vec3 rd, float sr) {
 //	//return vec4(weights,Height(pos,ppos[0],dir));
 //}
 
+float SphereField(vec3 pos, vec4 sphere) {
+	return distance(pos, sphere.xyz) - sphere.w;
+}
+
 vec4 PhongField(Triangle tri, vec3 pos) {
 	vec3 ppos[3];
     vec3 weights;
@@ -104,18 +108,27 @@ vec4 PhongField(Triangle tri, vec3 pos) {
 //	tri.Spheres[3]=CalculateSphere(tri.Position[1].xyz,tri.Position[2].xyz,tri.Normal[1].xyz);
 //	tri.Spheres[4]=CalculateSphere(tri.Position[2].xyz,tri.Position[0].xyz,tri.Normal[2].xyz);
 //	tri.Spheres[5]=CalculateSphere(tri.Position[2].xyz,tri.Position[1].xyz,tri.Normal[2].xyz);
+
 	vec2 w01 = weights.xy/(weights.x+weights.y);
 	vec2 w12 = weights.yz/(weights.y+weights.z);
 	vec2 w02 = weights.xz/(weights.x+weights.z);
+
+	float sf0 = SphereField(pos, tri.Spheres[0]);
+	float sf1 = SphereField(pos, tri.Spheres[1]);
+	float sf2 = SphereField(pos, tri.Spheres[2]);
+	float sf3 = SphereField(pos, tri.Spheres[3]);
+	float sf4 = SphereField(pos, tri.Spheres[4]);
+	float sf5 = SphereField(pos, tri.Spheres[5]);
+	float s0 = sf0*w12.x+sf1*w12.y;
+	float s1 = sf2*w02.x+sf3*w02.y;
+	float s2 = sf4*w01.x+sf5*w01.y;
+	return vec4(weights,dot(weights,vec3(s0,s1,s2)));
+
 //	vec4 s0 = tri.Spheres[0]*w12.x+tri.Spheres[1]*w12.y;
 //	vec4 s1 = tri.Spheres[2]*w02.x+tri.Spheres[3]*w02.y;
 //	vec4 s2 = tri.Spheres[4]*w01.x+tri.Spheres[5]*w01.y;
-	vec4 s0 = tri.Spheres[0]*0.5+tri.Spheres[1]*0.5;
-	vec4 s1 = tri.Spheres[2]*0.5+tri.Spheres[3]*0.5;
-	vec4 s2 = tri.Spheres[4]*0.5+tri.Spheres[5]*0.5;
-	vec4 s = s0*weights.x+s1*weights.y+s2*weights.z;
-
-	return vec4(weights,distance(pos, s.xyz) - s.w);
+//	vec4 s = s0*weights.x+s1*weights.y+s2*weights.z;
+//	return vec4(weights,distance(pos, s.xyz) - s.w);
 }
 
 void main()
