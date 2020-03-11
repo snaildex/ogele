@@ -72,7 +72,7 @@ private:
 		material.reset(shader->CreateMaterial());
 		bakeShader = Application::GetResourceByName<ShaderProgram>("Bake");
 		cam = Application::CreateWorld("Main")->CreateActor("Camera")->AddComponent<PerspectiveCamera>(GetResolution(), 45.0, 0.1, 10000.0);
-		//Application::SetDebugCamera(cam);
+		Application::SetDebugCamera(cam);
 		cam->GetTransform()->SetLocalPos({ 4, 4, 10 });
 		cam->GetTransform()->LookAt({ 0, 0, 0 });
 		models = Application::GetResources<Model>();

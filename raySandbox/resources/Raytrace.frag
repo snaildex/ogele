@@ -74,23 +74,6 @@ vec2 rsi(vec3 r0, vec3 rd, float sr) {
     );
 }
 
-//vec4 PhongField(Triangle tri, vec3 pos) {
-//	vec3 ppos[3];
-//    vec3 weights;
-//	float height=dot(pos-tri.Position[0].xyz,tri.TriNormal.xyz);
-//    for(int i=0; i<3; i++) ppos[i]=tri.Position[i].xyz+tri.Normal[i].xyz/tri.NormDot[i]*height;
-//    weights=Barycentric(pos,ppos[0],ppos[1],ppos[2]);
-//    //return vec4(weights,Height(pos,tri.Position[0].xyz,tri.TriNormal.xyz));
-//	//vec3 tpos = tri.Position[0].xyz*weights.x+tri.Position[1].xyz*weights.y+tri.Position[2].xyz*weights.z;
-//    vec3 norm = normalize(tri.Normal[0].xyz*weights.x+tri.Normal[1].xyz*weights.y+tri.Normal[2].xyz*weights.z);
-//	vec3 center=(tri.Position[0].xyz+tri.Position[1].xyz+tri.Position[2].xyz)/3 + tri.TriNormal.xyz*0.0;
-//	for(int i=0; i<3; i++) ppos[i]=mix(center,tri.Position[i].xyz,weights[i]);
-//	vec3 tpos = ppos[0]*weights.x+ppos[1]*weights.y+ppos[2]*weights.z;
-//	return vec4(weights,Height(pos,tpos,norm));
-//    //vec3 dir = normalize(cross(normalize(ppos[1]-ppos[0]),normalize(ppos[2]-ppos[0])));
-//	//return vec4(weights,Height(pos,ppos[0],dir));
-//}
-
 float SphereField(vec3 pos, vec4 sphere) {
 	return distance(pos, sphere.xyz) - sphere.w;
 }
@@ -192,8 +175,8 @@ void main()
 		float depth = distance(NearPos, cpos);
         hit=abs(curScene)<=deltaLength;
         float b = min3(weights);
-        if(hit && b>=0 && depth < cdepth && dot(curNorm,view)>0) {
-        //if(hit && b>=0 && depth < cdepth) {
+        //if(hit && b>=0 && depth < cdepth && dot(curNorm,view)>0) {
+        if(hit && b>=0 && depth < cdepth) {
         //if(hit && b>=0) {
         	float f=Lambert(curNorm,ldir);
         	cdepth=depth;
