@@ -11,6 +11,7 @@ const int Rank = 12;
 const float minDelta = 0.01;
 const vec3 ldir=normalize(vec3(1,1,1));
 uniform uint TriCount;
+uniform int SphereNum;
 
 struct Triangle {
     vec4 Position[3];
@@ -78,6 +79,10 @@ float SphereField(vec3 pos, vec4 sphere) {
 	return distance(pos, sphere.xyz) - sphere.w;
 }
 
+//interpolate curvature
+//weight intersections
+//sphere intersection
+
 vec4 PhongField(Triangle tri, vec3 pos) {
 	vec3 ppos[3];
     vec3 weights;
@@ -92,6 +97,8 @@ vec4 PhongField(Triangle tri, vec3 pos) {
 //	tri.Spheres[4]=CalculateSphere(tri.Position[2].xyz,tri.Position[0].xyz,tri.Normal[2].xyz);
 //	tri.Spheres[5]=CalculateSphere(tri.Position[2].xyz,tri.Position[1].xyz,tri.Normal[2].xyz);
 
+	int snum = max(min(SphereNum, 5),0);
+	return vec4(weights,SphereField(pos, tri.Spheres[snum]));
 	vec2 w01 = weights.xy/(weights.x+weights.y);
 	vec2 w12 = weights.yz/(weights.y+weights.z);
 	vec2 w02 = weights.xz/(weights.x+weights.z);

@@ -39,7 +39,7 @@ namespace ogele {
 
             UniformValue(const valueType &val) { m_value = val; }
 
-			void GUI(const std::string &name) override {  }
+			void GUI(const std::string& name) override { GUI::Internal::Property(name, m_value); }
 
             void TryCopyFrom(UniformBase *other) override {
                 UniformValue<valueType> *cother = dynamic_cast<UniformValue<valueType> *>(other);

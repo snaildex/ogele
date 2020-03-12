@@ -8,6 +8,7 @@ namespace ogele::GUI {
 		void Shutdown();
 		void NewFrame();
 		void Render();
+		template<typename T> void Property(const std::string& name, T& value);
 	}
 
 	enum class WindowFlags {
@@ -168,7 +169,14 @@ namespace ogele::GUI {
 	bool Input(const std::string& label, ivec2& value, InputTextFlags flags = InputTextFlags::None);
 	bool Input(const std::string& label, ivec3& value, InputTextFlags flags = InputTextFlags::None);
 	bool Input(const std::string& label, ivec4& value, InputTextFlags flags = InputTextFlags::None);
+	bool Input(const std::string& label, unsigned int& value, int step = 0.0f, int stepFast = 0.0f, InputTextFlags flags = InputTextFlags::None);
+	bool Input(const std::string& label, uvec2& value, InputTextFlags flags = InputTextFlags::None);
+	bool Input(const std::string& label, uvec3& value, InputTextFlags flags = InputTextFlags::None);
+	bool Input(const std::string& label, uvec4& value, InputTextFlags flags = InputTextFlags::None);
 	bool Input(const std::string& label, double& value, double step = 0.0f, double stepFast = 0.0f, const std::string& format = "%.6f", InputTextFlags flags = InputTextFlags::None);
+	bool Input(const std::string& label, glm::dvec2& value, const std::string& format = "%.3f", InputTextFlags flags = InputTextFlags::None);
+	bool Input(const std::string& label, glm::dvec3& value, const std::string& format = "%.3f", InputTextFlags flags = InputTextFlags::None);
+	bool Input(const std::string& label, glm::dvec4& value, const std::string& format = "%.3f", InputTextFlags flags = InputTextFlags::None);
 
 	bool InputText(const std::string& label, std::string& value, InputTextFlags flags = InputTextFlags::None);
 	bool InputTextMultiline(const std::string& label, std::string& value, const glm::vec2& size = { 0, 0 }, InputTextFlags flags = InputTextFlags::None);
@@ -182,5 +190,4 @@ namespace ogele::GUI {
 
 	void TreeNode(const std::string& label, std::function<void()> action);
 	bool CollapsingHeader(const std::string& label);
-
 }

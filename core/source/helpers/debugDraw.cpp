@@ -80,8 +80,6 @@ namespace ogele {
 		m_linesColorsBuf->Unbind();
 		Disable(Feature::DepthTest);
 		Disable(Feature::CullFace);
-		Enable(Feature::Blend);
-		BlendFunc(BlendFactor::SrcAlpha, BlendFactor::OneMinusSrcAlpha);
 		m_linesVao->Bind();
 		m_drawLines->Bind();
 		m_drawLines->Set("MVP", m_debugCamera->GetViewProjMatrix());

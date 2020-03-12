@@ -259,8 +259,29 @@ namespace ogele::GUI {
 	bool Input(const std::string& label, ivec4& value, InputTextFlags flags) {
 		return ImGui::InputInt4(label.data(), glm::value_ptr(value), CAST(flags, ImGuiInputTextFlags));
 	}
+	bool Input(const std::string& label, unsigned int& value, int step, int stepFast, InputTextFlags flags) {
+		return ImGui::InputUInt(label.data(), &value, step, stepFast, CAST(flags, ImGuiInputTextFlags));
+	}
+	bool Input(const std::string& label, uvec2& value, InputTextFlags flags) {
+		return ImGui::InputUInt2(label.data(), glm::value_ptr(value), CAST(flags, ImGuiInputTextFlags));
+	}
+	bool Input(const std::string& label, uvec3& value, InputTextFlags flags) {
+		return ImGui::InputUInt3(label.data(), glm::value_ptr(value), CAST(flags, ImGuiInputTextFlags));
+	}
+	bool Input(const std::string& label, uvec4& value, InputTextFlags flags) {
+		return ImGui::InputUInt4(label.data(), glm::value_ptr(value), CAST(flags, ImGuiInputTextFlags));
+	}
 	bool Input(const std::string& label, double& value, double step, double stepFast, const std::string& format, InputTextFlags flags) {
 		return ImGui::InputDouble(label.data(), &value, step, stepFast, format.data(), CAST(flags, ImGuiInputTextFlags));
+	}
+	bool Input(const std::string& label, glm::dvec2& value, const std::string& format, InputTextFlags flags) {
+		return ImGui::InputDouble2(label.data(), glm::value_ptr(value), format.data(), CAST(flags, ImGuiInputTextFlags));
+	}
+	bool Input(const std::string& label, glm::dvec3& value, const std::string& format, InputTextFlags flags) {
+		return ImGui::InputDouble3(label.data(), glm::value_ptr(value), format.data(), CAST(flags, ImGuiInputTextFlags));
+	}
+	bool Input(const std::string& label, glm::dvec4& value, const std::string& format, InputTextFlags flags) {
+		return ImGui::InputDouble4(label.data(), glm::value_ptr(value), format.data(), CAST(flags, ImGuiInputTextFlags));
 	}
 
 	bool InputText(const std::string& label, std::string& value, InputTextFlags flags) {
@@ -298,4 +319,41 @@ namespace ogele::GUI {
 	bool CollapsingHeader(const std::string& label) {
 		return ImGui::CollapsingHeader(label.data());
 	}
+
+	template<> void Internal::Property(const std::string& name, int& value) { Input(name, value); }
+	template<> void Internal::Property(const std::string& name, unsigned int& value) { Input(name, value); }
+	template<> void Internal::Property(const std::string& name, float& value) { Input(name, value); }
+	template<> void Internal::Property(const std::string& name, double& value) { Input(name, value); }
+	template<> void Internal::Property(const std::string& name, glm::vec2& value) { Input(name, value); }
+	template<> void Internal::Property(const std::string& name, glm::vec3& value) { Input(name, value); }
+	template<> void Internal::Property(const std::string& name, glm::vec4& value) { Input(name, value); }
+	template<> void Internal::Property(const std::string& name, glm::ivec2& value) { Input(name, value); }
+	template<> void Internal::Property(const std::string& name, glm::ivec3& value) { Input(name, value); }
+	template<> void Internal::Property(const std::string& name, glm::ivec4& value) { Input(name, value); }
+	template<> void Internal::Property(const std::string& name, glm::uvec2& value) { Input(name, value); }
+	template<> void Internal::Property(const std::string& name, glm::uvec3& value) { Input(name, value); }
+	template<> void Internal::Property(const std::string& name, glm::uvec4& value) { Input(name, value); }
+	template<> void Internal::Property(const std::string& name, glm::dvec2& value) { Input(name, value); }
+	template<> void Internal::Property(const std::string& name, glm::dvec3& value) { Input(name, value); }
+	template<> void Internal::Property(const std::string& name, glm::dvec4& value) { Input(name, value); }
+
+	template<> void Internal::Property(const std::string& name, glm::mat2x2& value) { LabelText(name, "%s", typeid(value).name()); }
+	template<> void Internal::Property(const std::string& name, glm::mat2x3& value) { LabelText(name, "%s", typeid(value).name()); }
+	template<> void Internal::Property(const std::string& name, glm::mat2x4& value) { LabelText(name, "%s", typeid(value).name()); }
+	template<> void Internal::Property(const std::string& name, glm::mat3x2& value) { LabelText(name, "%s", typeid(value).name()); }
+	template<> void Internal::Property(const std::string& name, glm::mat3x3& value) { LabelText(name, "%s", typeid(value).name()); }
+	template<> void Internal::Property(const std::string& name, glm::mat3x4& value) { LabelText(name, "%s", typeid(value).name()); }
+	template<> void Internal::Property(const std::string& name, glm::mat4x2& value) { LabelText(name, "%s", typeid(value).name()); }
+	template<> void Internal::Property(const std::string& name, glm::mat4x3& value) { LabelText(name, "%s", typeid(value).name()); }
+	template<> void Internal::Property(const std::string& name, glm::mat4x4& value) { LabelText(name, "%s", typeid(value).name()); }
+
+	template<> void Internal::Property(const std::string& name, glm::dmat2x2& value) { LabelText(name, "%s", typeid(value).name()); }
+	template<> void Internal::Property(const std::string& name, glm::dmat2x3& value) { LabelText(name, "%s", typeid(value).name()); }
+	template<> void Internal::Property(const std::string& name, glm::dmat2x4& value) { LabelText(name, "%s", typeid(value).name()); }
+	template<> void Internal::Property(const std::string& name, glm::dmat3x2& value) { LabelText(name, "%s", typeid(value).name()); }
+	template<> void Internal::Property(const std::string& name, glm::dmat3x3& value) { LabelText(name, "%s", typeid(value).name()); }
+	template<> void Internal::Property(const std::string& name, glm::dmat3x4& value) { LabelText(name, "%s", typeid(value).name()); }
+	template<> void Internal::Property(const std::string& name, glm::dmat4x2& value) { LabelText(name, "%s", typeid(value).name()); }
+	template<> void Internal::Property(const std::string& name, glm::dmat4x3& value) { LabelText(name, "%s", typeid(value).name()); }
+	template<> void Internal::Property(const std::string& name, glm::dmat4x4& value) { LabelText(name, "%s", typeid(value).name()); }
 }
