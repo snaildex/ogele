@@ -7,7 +7,7 @@ in vec2 UV;
 
 layout(location = 0) out vec3 Result;
 
-const int Rank = 12;
+const int Rank = 24;
 const float minDelta = 0.01;
 const vec3 ldir=normalize(vec3(1,1,1));
 uniform uint TriCount;
@@ -61,9 +61,6 @@ float Dist(vec3 p, vec3 d, vec3 o, vec3 n) {
 }
 
 vec2 rsi(vec3 r0, vec3 rd, float sr) {
-    // ray-sphere intersection that assumes
-    // the sphere is centered at the origin.
-    // No intersection when result.x > result.y
     float a = dot(rd, rd);
     float b = 2.0 * dot(rd, r0);
     float c = dot(r0, r0) - (sr * sr);
@@ -79,6 +76,16 @@ float SphereField(vec3 pos, vec4 sphere) {
 	return distance(pos, sphere.xyz) - sphere.w;
 }
 
+float SphereDist(vec3 pos, vec3 dir, vec3 center, float radius) {
+	vec2 bounds = rsi(pos-center,dir,radius);
+	return bounds.x;
+	//return min(bounds.x, bounds.y);
+}
+
+float PlaneDist(vec3 pos, vec3 dir, vec3 planePos, vec3 planeNorm) {
+	return dot(pos-planePos, planeNorm) / dot(planeNorm, dir);
+}
+
 //interpolate curvature
 //weight intersections
 //sphere intersection
@@ -89,42 +96,27 @@ vec4 PhongField(Triangle tri, vec3 pos) {
 	float height=Height(pos, tri.Position[0].xyz, tri.TriNormal.xyz);
 	for(int i=0; i<3; i++) ppos[i]=tri.Position[i].xyz+tri.Normal[i].xyz/tri.NormDot[i]*height;
     weights=Barycentric(pos,ppos[0],ppos[1],ppos[2]);
-	if(height < 0) return vec4(weights, height);
-//	tri.Spheres[0]=CalculateSphere(tri.Position[0].xyz,tri.Position[1].xyz,tri.Normal[0].xyz);
-//	tri.Spheres[1]=CalculateSphere(tri.Position[0].xyz,tri.Position[2].xyz,tri.Normal[0].xyz);
-//	tri.Spheres[2]=CalculateSphere(tri.Position[1].xyz,tri.Position[0].xyz,tri.Normal[1].xyz);
-//	tri.Spheres[3]=CalculateSphere(tri.Position[1].xyz,tri.Position[2].xyz,tri.Normal[1].xyz);
-//	tri.Spheres[4]=CalculateSphere(tri.Position[2].xyz,tri.Position[0].xyz,tri.Normal[2].xyz);
-//	tri.Spheres[5]=CalculateSphere(tri.Position[2].xyz,tri.Position[1].xyz,tri.Normal[2].xyz);
-
-	int snum = max(min(SphereNum, 5),0);
-	return vec4(weights,SphereField(pos, tri.Spheres[snum]));
+	vec3 triPos = tri.Position[0].xyz*weights.x+tri.Position[1].xyz*weights.y+tri.Position[2].xyz*weights.z;
+	vec3 dir = normalize(triPos - pos);
+	//return vec4(weights,PlaneDist(pos, -dir, tri.Position[0].xyz, tri.TriNormal.xyz));
 	vec2 w01 = weights.xy/(weights.x+weights.y);
 	vec2 w12 = weights.yz/(weights.y+weights.z);
 	vec2 w02 = weights.xz/(weights.x+weights.z);
-
-	float sf0 = SphereField(pos, tri.Spheres[0]);
-	float sf1 = SphereField(pos, tri.Spheres[1]);
-	float sf2 = SphereField(pos, tri.Spheres[2]);
-	float sf3 = SphereField(pos, tri.Spheres[3]);
-	float sf4 = SphereField(pos, tri.Spheres[4]);
-	float sf5 = SphereField(pos, tri.Spheres[5]);
-	float s0 = sf0*w12.x+sf1*w12.y;
-	float s1 = sf2*w02.x+sf3*w02.y;
-	float s2 = sf4*w01.x+sf5*w01.y;
-	return vec4(weights,dot(weights,vec3(s0,s1,s2)));
-
-//	vec4 s0 = tri.Spheres[0]*w12.x+tri.Spheres[1]*w12.y;
-//	vec4 s1 = tri.Spheres[2]*w02.x+tri.Spheres[3]*w02.y;
-//	vec4 s2 = tri.Spheres[4]*w01.x+tri.Spheres[5]*w01.y;
-//	vec4 s = s0*weights.x+s1*weights.y+s2*weights.z;
-//	return vec4(weights,distance(pos, s.xyz) - s.w);
+	vec4 s0 = tri.Spheres[0]*w12.x+tri.Spheres[1]*w12.y;
+	vec4 s1 = tri.Spheres[2]*w02.x+tri.Spheres[3]*w02.y;
+	vec4 s2 = tri.Spheres[4]*w01.x+tri.Spheres[5]*w01.y;
+	vec3 dist;
+	dist.x = SphereDist(pos, dir, s0.xyz, s0.w);
+	dist.y = SphereDist(pos, dir, s1.xyz, s1.w);
+	dist.z = SphereDist(pos, dir, s2.xyz, s2.w);
+	//return vec4(weights,dist.x);
+	return vec4(weights,dot(dist,weights));
 }
 
 void main()
 {
     vec3 view = normalize(LookDir);
-    Result=mix(vec3(1,0.7,0.5),vec3(0.8,0.9,1),pow(abs(view.y),0.5));
+	Result=mix(vec3(1,0.7,0.5),vec3(0.8,0.9,1),pow(abs(view.y),0.5));
 
     int density=int(pow(2,Rank));
     float totalLength=length(FarPos-NearPos);
@@ -154,10 +146,12 @@ void main()
     for(int t=0; t<TriCount; ++t)
     {
 		Triangle tri = Tris[t];
-        vec2 bounds = rsi(NearPos-tri.Domain.xyz,LookDir,tri.Domain.w);
+        vec2 bounds = rsi(NearPos-tri.Domain.xyz,view,tri.Domain.w);
 		if(bounds.x>bounds.y) continue;
-		vec3 near=NearPos+LookDir*bounds.x;
-		vec3 far=NearPos+LookDir*bounds.y;
+		//float triDist = PlaneDist(NearPos, -view, tri.Position[0].xyz, tri.TriNormal.xyz);
+		//bounds.y = min(bounds.y, triDist);
+		vec3 near=NearPos+view*bounds.x;
+		vec3 far=NearPos+view*bounds.y;
 		totalLength=length(far-near);
 		deltaLength=totalLength/density;
 		deltaLength=max(deltaLength,minDelta);
@@ -187,7 +181,9 @@ void main()
         //if(hit && b>=0) {
         	float f=Lambert(curNorm,ldir);
         	cdepth=depth;
-			Result=(vec3(1,1,1) + pow(max(cos(cpos*(2*3.14)*10),0),vec3(5)))*(0.3+0.2*f);
+			float grid = max3(pow(max(cos(cpos*(2*3.14)*10),0),vec3(10)));
+			//Result=vec3((0.5+grid*0.25)*f+0.25);
+			Result=weights;
 			//Result=weights;
 		}
     }
