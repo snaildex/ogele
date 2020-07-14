@@ -8,7 +8,7 @@ struct Triangle {
 	vec4 TriNormal;
 	vec4 NormDot;
 	vec4 Domain;
-	vec4 Spheres[6];
+	vec4 VertexData[3];
 };
 
 layout(std430, binding = 0) buffer PosBuffer { vec4 Pos[]; };
@@ -18,12 +18,12 @@ layout(std430, binding = 3) buffer TrisBuffer { Triangle Tris[]; };
 
 uint GetIndex(uint i) { return Index[i/4][i%4]; }
 
-vec4 CalculateSphere(vec3 a, vec3 b, vec3 n) {
-	//return vec4(a-n*0.3,0.3);
+float CalculateSphere(vec3 a, vec3 b, vec3 n) {
 	vec3 d = (b-a) / 2;
-	float r = length(d) / dot(-n, normalize(d));
-	return vec4(a-n*r,r);
+	return dot(-n, normalize(d)) / length(d);
 }
+
+float AngleBetween(vec3 a, vec3 b) { return acos(dot(normalize(a), normalize(b))); }
 
 void main()
 {
@@ -34,7 +34,6 @@ void main()
 		tri.Normal[i] = normalize(Norm[GetIndex(idx * 3 + i)]);
 	}
 	tri.TriNormal.xyz = normalize(cross(tri.Position[1].xyz-tri.Position[0].xyz,tri.Position[2].xyz-tri.Position[0].xyz));
-	//for(int i=0; i<3; ++i) tri.Normal[i] = tri.TriNormal;
 	tri.NormDot.xyz = vec3(dot(tri.TriNormal.xyz,tri.Normal[0].xyz), dot(tri.TriNormal.xyz,tri.Normal[1].xyz), dot(tri.TriNormal.xyz,tri.Normal[2].xyz));
 
 	float a=distance(tri.Position[1].xyz, tri.Position[2].xyz);
@@ -48,11 +47,15 @@ void main()
 	bc/=sum;
 	tri.Domain.xyz=tri.Position[0].xyz*bc.x+tri.Position[1].xyz*bc.y+tri.Position[2].xyz*bc.z;
 	tri.Domain.w=distance(tri.Domain.xyz,tri.Position[0].xyz);
-	tri.Spheres[0]=CalculateSphere(tri.Position[0].xyz,tri.Position[1].xyz,tri.Normal[0].xyz);
-	tri.Spheres[1]=CalculateSphere(tri.Position[0].xyz,tri.Position[2].xyz,tri.Normal[0].xyz);
-	tri.Spheres[2]=CalculateSphere(tri.Position[1].xyz,tri.Position[0].xyz,tri.Normal[1].xyz);
-	tri.Spheres[3]=CalculateSphere(tri.Position[1].xyz,tri.Position[2].xyz,tri.Normal[1].xyz);
-	tri.Spheres[4]=CalculateSphere(tri.Position[2].xyz,tri.Position[0].xyz,tri.Normal[2].xyz);
-	tri.Spheres[5]=CalculateSphere(tri.Position[2].xyz,tri.Position[1].xyz,tri.Normal[2].xyz);
+	tri.VertexData[0].x=CalculateSphere(tri.Position[0].xyz,tri.Position[1].xyz,tri.Normal[0].xyz);
+	tri.VertexData[0].y=CalculateSphere(tri.Position[0].xyz,tri.Position[2].xyz,tri.Normal[0].xyz);
+	tri.VertexData[1].x=CalculateSphere(tri.Position[1].xyz,tri.Position[0].xyz,tri.Normal[1].xyz);
+	tri.VertexData[1].y=CalculateSphere(tri.Position[1].xyz,tri.Position[2].xyz,tri.Normal[1].xyz);
+	tri.VertexData[2].x=CalculateSphere(tri.Position[2].xyz,tri.Position[0].xyz,tri.Normal[2].xyz);
+	tri.VertexData[2].y=CalculateSphere(tri.Position[2].xyz,tri.Position[1].xyz,tri.Normal[2].xyz);
+	tri.VertexData[0].z=AngleBetween(tri.Position[1].xyz-tri.Position[0].xyz,tri.Position[2].xyz-tri.Position[0].xyz);
+	tri.VertexData[1].z=AngleBetween(tri.Position[2].xyz-tri.Position[1].xyz,tri.Position[0].xyz-tri.Position[1].xyz);
+	tri.VertexData[2].z=AngleBetween(tri.Position[0].xyz-tri.Position[2].xyz,tri.Position[1].xyz-tri.Position[2].xyz);
+
 	Tris[idx] = tri;
 }

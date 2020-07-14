@@ -66,6 +66,7 @@ namespace ogele {
 		vsprintf(LogBuf, fmt, vargs);
 		va_end(vargs);
 		LogFile << LogBuf << std::endl;
+		std::cout << LogBuf << std::endl;
 	}
 
 	void LogSpace()

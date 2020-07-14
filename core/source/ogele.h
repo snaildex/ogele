@@ -52,4 +52,5 @@
 #include "pipeline/renderPipelineLoader.h"
 #include "resource/resourceContainer.h"
 #include "application/window.h"
+#include "helpers/vertexAccumulator.h"
 #include "application/application.h"

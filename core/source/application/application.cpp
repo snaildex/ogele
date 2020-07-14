@@ -3,7 +3,7 @@
 using namespace std;
 using namespace glm;
 namespace ogele {
-	Application *Application::m_instance = nullptr;
+	Application* Application::m_instance = nullptr;
 
 	bool exitLoader;
 
@@ -12,8 +12,8 @@ namespace ogele {
 		m_instance = this;
 		MakeContextCurrent();
 		m_res = make_unique<ResourceContainer>();
-		m_fpsCounter = make_unique<GPUStopwatch<100>>();
-		const GLFWvidmode *mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+		m_fpsCounter = make_unique<GPUStopwatch<20>>();
+		const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 		m_screenSize.x = mode->width;
 		m_screenSize.y = mode->height;
 		m_lastFrameTimePoint = chrono::high_resolution_clock::now();
@@ -29,20 +29,21 @@ namespace ogele {
 			m_loaderWindows.push_back(win);
 			m_loaders.emplace_back(Application::LoaderFunc, win);
 		}
-		InitLineDrawer();
+		m_lines = make_unique<VertexAccumulator>(Topology::Lines);
+		m_triangles = make_unique<VertexAccumulator>(Topology::Triangles);
 		Particles::Init();
 	}
 
 	future<Resource*> Application::LoadAsync(const ResourceProxy* proxy) {
 		lock_guard lock(m_instance->m_loadingQueueLock);
-		packaged_task<Resource*(void)> task([proxy]() {
+		packaged_task<Resource * (void)> task([proxy]() {
 			m_instance->m_loadingQueueLock.lock();
 			cout << "Thread " << this_thread::get_id() << " working" << endl;
 			m_instance->m_loadingQueueLock.unlock();
 			auto res = proxy->Build();
 			Finish();
 			return res;
-		});
+			});
 		future<Resource*> res = task.get_future();
 		m_instance->m_loading.push(move(task));
 		return res;
@@ -69,17 +70,17 @@ namespace ogele {
 		}
 	}
 
-	dvec2 Application::WorldToScreen(const dvec3 & pos)
+	dvec2 Application::WorldToScreen(const dvec3& pos)
 	{
 		if (m_instance->m_debugCamera == nullptr) return dvec2(0, 0);
 		dvec4 p = m_instance->m_debugCamera->GetViewProjMatrix() * dvec4(pos, 1);
 		p /= p.w;
-		p = p / 2.0 + 0.5;
+		p = p * 0.5 + 0.5;
 		ivec2 res = m_instance->GetResolution();
-		return { p.x*res.x,p.y*res.y };
+		return { p.x * res.x,res.y - p.y * res.y };
 	}
 
-	void Application::DrawTex(TextureBase *tex) {
+	void Application::DrawTex(TextureBase* tex) {
 		m_instance->m_drawTex->Bind();
 		m_instance->m_drawTex->Set("MVP", dmat4());
 		m_instance->m_drawTex->SetTexture("Tex", tex);
@@ -87,7 +88,7 @@ namespace ogele {
 		m_instance->m_drawTex->Unbind();
 	}
 
-	void Application::DrawTex(TextureBase * tex, const dvec2 & size, const dvec2 & pos, double rot)
+	void Application::DrawTex(TextureBase* tex, const dvec2& size, const dvec2& pos, double rot)
 	{
 		ivec2 res = m_instance->GetResolution();
 		dmat4 mat = dmat4();
@@ -101,7 +102,7 @@ namespace ogele {
 		m_instance->m_drawTex->Unbind();
 	}
 
-	void Application::DrawBasis(const dmat4 &M) {
+	void Application::DrawBasis(const dmat4& M) {
 		if (m_instance->m_debugCamera == nullptr) return;
 		m_instance->m_drawBasis->Bind();
 		m_instance->m_drawBasis->Set("MVP", m_instance->m_debugCamera->GetViewProjMatrix() * M);
@@ -125,11 +126,25 @@ namespace ogele {
 			m_material->Set<double>("Time", m_time);
 			m_material->Set<double>("TimeDelta", m_timeDelta);
 			GUI::Internal::NewFrame();
-			LineDrawerStartFrame();
+			if (m_debugCamera) {
+				m_lines->StartFrame();
+				m_triangles->StartFrame();
+			}
 			m_fpsCounter->Start();
 			Update();
 			m_fpsCounter->Stop();
-			LineDrawerEndFrame();
+			if (m_debugCamera) {
+				Clear(BufferBit::Depth);
+				Enable(Feature::DepthTest);
+				Disable(Feature::Blend);
+				m_lines->EndFrame();
+				m_triangles->EndFrame();
+				m_drawLines->Bind();
+				m_drawLines->Set("MVP", m_debugCamera->GetViewProjMatrix());
+				m_lines->Draw();
+				m_triangles->Draw();
+				m_drawLines->Unbind();
+			}
 			GUI::Internal::Render();
 			SwapBuffers();
 			PollEvents();
@@ -138,7 +153,7 @@ namespace ogele {
 		m_res.reset();
 	}
 
-	World * Application::CreateWorld(const std::string & name)
+	World* Application::CreateWorld(const std::string& name)
 	{
 		World* w = new World();
 		w->SetName(name);
@@ -148,7 +163,8 @@ namespace ogele {
 
 	Application::~Application() {
 		Particles::Shutdown();
-		ShutdownLineDrawer();
+		m_lines.reset();
+		m_triangles.reset();
 		m_screenQuad.reset();
 		m_coordBasis.reset();
 		m_drawTex.reset();

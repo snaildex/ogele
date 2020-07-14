@@ -11,6 +11,10 @@ namespace ogele::GUI {
 		template<typename T> void Property(const std::string& name, T& value);
 	}
 
+	namespace Place {
+		void Text(vec2 screenPos, const char* format, ...);
+	}
+
 	enum class WindowFlags {
 		None = 0,
 		NoTitleBar = 1,   // Disable title-bar

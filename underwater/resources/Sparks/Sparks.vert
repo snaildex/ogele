@@ -19,14 +19,14 @@ out vec4 Size;
 out float Index;
 
 double rand(dvec4 co){
-  return double(fract(sin(float(dot(co ,dvec4(12.9898,78.233,1134.971,-99997.65)))) * 43758.5453));
+  return double(fract(sin(float(dot(co ,dvec4(12.9898,78.233,1134.971,-99997.65))))* 43758.5453));
 }
 
 void main()
 {
 	dvec3 pos = Center + vCoord * Interval;
 	dvec3 offset = dvec3(rand(dvec4(pos,0)),rand(dvec4(pos,100)),rand(dvec4(pos,200)));
-	pos+=(offset-0.5)*Interval;
+	pos+=offset*0.5*Interval;
 	double size = mix(MinSize, MaxSize, rand(dvec4(pos,1400)));
 	gl_Position=vec4(VP*dvec4(pos,1));
 	dvec4 vpos=V*dvec4(pos,1);

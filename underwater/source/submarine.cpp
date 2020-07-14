@@ -41,15 +41,15 @@ Submarine::Submarine(Actor * actor) : Component(actor)
 void Submarine::Update()
 {
 	dvec3 rot{ 0 };
-	rot.x = Application::GetInstance()->GetJoystickAxis(0, 1);
+	/*rot.x = Application::GetInstance()->GetJoystickAxis(0, 1);
 	rot.y = -Application::GetInstance()->GetJoystickAxis(0, 2);
-	rot.z = -Application::GetInstance()->GetJoystickAxis(0, 0);
-	/*if (Application::GetInstance()->GetKey(Key::W)) rot.x = 1;
+	rot.z = -Application::GetInstance()->GetJoystickAxis(0, 0);*/
+	if (Application::GetInstance()->GetKey(Key::W)) rot.x = 1;
 	if (Application::GetInstance()->GetKey(Key::S)) rot.x = -1;
 	if (Application::GetInstance()->GetKey(Key::A)) rot.z = 1;
 	if (Application::GetInstance()->GetKey(Key::D)) rot.z = -1;
 	if (Application::GetInstance()->GetKey(Key::Q)) rot.y = 1;
-	if (Application::GetInstance()->GetKey(Key::E)) rot.y = -1;*/
+	if (Application::GetInstance()->GetKey(Key::E)) rot.y = -1;
 
 	double jitter = 0.02 * m_curSpeed;
 	rot.x += jitter * SimplexNoise({ Application::GetTime(), 13.76 });
@@ -57,9 +57,9 @@ void Submarine::Update()
 
 	GetTransform()->Rotate(rot * m_stats.Turn * Application::GetTimeDelta());
 
-	//if (Application::GetInstance()->GetKey(Key::X)) m_curSpeed += m_stats.Speed * Application::GetTimeDelta() * 0.25;
-	//if (Application::GetInstance()->GetKey(Key::Z)) m_curSpeed -= m_stats.Speed * Application::GetTimeDelta() * 0.25;
-	m_curSpeed = m_stats.Speed * (Application::GetInstance()->GetJoystickAxis(0, 3) + 1)*0.5;
+	if (Application::GetInstance()->GetKey(Key::X)) m_curSpeed += m_stats.Speed * Application::GetTimeDelta() * 0.25;
+	if (Application::GetInstance()->GetKey(Key::Z)) m_curSpeed -= m_stats.Speed * Application::GetTimeDelta() * 0.25;
+	//m_curSpeed = m_stats.Speed * (Application::GetInstance()->GetJoystickAxis(0, 3) + 1)*0.5;
 	m_curSpeed = glm::clamp(m_curSpeed, 0.0, m_stats.Speed);
 	GetTransform()->MoveLocal(GetTransform()->Forward() * m_curSpeed * Application::GetTimeDelta());
 }

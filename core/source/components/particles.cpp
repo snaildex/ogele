@@ -64,7 +64,7 @@ namespace ogele {
 	{
 		delete m_generator;
 	}
-	Particles::Particles(Actor * actor, int count) : Renderable(actor)
+	Particles::Particles(Actor* actor, int count) : Renderable(actor)
 	{
 		GetActor()->AddTag("Particles");
 		m_shaders.FindResouces({ "Particles" });
@@ -90,7 +90,7 @@ namespace ogele {
 
 		m_counter = make_unique<UnsignedIntBuffer<uint>>(BufferFlags::None, 1, nullptr);
 		m_counter->Bind();
-		m_counter->bClear(TextureFormat::R32UI, PixelDataFormat::RedInteger, 0);
+		m_counter->bClearRange(TextureFormat::R32UI, 0, 1, PixelDataFormat::RedInteger, 0);
 		m_counter->Unbind();
 
 		m_count = count;
@@ -136,7 +136,7 @@ namespace ogele {
 		m_emitterIndecies->bFlushRange(0, j);
 		m_emitterIndecies->Unbind();
 		m_counter->Bind();
-		m_counter->bClear(TextureFormat::R32UI, PixelDataFormat::RedInteger, 0);
+		m_counter->bClearRange(TextureFormat::R32UI, 0, 1, PixelDataFormat::RedInteger, 0);
 		m_counter->Unbind();
 
 		RebuildSamples();
@@ -148,7 +148,7 @@ namespace ogele {
 		m_generator->bDispatchCompute({ m_count / 1024,1,1 });
 		m_generator->Unbind();
 	}
-	void Particles::Render(const Camera * camera, const std::vector<std::string>& tags, const ogele::Material* material) const
+	void Particles::Render(const Camera* camera, const std::vector<std::string>& tags, const ogele::Material* material) const
 	{
 		auto sh = m_shaders.Get(tags);
 		sh->Bind();
@@ -160,11 +160,11 @@ namespace ogele {
 		m_vao->bDraw(0, m_count);
 		sh->Unbind();
 	}
-	void Particles::AddEmitter(Emitter * emitter)
+	void Particles::AddEmitter(Emitter* emitter)
 	{
 		m_emitters.push_back(emitter);
 	}
-	void Particles::RemoveEmitter(Emitter * emitter)
+	void Particles::RemoveEmitter(Emitter* emitter)
 	{
 		m_emitters.remove(emitter);
 	}
@@ -222,15 +222,15 @@ namespace ogele {
 	void Particles::Emitter::SetRandomRotation(bool value) noexcept {
 		m_randomRotation = value;
 	}
-	void Particles::Emitter::SetSpeed(const dvec3 & value) noexcept
+	void Particles::Emitter::SetSpeed(const dvec3& value) noexcept
 	{
 		m_sample.Speed = value;
 	}
-	void Particles::Emitter::SetForce(const dvec3 & value) noexcept
+	void Particles::Emitter::SetForce(const dvec3& value) noexcept
 	{
 		m_sample.Force = value;
 	}
-	void Particles::Emitter::SetColor(const dvec4 & value) noexcept
+	void Particles::Emitter::SetColor(const dvec4& value) noexcept
 	{
 		m_sample.Color = value;
 	}

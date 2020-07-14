@@ -20,10 +20,10 @@ function render ()
 	disable(feature.depthTest)
 	disable(feature.cullFace)
 	enable(feature.blend)
-	blendFunc(blendFactor.srcAlpha, blendFactor.oneMinusSrcAlpha);
+	blendFunc(blendFactor.srcAlpha, blendFactor.one);
 	drawScene(final, {}, {"Sparks"})
-	drawScene(final, {}, {"Particles"})
-
+	blendFunc(blendFactor.srcAlpha, blendFactor.oneMinusSrcAlpha);
+	drawScene(final, {}, {"Particles"})	
 end
 
 function resize ()

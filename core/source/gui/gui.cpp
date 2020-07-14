@@ -54,6 +54,15 @@ namespace ogele::GUI {
 		}
 	}
 
+	void Place::Text(vec2 screenPos, const char* format, ...) {
+		array<char, 255> buf;
+		va_list args;
+		va_start(args, format);
+		vsprintf(buf.data(), format, args);
+		va_end(args);
+		ImGui::GetWindowDrawList()->AddText(CAST(screenPos, const ImVec2), ImColor(255, 255, 0, 255), buf.data());
+	}
+
 	void Window(const std::string& title, std::function<void()> action, WindowFlags flags, bool* open) {
 		Begin(title.data(), open, CAST(flags, ImGuiWindowFlags));
 		action();

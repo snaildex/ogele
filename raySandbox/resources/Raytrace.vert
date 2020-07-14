@@ -17,7 +17,7 @@ void main()
 	fPos.xyz/=fPos.w;
 	dvec4 nPos=IVP * dvec4(nearPos,1);
 	nPos.xyz/=nPos.w;
-	LookDir=vec3(normalize(nPos.xyz-fPos.xyz));
+	LookDir=vec3(normalize(fPos.xyz-nPos.xyz));
 	FarPos=vec3(fPos.xyz);
 	NearPos=vec3(nPos.xyz);
     UV=uv;

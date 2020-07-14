@@ -73,6 +73,8 @@ namespace ogele {
 	{
 		if (m_cam != nullptr) m_cam->UpdateMaterial();
 		m_lua->Call("render");
+		ogele::Disable(Feature::Blend);
+		ogele::BlendFunc(BlendFactor::SrcAlpha, BlendFactor::OneMinusSrcAlpha);
 		if (m_finalTarget != nullptr && m_finalTargetTextureIndex >= 0)
 			Application::DrawTex((*m_finalTarget)[m_finalTargetTextureIndex]);
 	}

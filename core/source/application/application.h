@@ -35,23 +35,12 @@ namespace ogele {
 		unique_ptr<ShaderProgram> m_drawTex;
 		unique_ptr<ShaderProgram> m_drawBasis;
 		unique_ptr<ShaderProgram> m_drawLines;
-		unique_ptr<DoubleBuffer<dvec3>> m_linesCoordsBuf;
-		unique_ptr<FloatBuffer<vec3>> m_linesColorsBuf;
-		unique_ptr<VertexArray> m_linesVao;
-		int m_linesCount;
-		int m_currentLinesCount;
+		unique_ptr<VertexAccumulator> m_lines;
+		unique_ptr<VertexAccumulator> m_triangles;
 		Camera* m_debugCamera;
-		dvec3* m_linesCoordsData;
-		vec3* m_linesColorsData;
-
-		std::unique_ptr<GPUStopwatch<100>> m_fpsCounter;
+		
+		std::unique_ptr<GPUStopwatch<20>> m_fpsCounter;
 		std::list<std::unique_ptr<World>> m_worlds;
-
-		void InitLineDrawer();
-		void PushLineVertex(const dvec3& coord, const vec3& color);
-		void LineDrawerStartFrame();
-		void LineDrawerEndFrame();
-		void ShutdownLineDrawer();
 
 	protected:
 		virtual void Start() {};
@@ -64,6 +53,7 @@ namespace ogele {
 		static Application *GetInstance() noexcept { return m_instance; }
 		static double GetTime() noexcept { return m_instance->m_time; }
 		static double GetTimeDelta() noexcept { return m_instance->m_timeDelta; }
+		static double GetFrameTime() { return m_instance->m_fpsCounter->GetTime(); }
 		static const std::list<std::unique_ptr<World>>& GetWorlds() noexcept { return m_instance->m_worlds; }
 		static World* CreateWorld(const std::string& name);
 		template<typename T>  static res_ptr<T> GetResourceByName(const std::string& name) noexcept { return m_instance->m_res->GetResourceByName<T>(name); }
@@ -89,6 +79,8 @@ namespace ogele {
 		static void SetDebugCamera(Camera* cam) { m_instance->m_debugCamera = cam; }
 		static void DrawLine(const std::vector<glm::dvec3>& coords, const vec3& color);
 		static void DrawRay(const glm::dvec3& pos, const glm::dvec3& dir, const vec3& color);
+		static void DrawTriangle(const std::array<glm::dvec3, 3>& pos, const vec3& color);
+		static void DrawCircle(const glm::dvec3& pos, const glm::dvec3& radius, const glm::dvec3& dir, int segments, const vec3& color);
 
 		void Run();
 
