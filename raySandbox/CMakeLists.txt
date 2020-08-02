@@ -4,8 +4,15 @@ project(raySandbox)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
 file(GLOB_RECURSE DUMMY_SOURCE 
-source/* 
-resources/*
+source/*.h 
+source/*.cpp 
+resources/*.vert
+resources/*.tese
+resources/*.tesc
+resources/*.geom
+resources/*.frag
+resources/*.comp
+resources/*.json
 )
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX "Sources" FILES ${DUMMY_SOURCE})
 

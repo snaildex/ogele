@@ -7,6 +7,8 @@ class RunnerApp : public Application {
 public:
 	RunnerApp() : Application("Sandbox") {};
 private:
+
+	//Data layout for single triangle
 	struct Triangle {
 		vec4 Position[3];
 		vec4 Normal[3];
@@ -16,16 +18,25 @@ private:
 		vec4 VertexData[3];
 	};
 
+	//Camera for moving around
 	Camera* cam = nullptr;
+	//Raytrace shader program
 	res_ptr<ShaderProgram> shader;
+	//Material for storing configurable data for raytrace shader program
 	unique_ptr<Material> material;
+	//Shader for converting loaded model data to raytrace-appropriate format
 	res_ptr<ShaderProgram> bakeShader;
+	//List of loaded models from files
 	std::vector<Model*> models;
+	//Processed triangle data GPU buffer, used in raytrace algorithm
 	std::unique_ptr<FloatBuffer<Triangle>> trisBuffer;
+	//Triangle data, same as above, but stored on CPU side
 	std::vector<Triangle> tris;
+	//Current model number in a list
 	int currentModel = 0;
 	int triCount = 0;
 	bool raytarce = false;
+	//Near and Far points for drawing single ray in debug mode
 	dvec3 nearPos = { -1,1,2 };
 	dvec3 farPos = { 1,0,-2 };
 	int ctri = -1;

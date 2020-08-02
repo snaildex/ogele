@@ -99,7 +99,7 @@ vec4 MSIField(Triangle tri, vec3 pos) {
 	//vec3 triPos = tri.Position[0].xyz*weights.x+tri.Position[1].xyz*weights.y+tri.Position[2].xyz*weights.z;
 	vec3 triPos = tri.Position[0].xyz*cw.x+tri.Position[1].xyz*cw.y+tri.Position[2].xyz*cw.z;
 	vec3 dir = normalize(triPos - pos)*sign(height);
-	
+
 	vec2 w01;
 	vec2 w12;
 	vec2 w02;
@@ -112,7 +112,7 @@ vec4 MSIField(Triangle tri, vec3 pos) {
 	vec4 s0 = BlendSpheres(tri.Position[0].xyz,tri.Normal[0].xyz,tri.VertexData[0].x,tri.VertexData[0].y,w12);
 	vec4 s1 = BlendSpheres(tri.Position[1].xyz,tri.Normal[1].xyz,tri.VertexData[1].x,tri.VertexData[1].y,w02);
 	vec4 s2 = BlendSpheres(tri.Position[2].xyz,tri.Normal[2].xyz,tri.VertexData[2].x,tri.VertexData[2].y,w01);
-	
+
 	vec3 dist;
 	dist.x = SphereDist(pos, dir, s0);
 	dist.y = SphereDist(pos, dir, s1);
@@ -176,7 +176,7 @@ void main()
         }
 		float depth = distance(NearPos, cpos);
         hit=abs(curScene)<=deltaLength;
-		curNorm=tri.Normal[0].xyz*weights.r+tri.Normal[1].xyz*weights.g+tri.Normal[2].xyz*weights.b;	
+		curNorm=tri.Normal[0].xyz*weights.r+tri.Normal[1].xyz*weights.g+tri.Normal[2].xyz*weights.b;
         float b = min3(weights);
         if(hit && b>=0 && depth < cdepth && distance(cpos,far) > 1e-3) {
         //if(hit && b>=0 && depth < cdepth) {
